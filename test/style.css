@@ -1,0 +1,87 @@
+/* 原生式写法 */
+/*
+#id1 {
+    background-color: yellow;
+    width: 50px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#id2 {
+    background-color: yellow;
+    width: 100px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#id3 {
+    background-color: yellow;
+    width: 150px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#id4 {
+    background-color: yellow;
+    width: 200px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#id5 {
+    background-color: yellow;
+    width: 250px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+*/
+
+/* 组件式写法 */
+.btn {
+    background-color: yellow;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.wt-50 {
+    width: 50px;
+}
+
+.wt-100 {
+    width: 100px;
+}
+
+.wt-150 {
+    width: 150px;
+}
+
+.wt-200 {
+    width: 200px;
+}
+
+.wt-250 {
+    width: 250px;
+}
+
+/* #sucess {
+    background-color: yellow;
+} */
+
+
+.btn {
+    text-align: center;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.yellow {
+    background-color: #FCF113;
+}
+
+.wh-120 {
+    width: 120px;
+}
+
+.wh-240 {
+    width: 240px;
+}

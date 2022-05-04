@@ -1,0 +1,77 @@
+@font-face {
+  font-family: "iconfont";
+  /* Project id  */
+  src: url('../font/iconfont.ttf') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zuosanjiaoxing:before {
+  content: "\e645";
+}
+
+.icon-facebook-fill:before {
+  content: "\e88d";
+}
+
+.icon-instagram-fill:before {
+  content: "\e88f";
+}
+
+.icon-caidan:before {
+  content: "\eaf1";
+}
+
+.icon-guanbi:before {
+  content: "\eaf2";
+}
+
+.icon-sousuo:before {
+  content: "\eafe";
+}
+
+.icon-jiantou_xiangyouliangci_o:before {
+  content: "\eb91";
+}
+
+.icon-twitter:before {
+  content: "\e69e";
+}
+
+.icon-whatsapp:before {
+  content: "\e97b";
+}
+
+.icon-you:before {
+  content: "\e60f";
+}
+
+.icon-linkedin-fill:before {
+  content: "\eab1";
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("../font/Inter-Regular.otf");
+}
+
+@font-face {
+  font-family: "AbhayaLibre";
+  src: url("../font/AbhayaLibre-Regular.ttf");
+}
+
+@font-face {
+  font-family: "BioRhyme";
+  src: url("../font/BioRhyme-Regular.ttf");
+}
+
+@font-face {
+  font-family: "SentinelSSmPro";
+  src: url("../font/SentinelSSmPro-LightItalic.ttf");
+}
