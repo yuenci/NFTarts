@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="butOpenFile">click</button>
+    <textarea name="" id="textArea" cols="500" rows="50"></textarea>
+
+    <script>
+        let butOpenFile = document.getElementById("butOpenFile");
+        let textArea = document.getElementById("textArea");
+
+        butOpenFile.addEventListener('click', async function getNewFileHandle() {
+            const options = {
+                types: [
+                    {
+                        description: 'Text Files',
+                        accept: {
+                            'text/plain': ['.txt'],
+                        },
+                    },
+                ],
+            };
+            const handle = await window.showSaveFilePicker(options);
+
+            const writable = await handle.createWritable();
+            // Write the contents of the file to the stream.
+            await writable.write(textArea.value);
+            // Close the file and write the contents to disk.
+            await writable.close();
+        });
+    </script>
+</body>
+
+</html>

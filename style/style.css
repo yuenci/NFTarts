@@ -1,3 +1,103 @@
-#container {
-    margin: 40px 90px 0px 90px;
+#writer-container {
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    grid-template-rows: 1fr 13fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+
+#new-btn-container {
+    margin-top: 10px;
+    /* background-color: aqua; */
+    border-top: 2px solid #ACADB6;
+    border-bottom: 2px solid #ACADB6;
+    border-right: 1px solid #ACADB6;
+}
+
+#title {
+    margin-top: 10px;
+    /* background-color: brown; */
+    border-top: 2px solid #ACADB6;
+    border-bottom: 2px solid #ACADB6;
+    border-left: 1px solid #ACADB6;
+}
+
+#table-container {
+    /* background-color: blue; */
+    border-right: 1px solid #ACADB6;
+}
+
+#write-area {
+    /* background-color: yellow; */
+    border-left: 1px solid #ACADB6;
+}
+
+#new-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center
+}
+
+#title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+#writer-post-btn,
+#writer-new-btn {
+    width: 110px;
+    height: 35px;
+    background-color: #fcf113;
+    border: 0;
+    font-family: "Inter";
+    font-size: 14px;
+    margin: 10px;
+}
+
+#writer-post-btn {
+    position: absolute;
+    top: 0px;
+    right: 140px;
+}
+
+
+
+#writer-post-btn:hover {
+    background-color: #262c30;
+    color: white;
+    cursor: pointer;
+}
+
+#writer-new-btn:hover {
+    background-color: #262c30;
+    color: white;
+    cursor: pointer;
+}
+
+#title-text-input {
+    font-size: 32px;
+    font-family: "AbhayaLibre";
+    color: #ACADB6;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 0;
+    outline: none;
+    width: 100%;
+}
+
+#write-area-textarea {
+    font-size: 20px;
+    font-family: "AbhayaLibre";
+    color: #ACADB6;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    outline: none;
 }

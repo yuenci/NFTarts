@@ -1,4 +1,5 @@
-document.getElementById("nav").innerHTML = `
+if (document.getElementById("nav") != null) {
+    document.getElementById("nav").innerHTML = `
 <div id="nav-container">
     <div class="nav-ele" id="logo">NFTarts</div>
     <div class="nav-ele" id="search">
@@ -10,8 +11,10 @@ document.getElementById("nav").innerHTML = `
     <div id="nav-room"></div>
 </div>
 `;
+}
 
-document.getElementById("footer").innerHTML = `
+if (document.getElementById("footer") != null) {
+    document.getElementById("footer").innerHTML = `
 <div id="footer-container">
     <div id="footer-container1">
         <div id="hello-container">
@@ -62,6 +65,9 @@ document.getElementById("footer").innerHTML = `
     </div>
 </div>
 `;
+}
+
+
 
 document.getElementById("search").addEventListener("click", search);
 document.getElementById("menu").addEventListener("click", menu);
@@ -252,12 +258,14 @@ function lightDotLeft() {
     dot.style.left = `${y - 20}px`;
     console.log("left");
 }
-
-let socialIcons = document.getElementById("social-icons").childNodes;
-for (i = 0; i < socialIcons.length; i++) {
-    socialIcons[i].addEventListener("mouseover", lightDotBottom);
-    socialIcons[i].addEventListener("mouseout", () => document.getElementById("dot").remove());
+if (document.getElementById("social-icons") != null) {
+    let socialIcons = document.getElementById("social-icons").childNodes;
+    for (i = 0; i < socialIcons.length; i++) {
+        socialIcons[i].addEventListener("mouseover", lightDotBottom);
+        socialIcons[i].addEventListener("mouseout", () => document.getElementById("dot").remove());
+    }
 }
+
 
 function lightDotBottom() {
     let x = this.offsetTop;
@@ -294,6 +302,33 @@ if (articleTitle != null) {
     `;
     backToNewsList.id = "backToNewsList";
     document.body.insertBefore(backToNewsList, articleTitle);
+}
+if (document.getElementById("side-icon-facebook") != null) {
+    let facebook_side_icon = document.getElementById("side-icon-facebook")
+    let instagram_side_icon = document.getElementById("side-icon-instagram")
+    let twitter_side_icon = document.getElementById("side-icon-twitter")
+    let linkedin_side_icon = document.getElementById("side-icon-linkedin")
+    let whatsapp_side_icon = document.getElementById("side-icon-whatsapp")
+    facebook_side_icon.addEventListener("click", function () {
+        console.log(facebook_side_icon);
+        window.open(`https://www.facebook.com/sharer.php?title=${document.title}&u=http://nftart.com/news/${document.title}`, '_blank');
+    });
+    twitter_side_icon.addEventListener("click", function () {
+        console.log(facebook_side_icon);
+        window.open(`https://twitter.com/share?text=${document.title}&url=http://nftart.com/news/${document.title}`, '_blank');
+    });
+    instagram_side_icon.addEventListener("click", function () {
+        console.log(facebook_side_icon);
+        window.open(`https://www.instagram.com/`, '_blank');
+    });
+    linkedin_side_icon.addEventListener("click", function () {
+        console.log(facebook_side_icon);
+        window.open(`http://www.linkedin.com/shareArticle?url==http://nftart.com/news/${document.title}`, '_blank');
+    });
+    whatsapp_side_icon.addEventListener("click", function () {
+        console.log(facebook_side_icon);
+        window.open(`https://web.whatsapp.com/`, '_blank');
+    });
 }
 
 

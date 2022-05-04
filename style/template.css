@@ -287,6 +287,11 @@ time {
     margin-top: 70px;
 }
 
+main {
+    line-height: 25px;
+    text-indent: 2em;
+    margin-bottom: 20px;
+}
 
 #social-icons-side {
     display: inline-block;

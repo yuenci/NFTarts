@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="whatsapp:url" class="share_url" content="http://www.abc.com">
+    <meta name="whatsapp:title" class="share_title" content="测试分享到whatsapp">
+    <title>Document</title>
+</head>
+
+<body>
+    <a href="https://www.facebook.com/sharer.php?title=填上你的标题&u=http://example.com" target="_blank">Facebook</a>
+    <a href="https://twitter.com/share?text=填上你的标题&url=http://example.com" target="_blank">Twitter</a>
+    <a href="https://www.instagram.com/" target="_blank">instagram</a>
+    <a href="whatsapp://send?text=分享的内容 " target="_blank">whatsapp</a>
+    <a href="http://www.linkedin.com/shareArticle?url=https://www.okchem.com/instant-quote"></a>
+
+    <hr>
+    <a href="javascript:whatsApp();" class="xq-whatsapp" data-action="share/whatsapp/share">whatsApp</a>
+    <script>
+        function whatsApp(contentId) {
+
+            u = document.getElementsByClassName("share_url")[0].content;
+
+            t = document.getElementsByClassName("share_title")[0].content;
+
+            location = "whatsapp://send?text=" + encodeURIComponent(t) + encodeURIComponent("\n\n" + u) + "&via=lopscoop";
+
+        }
+    </script>
+</body>
+
+</html>
