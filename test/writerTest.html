@@ -24,62 +24,23 @@
     <nav id="nav"></nav>
     <div id="writer-container">
         <div id="new-btn-container">
+            <button id="writer-open-btn">OPEN</button>
             <button id="writer-new-btn">NEW ARTICLE</button>
         </div>
         <div id="title">
-            <input type="text" id="title-text-input" value="Title">
+            <input type="text" id="title-text-input" value="Title" tabindex="1">
             <button id="writer-post-btn">Post</button>
         </div>
-        <div id="table-container">3</div>
+        <div id="table-container"></div>
         <div id="write-area">
-            <textarea name="" id="write-area-textarea" cols="30" rows="10">Start to write something...</textarea>
+            <textarea name="" id="write-area-textarea" cols="30" rows="10"
+                tabindex="2">Start to write something...</textarea>
         </div>
     </div>
 
 
     <script src="../script/template.js"></script>
-    <script>
-        document.getElementById("writer-container").style.height = document.body.clientHeight - 40 + "px";
-
-        let title_input = document.getElementById("title-text-input");
-        title_input.onfocus = function () {
-            if (title_input.value == "Title") {
-                title_input.value = "";
-            }
-        }
-        title_input.onblur = function () {
-            if (title_input.value == "") {
-                title_input.value = "Title";
-            }
-        }
-
-        let area_input = document.getElementById("write-area-textarea");
-        area_input.onfocus = function () {
-            if (area_input.value == "Start to write something...") {
-                area_input.value = "";
-            }
-        }
-        area_input.onblur = function () {
-            if (area_input.value == "") {
-                area_input.value = "Start to write something...";
-            }
-        }
-
-        let post_btn = document.getElementById("writer-post-btn");
-        post_btn.addEventListener("click", function () {
-            console.log("dadasd");
-            let result = confirm("Are you sure post this article?");
-            if (result == true) {
-                if (title_input.value != "Title" && area_input.value != "Start to write something...") {
-                    alert("yes")
-                }
-                else {
-                    alert("Error")
-                }
-            }
-        });
-
-    </script>
+    <script src="./writer.js"></script>
 </body>
 
 </html>

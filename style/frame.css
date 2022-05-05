@@ -110,3 +110,8 @@ body {
 .ff-se {
     font-family: "SentinelSSmPro";
 }
+
+/* display*/
+.dy-ib {
+    display: inline-block;
+}

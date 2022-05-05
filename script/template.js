@@ -169,7 +169,7 @@ function menu() {
             <div id="menu-news" class="menu-main-text">NEWS</div>
             <div id="menu-contact" class="menu-main-text">CONTACT US</div>
             <div id="menu-join" class="menu-main-text">JOIN</div>
-            <div id="menu-news" class="menu-main-text">ABOUT APU</div>
+            <div id="menu-news" class="menu-main-text">LOG IN</div>
             <div id="menu-line2" class="menu-line"></div>
             <div id="menu-footer">
                 <div id="menu-faq" class="menu-footer-items">FAQ</div>
@@ -256,7 +256,6 @@ function lightDotLeft() {
     dot.style.position = "absolute";
     dot.style.top = `${x + 10}px`;
     dot.style.left = `${y - 20}px`;
-    console.log("left");
 }
 if (document.getElementById("social-icons") != null) {
     let socialIcons = document.getElementById("social-icons").childNodes;

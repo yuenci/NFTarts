@@ -28,11 +28,8 @@
                 ],
             };
             const handle = await window.showSaveFilePicker(options);
-
             const writable = await handle.createWritable();
-            // Write the contents of the file to the stream.
             await writable.write(textArea.value);
-            // Close the file and write the contents to disk.
             await writable.close();
         });
     </script>

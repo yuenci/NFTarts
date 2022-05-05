@@ -48,7 +48,8 @@
 }
 
 #writer-post-btn,
-#writer-new-btn {
+#writer-new-btn,
+#writer-open-btn {
     width: 110px;
     height: 35px;
     background-color: #fcf113;

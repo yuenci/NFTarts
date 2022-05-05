@@ -18,6 +18,7 @@
         butOpenFile.addEventListener('click', async () => {
             [fileHandle] = await window.showOpenFilePicker();
             const file = await fileHandle.getFile();
+            console.log(fileHandle);
             const contents = await file.text();
             textArea.value = contents;
         });
