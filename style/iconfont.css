@@ -56,6 +56,10 @@
   content: "\eab1";
 }
 
+.icon-lajitong:before {
+  content: "\e62b";
+}
+
 @font-face {
   font-family: "Inter";
   src: url("../font/Inter-Regular.otf");

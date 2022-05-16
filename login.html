@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./style/template.css">
+    <link rel="stylesheet" href="./style/style.css">
+    <link rel="stylesheet" href="./style/iconfont.css">
+    <link rel="stylesheet" href="./style/frame.css">
+    <style>
+        #login-btn:hover {
+            cursor: pointer;
+            background-color: #262c30;
+            color: white;
+        }
+
+        #login-btn {
+            font-family: "Inter";
+            font-size: 20px;
+            margin: 30px 0px 30px 0px;
+            background-color: #f0f4f6;
+            color: black;
+            width: 150px;
+            height: 50px;
+            border: 1px solid white;
+            transition: all 0.2s;
+            font-family: AbhayaLibre;
+        }
+
+        #login-page {
+            height: 95vh;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-items: center;
+            font-family: AbhayaLibre;
+        }
+
+        #login-page-container {
+            width: 60%;
+            height: 60%;
+            margin: auto auto auto auto;
+            border: 5px solid #f0f4f6;
+            font-family: AbhayaLibre;
+        }
+
+        #login-title {
+            font-size: 50px;
+            margin: 30px 0px 30px 30px;
+        }
+
+        input {
+            height: 50px;
+            font-size: 30px;
+            margin: 30px 0px 30px 0px;
+            font-family: AbhayaLibre;
+        }
+
+        #login-input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="nav"></nav>
+    <div id="login-page">
+        <div id="login-page-container">
+            <div id="login-title">Login to news writer</div>
+            <div id="login-input-container">
+                <div id="username-container">
+                    <input id="login-username" type="text" value="Enter your username" size="50"
+                        onclick="this.value=''">
+                </div>
+                <div id="password-container">
+                    <input id="login-password" type="text" value="Enter your password" size="50"
+                        onclick="this.value='';this.type='password'">
+                </div>
+                <button id="login-btn">Login</button>
+            </div>
+        </div>
+    </div>
+    <footer id="footer"></footer>
+    <script src="./script/template.js"></script>
+    <script>
+        let login_btn = document.getElementById("login-btn");
+        login_btn.addEventListener("click", function () {
+            let username_value = document.getElementById("login-username").value.toLowerCase();
+            let password_value = document.getElementById("login-password").value.toLowerCase();
+
+            if (username_value && password_value) {
+                if (username_value != "Enter your username"
+                    && password_value != "Enter your password") {
+                    if (verify(username_value, password_value)) {
+                        window.location.href = "writer.html";
+                    }
+                } else {
+                    alert("Please enter invalid value")
+                }
+            } else {
+                alert("Please enter invalid value")
+            }
+        })
+
+        function verify(name, password) {
+            let userInfo = {
+                "yannis": 112233,
+                "pheymin": 332211,
+                "innis": 221133
+            }
+
+            if (name in userInfo) {
+                if (userInfo[name] == password) {
+                    return true
+                }
+                else {
+                    alert(`Password is wrong`)
+                    return false
+                }
+            } else {
+                alert(`User ${name} does not exist`)
+                return false
+            }
+        }
+    </script>
+</body>
+
+</html>

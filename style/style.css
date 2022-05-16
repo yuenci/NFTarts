@@ -1,3 +1,4 @@
+/* writer */
 #writer-container {
     display: grid;
     grid-template-columns: 1fr 4fr;
@@ -44,12 +45,15 @@
 #title {
     display: flex;
     justify-content: space-between;
-    align-items: center
+    align-items: center;
 }
 
 #writer-post-btn,
 #writer-new-btn,
-#writer-open-btn {
+#writer-open-btn,
+#writer-index-btn,
+#join-container-btn,
+#Error-page-btn {
     width: 110px;
     height: 35px;
     background-color: #fcf113;
@@ -57,6 +61,11 @@
     font-family: "Inter";
     font-size: 14px;
     margin: 10px;
+    transition: all 0.4s;
+}
+
+#join-container-btn {
+    margin-left: 0px;
 }
 
 #writer-post-btn {
@@ -73,7 +82,81 @@
     cursor: pointer;
 }
 
+#writer-open-btn:hover {
+    background-color: #262c30;
+    color: white;
+    cursor: pointer;
+}
+
+#writer-index-btn:hover {
+    background-color: #262c30;
+    color: white;
+    cursor: pointer;
+}
+
 #writer-new-btn:hover {
+    background-color: #262c30;
+    color: white;
+    cursor: pointer;
+
+}
+
+#table-container {
+    overflow: scroll;
+}
+
+#table-container::-webkit-scrollbar {
+    display: none;
+}
+
+
+.writer-table-cards {
+    border: 1px solid #ACADB6;
+    margin: 2px;
+    height: 80px;
+    padding: 5px;
+}
+
+.writer-table-cards-title-icon {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.writer-table-cards-title {
+    font-family: AbhayaLibre;
+    font-size: 20px;
+}
+
+.writer-table-cards-time {
+    font-family: Inter;
+    color: #ACADB6;
+    font-size: 12px;
+}
+
+.icon-lajitong {
+    color: white !important;
+}
+
+.writer-table-cards:hover {
+    background-color: #fcf113;
+    font-weight: bold;
+}
+
+.writer-table-cards:hover .icon-lajitong {
+    color: #262c30 !important;
+    font-size: 20px;
+}
+
+/*  */
+
+#join-container-btn:hover {
+    background-color: #262c30;
+    color: white;
+    cursor: pointer;
+}
+
+#Error-page-btn:hover {
     background-color: #262c30;
     color: white;
     cursor: pointer;
@@ -87,7 +170,29 @@
     margin-right: 10px;
     border: 0;
     outline: none;
-    width: 100%;
+    width: 70%;
+}
+
+#title-text-type {
+    font-size: 32px;
+    font-family: "AbhayaLibre";
+    color: #ACADB6;
+    border: 0;
+    outline: none;
+    border-left: 2px solid #ACADB6;
+    width: 15%;
+    padding-left: 10px;
+}
+
+#title-text-publisher {
+    font-size: 32px;
+    font-family: "AbhayaLibre";
+    color: #ACADB6;
+    border: 0;
+    outline: none;
+    border-left: 2px solid #ACADB6;
+    width: 15%;
+    padding-left: 10px;
 }
 
 #write-area-textarea {
@@ -101,4 +206,209 @@
     height: 100%;
     border: 0;
     outline: none;
+}
+
+
+/* contact page */
+#contact-container {
+    width: 50%;
+    margin: 0px auto 0px auto;
+}
+
+#contact-page-title {
+    font-size: 90px;
+    font-family: AbhayaLibre;
+}
+
+#contact-page-text {
+    font-family: AbhayaLibre;
+    margin-bottom: 20px;
+}
+
+/* join us page */
+#join-container {
+    width: 50%;
+    margin: 0px auto 0px auto;
+}
+
+#join-container-title {
+    font-size: 90px;
+    font-family: AbhayaLibre;
+}
+
+#join-container-text {
+    font-family: AbhayaLibre;
+    margin-bottom: 20px;
+}
+
+.join-container-p-title {
+    font-size: 30px;
+    font-family: AbhayaLibre;
+}
+
+.join-container-p-text {
+    margin-top: 10px;
+    font-family: AbhayaLibre;
+}
+
+.join-container-p-container {
+    margin: 20px 0px 20px 0px;
+}
+
+/* 404page */
+#Error-container-text {
+    width: 50%;
+    margin: 0px auto 0px auto;
+    text-align: center;
+}
+
+#Error-page-pic {
+    width: 80%;
+    margin: 0px 10% 0px 10%;
+}
+
+#Error-container {
+    height: 100vh;
+}
+
+#Error-page-text {
+    font-size: 30px;
+    font-family: AbhayaLibre;
+    margin-bottom: 10px;
+}
+
+/* news page */
+#News-container {
+    width: 80%;
+    margin: 0px auto 0px auto;
+}
+
+#News-page-title {
+    font-size: 90px;
+    font-family: AbhayaLibre;
+}
+
+#News-page-text {
+    font-family: AbhayaLibre;
+    margin-bottom: 20px;
+}
+
+#News-cards-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.News-card {
+    width: 25%;
+    border-top: 5px solid black;
+    padding-top: 20px;
+}
+
+.News-card-title {
+    font-size: 30px;
+    margin: 20px 0px 20px 0px;
+}
+
+.News-card-line {
+    width: 40px;
+    height: 5px;
+    margin: 20px 0px 20px 0px;
+    background-color: black;
+}
+
+.News-card-brief,
+.News-card-more {
+    font-family: AbhayaLibre;
+    margin: 20px 0px 20px 0px;
+}
+
+.News-card-link {
+    margin: 20px 0px 20px 0px;
+    color: black;
+}
+
+/* news page */
+
+#News-page-lower {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+#News-page-want-more {
+    background-color: #F0F4F6;
+    width: 20%;
+    height: 150px;
+}
+
+#News-page-want-more-title {
+    font-family: AbhayaLibre;
+    margin: 25px;
+}
+
+#News-page-want-more-text {
+    font-family: AbhayaLibre;
+    margin: 25px;
+}
+
+#News-page-news-list-container {
+
+    width: 70%;
+}
+
+#latest-news-bar {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.latest-news-bar-line {
+    width: 35%;
+    height: 1px;
+    background-color: black;
+}
+
+#latest-news-bar-text {
+    font-family: AbhayaLibre;
+    margin: 0px 10px 0px 10px;
+}
+
+.news-card-container {
+    width: 100%;
+    border-bottom: 1px solid #AEB2B6;
+
+}
+
+.news-type {
+    font-family: Inter;
+    color: #AEB2B6;
+    font-size: 12px;
+    margin: 10px 0px 10px 0px;
+}
+
+.news-publisher {
+    font-family: Inter;
+    font-size: 12px;
+    margin: 10px 0px 10px 0px;
+}
+
+.news-title {
+    font-family: AbhayaLibre;
+    font-size: 20px;
+    margin: 10px 0px 10px 0px;
+}
+
+.news-title:hover {
+    cursor: pointer;
+}
+
+.news-datetime {
+    font-family: Inter;
+    color: #AEB2B6;
+    font-size: 12px;
+    margin: 10px 0px 10px 0px;
 }

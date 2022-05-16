@@ -6,6 +6,60 @@ window.onload = function () {
             creat_card(title, time)
         }
     })
+    checkAllPermission();
+
+    let articleJS = document.createElement("script")
+    articleJS.setAttribute("src", "./script/articles.js");
+    document.body.appendChild(articleJS);
+}
+// TODO check the permission status
+// function checkAllPermission() {
+//     idbKeyval.keys().then(function (keys) {
+//         console.log(keys);
+//         for (let index = 0; index < keys.length; index += 2) {
+//             idbKeyval.get(keys[i]).then(
+//                 function (fileHandle) {
+//                     if (await verifyPermission(fileHandle, true) === false) {
+//                         console.log("false");
+//                     } else {
+//                         console.log("true");
+//                     }
+//                 }
+//             );
+//         }
+//     });
+// }
+function checkAllPermission() {
+    idbKeyval.keys().then(function (keys) {
+        for (let index = 0; index < keys.length; index += 2) {
+            idbKeyval.get(keys[index]).then(
+                async function (handle) {
+                    // console.log(index);
+                    // console.log(handle);
+                    const options = {
+                        mode: 'readwrite'
+                    };
+                    let res = (await handle.queryPermission(options)) === 'granted'
+                    redCard(handle.name, res);
+                }
+            );
+        }
+    });
+}
+
+function redCard(cardname, status) {
+
+    let cards = document.getElementsByClassName("writer-table-cards-title")
+    for (let index = 0; index < cards.length; index++) {
+        const element = cards[index];
+        if (element.innerHTML + ".html" == cardname) {
+            if (status === false) {
+                element.style.color = "red";
+            } else {
+                element.style.color = "black";
+            }
+        }
+    }
 }
 
 document.getElementById("writer-container").style.height = document.body.clientHeight - 40 + "px";
@@ -178,15 +232,19 @@ write_open_btn.addEventListener("click", async () => {
     let time = new Date().toLocaleString()
     idbKeyval.set(name + "-time", time)
     const contents = await file.text();
-    area_input.value = contents;
-    creat_card(name);
+    [title, type, publisher, mainsStr] = parseDom(contents)
+    title_input.value = title;
+    title_type.value = type;
+    title_publisher.value = publisher;
+    area_input.value = mainsStr;
 })
 
 // table cards
-function creat_card(title, time = new Date().toLocaleString()) {
+function creat_card(title, time = new Date().toLocaleString(), bgc = "white") {
     let table_container = document.getElementById("table-container");
     let new_card = document.createElement("div")
     new_card.className = "writer-table-cards";
+    new_card.style.background = bgc;
     new_card.innerHTML = `
     <div class="writer-table-cards-title-icon">
         <div class="writer-table-cards-title">${title}</div>
@@ -230,7 +288,6 @@ function card_click() {
             const file = await fileHandle.getFile();
             // console.log(fileHandle);
             const contents = await file.text();
-            parseDom(contents)
             let title, type, publisher, mainsStr;
             [title, type, publisher, mainsStr] = parseDom(contents)
             title_input.value = title;
@@ -239,9 +296,13 @@ function card_click() {
             area_input.value = mainsStr;
 
             //area_input.value = contents;
+
+            //store content
+            storeArtle(title, type, publisher, mainsStr);
         }
 
     });
+    checkAllPermission();
 }
 
 function parseDom(arg) {
@@ -256,7 +317,7 @@ function parseDom(arg) {
 
     let children_List = objE.children;
     for (let index = 0; index < children_List.length; index++) {
-        console.log(children_List[index].localName);
+        //console.log(children_List[index].localName);
         if (children_List[index].localName == "title") {
             title_Index = index;
             type_Index = index - 1;
@@ -298,21 +359,31 @@ async function verifyPermission(fileHandle, readWrite) {
 }
 
 
-let test = document.getElementById("writer-test-btn");
-test.addEventListener("click", function () {
-    // let table_container = document.getElementById("table-container");
-    // console.log(table_container.children.length);
-
-    //creat_card("Title");
-    idbKeyval.clear()
-})
-
 
 let new_btn = document.getElementById("writer-new-btn");
 new_btn.addEventListener("click", function () {
-    title_input.value = "Title";
-    title_type.value = "Type";
-    title_publisher.value = "Publisher";
-    area_input.value = "Start to write something...";
+    // title_input.value = "Title";
+    // title_type.value = "Type";
+    // title_publisher.value = "Publisher";
+    // area_input.value = "Start to write something...";
+    location.reload()
 })
+
+function storeArtle(title, type, publisher, mainsStr) {
+    let obj = {
+        type: type,
+        publisher: publisher,
+        mainsStr: mainsStr
+    }
+
+    let articles = idbKeyval.createStore("articles-store", "articles")
+    idbKeyval.set(title, obj, articles)
+}
+
+let index_btn = document.getElementById("writer-index-btn");
+index_btn.addEventListener("click", function () {
+    console.log("index");
+})
+
+
 

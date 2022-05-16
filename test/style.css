@@ -18,16 +18,20 @@ body {
 
 #page1-upper-left {
     width: 800px;
-
+    height: 420px;
 }
 
 .page1-upper-left-text {
     font-size: 140px;
     font-family: "AbhayaLibre";
-    box-sizing: border-box;
-    border-bottom: solid 70px yellow;
+
     display: inline-block;
     height: 140px;
+}
+
+.page1-upper-left-text:hover {
+    box-sizing: border-box;
+    border-bottom: solid 70px yellow;
 }
 
 #page1-upper-right {
@@ -160,6 +164,7 @@ body {
 
 #page2-textBox {
     width: 30%;
+    min-width: 24px;
 }
 
 #page2-textBox-text1 {
@@ -199,7 +204,7 @@ body {
     width: 60%;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     justify-content: space-between;
     align-items: center;
 }
@@ -224,6 +229,7 @@ body {
 
 #page3-card {
     width: 30%;
+    min-width: 200px;
     height: 50%;
     background-color: white;
     margin: auto 10% auto 10%;

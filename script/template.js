@@ -67,6 +67,10 @@ if (document.getElementById("footer") != null) {
 `;
 }
 
+let logoObj = document.getElementById("logo")
+click_redirection(logoObj, "index.html")
+
+let sccript = document.getElementsByTagName("script")
 
 
 document.getElementById("search").addEventListener("click", search);
@@ -169,7 +173,7 @@ function menu() {
             <div id="menu-news" class="menu-main-text">NEWS</div>
             <div id="menu-contact" class="menu-main-text">CONTACT US</div>
             <div id="menu-join" class="menu-main-text">JOIN</div>
-            <div id="menu-news" class="menu-main-text">LOG IN</div>
+            <div id="menu-login" class="menu-main-text">LOG IN</div>
             <div id="menu-line2" class="menu-line"></div>
             <div id="menu-footer">
                 <div id="menu-faq" class="menu-footer-items">FAQ</div>
@@ -203,6 +207,17 @@ function init_menu_page() {
     function show_search() {
         document.getElementById("shadow").remove();
         search();
+    }
+
+    let login_btn = document.getElementById("menu-login");
+    click_redirection(login_btn, "login.html")
+
+    let menu_itemNames = ["menu-aboutUs", "menu-news", "menu-contact", "menu-join"]
+    let menu_item_url = ["aboutUs.html", "news.html", "contactUs.html", "joinUs.html"]
+    for (let index = 0; index < menu_itemNames.length; index++) {
+        const element = menu_itemNames[index];
+        let obj = document.getElementById(element)
+        click_redirection(obj, menu_item_url[index])
     }
 }
 // window.onresize = function () {
@@ -278,7 +293,6 @@ function lightDotBottom() {
     dot.style.position = "absolute";
     dot.style.top = `${x + 35}px`;
     dot.style.left = `${y + 12}px`;
-    console.log("bottom");
 }
 
 
@@ -302,6 +316,14 @@ if (articleTitle != null) {
     backToNewsList.id = "backToNewsList";
     document.body.insertBefore(backToNewsList, articleTitle);
 }
+
+let backToNew = document.getElementById("newsText");
+click_redirection(backToNew, "news.html")
+
+
+
+
+//  right side social icons part
 if (document.getElementById("side-icon-facebook") != null) {
     let facebook_side_icon = document.getElementById("side-icon-facebook")
     let instagram_side_icon = document.getElementById("side-icon-instagram")
@@ -330,4 +352,136 @@ if (document.getElementById("side-icon-facebook") != null) {
     });
 }
 
+
+// button event
+function click_redirection(eleObj, url) {
+    let scriptTags = document.getElementsByTagName("script")
+    let fileUrl = scriptTags[0].baseURI;
+    let args = fileUrl.split("/")
+    if (args[args.length - 2] == "news") {
+        url = "../" + url;
+    }
+    if (eleObj != null) {
+        eleObj.addEventListener("click", function () {
+            window.location.href = url;
+            //console.log(url);
+        })
+    }
+}
+
+
+let join_btn = document.getElementById("join-btn");
+click_redirection(join_btn, "joinUs.html")
+let policy_btn = document.getElementById("policy");
+click_redirection(policy_btn, "policy.html")
+let apu_logo_btn = document.getElementById("apu-logo");
+click_redirection(apu_logo_btn, "https://www.apu.edu.my/")
+
+let webItems_btns = document.getElementsByClassName("webItem");
+let webItems_urls = ["news.html", "aboutUs.html", "contactUs.html", "followUs.html"]
+for (let index = 0; index < webItems_btns.length; index++) {
+    let element = webItems_btns[index];
+    let url = webItems_urls[index];
+    click_redirection(element, url)
+}
+
+let apuItems_btns = document.getElementsByClassName("apuItem");
+let apuItems_urls = ["https://www.apu.edu.my/",
+    "https://www.apu.edu.my/our-courses/undergraduate-studies/school-computing-technology/bsc-hons-software-engineering",
+    "https://www.studentaffairs.apu.edu.my/clubs-societies/societies-sigs/",
+    "https://www.apu.edu.my/life-apu/student-life-apu"]
+for (let index = 0; index < apuItems_btns.length; index++) {
+    let element = apuItems_btns[index];
+    let url = apuItems_urls[index];
+    click_redirection(element, url)
+}
+if (document.getElementById("social-icons") != null) {
+    let social_icons = document.getElementById("social-icons").children;
+    let social_icons_webs = ["https://www.facebook.com/",
+        "https://www.instagram.com/",
+        "https://twitter.com/home",
+        "https://www.linkedin.com/",
+        "https://web.whatsapp.com/"];
+    for (let index = 0; index < social_icons.length; index++) {
+        let element = social_icons[index];
+        let url = social_icons_webs[4 - index];
+        click_redirection(element, url)
+    }
+}
+
+
+let page1_contact_btn = document.getElementById("page1-upper-right-text3");
+click_redirection(page1_contact_btn, "contactUs.html")
+
+let page4_contact_btn = document.getElementById("page4-card1-btn");
+click_redirection(page4_contact_btn, "contactUs.html")
+
+
+let page4_join_btn = document.getElementById("page4-card2-btn");
+click_redirection(page4_join_btn, "joinUs.html")
+
+let page8_news_bar = document.getElementById("page8-bar");
+click_redirection(page8_news_bar, "news.html")
+
+let page1_card1_text = document.getElementById("page1-lower-card1-activityName");
+click_redirection(page1_card1_text, "news/NFT Arts Sharing Event at Asia Pacific University on May 1.html")
+
+let page1_card2_text = document.getElementById("page1-lower-card2-activityName");
+click_redirection(page1_card2_text, "news/Kuala Lumpur to go digital with a major NFT festival in June.html")
+
+let page2_btn = document.getElementById("page2-textBox-btn1");
+click_redirection(page2_btn, "news/About NFTarts.html");
+
+let page3_btn = document.getElementById("page3-btn");
+click_redirection(page3_btn, "news/The NFT Events You Won’t Want to Miss at Bitcoin 2022.html");
+
+let page4_card3 = document.getElementById("page4-card3-text");
+click_redirection(page4_card3, "news/The Best NFT Memes of 2022_ February.html");
+
+
+let page4_card4 = document.getElementById("page4-card4-text");
+click_redirection(page4_card4, "news/Every Generative Avatar Project You Need to Know.html");
+
+let page5_btn = document.getElementById("page5-btn");
+click_redirection(page5_btn, "news/NFTs Are Shaking Up the Art World—But They Could Change So Much More.html");
+
+let page6_card1_text = document.getElementById("page6-card1-text")
+click_redirection(page6_card1_text, "news/Open Sea.html")
+
+let page6_card2_text = document.getElementById("page6-card2-text")
+click_redirection(page6_card2_text, "news/All relevent information to help you navigate your way in NFTs and Crypto.html")
+
+let page6_card3_text = document.getElementById("page6-card3-text")
+click_redirection(page6_card3_text, "news/How to Create NFT Sell Crypto Art.html")
+
+let page6_card4_text = document.getElementById("page6-card4-text")
+click_redirection(page6_card4_text, "https://www.youtube.com/watch?v=0pWTRsztTtY")
+
+let page6_card5_text = document.getElementById("page6-card5-text")
+click_redirection(page6_card5_text, "news/To make the NFTs have any value, they need Ethereum to give the collectible value.html")
+
+let page7_btn = document.getElementById("page7-btn");
+click_redirection(page7_btn, "news/Are NFTs The Future For The Art World_.html")
+
+let page8_card1_text = document.getElementById("page8-card1-text")
+click_redirection(page8_card1_text, "https://open.spotify.com/episode/6qyyCaka365swtq3C6HJLJ?si=6gq9fGz1TW2d7v0wJkpYPQ")
+
+let page8_card2_text = document.getElementById("page8-card2-text")
+click_redirection(page8_card2_text, "news/NFTs in M’sia this week Fahmi Reza draws another monkey, dickhead NFTs trigger MCMC.html")
+
+let page8_card3_text = document.getElementById("page8-card3-text")
+click_redirection(page8_card3_text, "http://shorturl.at/mnzS2")
+
+let page8_card4_text = document.getElementById("page8-card4-text")
+click_redirection(page8_card4_text, "news/NFT art how the future of NFTs will empower artists.html")
+
+let page8_card5_text = document.getElementById("page8-card5-text")
+click_redirection(page8_card5_text, "http://shorturl.at/qtAS0")
+
+let page8_card6_text = document.getElementById("page8-card6-text")
+click_redirection(page8_card6_text, "news/Elon Musk NFT First to Enter Ukrainian Hall of Fame and You Can't Buy It.html")
+
+let articleJS = document.createElement("script")
+articleJS.setAttribute("src", "./script/articles.js");
+document.body.appendChild(articleJS);
 
