@@ -412,3 +412,179 @@
     font-size: 12px;
     margin: 10px 0px 10px 0px;
 }
+
+
+/* waterfall page */
+.waterfall-card {
+    width: 600px;
+    border: 1px solid #dbdbdb;
+    border-radius: 3px;
+    margin: 30px auto 30px auto;
+}
+
+.waterfall-card-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px;
+}
+
+.waterfall-card-avatar {
+    height: 40px;
+    width: 40px;
+    border-radius: 32px;
+    line-height: 50px;
+}
+
+.waterfall-card-poster-tags {
+    display: flex;
+    flex-direction: column;
+    font-family: Inter;
+    margin-left: 10px;
+}
+
+.waterfall-card-tags-time {
+    width: 530px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.waterfall-card-poster {
+    font-weight: bold;
+}
+
+.waterfall-card-tags {
+    color: #929292;
+}
+
+.waterfall-card-time {
+    color: #929292;
+}
+
+.waterfall-card-image {
+    /* object-fit: cover; */
+    width: 600px;
+}
+
+.waterfall-card-footer {
+    font-family: Inter;
+}
+
+.waterfall-card-footer-icons {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+}
+
+.waterfall-card-footer-icons span {
+    font-size: 25px;
+    margin: 8px;
+    height: 100%;
+    line-height: 30px;
+}
+
+.waterfall-card-footer-icons span:hover {
+    color: #929292 !important;
+}
+
+.icon-xihuan {
+    font-weight: 600;
+}
+
+.icon-pinglun {
+    font-size: 30px !important;
+    position: relative;
+    top: 2px;
+    font-weight: 500;
+}
+
+.icon-sendfasong {
+    font-size: 25px !important;
+}
+
+.waterfall-card-footer {
+    font-size: 18px;
+}
+
+.waterfall-card-footer-likes {
+    margin: 5px 10px 10px 20px;
+    font-weight: bold;
+
+}
+
+.waterfall-card-footer-description {
+    margin: 5px 10px 10px 20px;
+}
+
+.waterfall-card-footer-comments {
+    margin: 5px 10px 10px 20px;
+    color: #8e8e8e;
+}
+
+.waterfall-card-footer-comments:hover {
+    cursor: pointer;
+}
+
+.waterfall-card-comment {
+    margin: 5px 10px 10px 20px;
+}
+
+.waterfall-card-comment-username {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.waterfall-card-comment-content {
+    font-size: 18px;
+    margin-left: 5px;
+}
+
+.waterfall-card-comment-time {
+    font-size: 16px;
+    color: #8e8e8e;
+}
+
+
+.waterfall-card-comment-writer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border-top: 1px solid #dbdbdb;
+    padding: 10px;
+    height: 40px;
+}
+
+.icon-weixiao {
+    font-size: 30px !important;
+    font-weight: 500;
+    flex: 1;
+}
+
+.icon-weixiao:hover {
+    color: #929292 !important;
+
+}
+
+.waterfall-comment-input {
+    color: #929292;
+    flex: 15;
+    border: none;
+    font-size: 18px;
+    padding-left: 10px;
+}
+
+.waterfall-comment-input:focus {
+    outline: none;
+}
+
+.waterfall-comment-post {
+    flex: 1;
+    font-size: 18px;
+    color: #b3dffc;
+    font-weight: bold;
+}
+
+.waterfall-comment-post:hover {
+    cursor: pointer;
+}

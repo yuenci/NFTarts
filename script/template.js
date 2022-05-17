@@ -105,9 +105,10 @@ click_redirection(logoObj, "index.html")
 
 let sccript = document.getElementsByTagName("script")
 
-
-document.getElementById("search").addEventListener("click", search);
-document.getElementById("menu").addEventListener("click", menu);
+if (document.getElementById("search")) {
+    document.getElementById("search").addEventListener("click", search);
+    document.getElementById("menu").addEventListener("click", menu);
+}
 //search()
 function search() {
     document.documentElement.style.overflowY = 'hidden';

@@ -60,6 +60,22 @@
   content: "\e62b";
 }
 
+.icon-sendfasong:before {
+  content: "\e6e2";
+}
+
+.icon-xihuan:before {
+  content: "\e682";
+}
+
+.icon-pinglun:before {
+  content: "\e605";
+}
+
+.icon-weixiao:before {
+  content: "\e606";
+}
+
 @font-face {
   font-family: "Inter";
   src: url("../font/Inter-Regular.otf");
