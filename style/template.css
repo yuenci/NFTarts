@@ -16,7 +16,21 @@
     width: 110px;
 }
 
+#search-page-logo {
+    font-family: "BioRhyme";
+    font-weight: bold;
+    font-size: 24px;
+    vertical-align: top;
+    margin: 10px;
+    margin-left: 20px;
+    width: 110px;
+}
+
 #logo:hover {
+    cursor: pointer;
+}
+
+#search-page-logo:hover {
     cursor: pointer;
 }
 

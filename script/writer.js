@@ -8,9 +8,6 @@ window.onload = function () {
     })
     checkAllPermission();
 
-    let articleJS = document.createElement("script")
-    articleJS.setAttribute("src", "./script/articles.js");
-    document.body.appendChild(articleJS);
 }
 // TODO check the permission status
 // function checkAllPermission() {
@@ -213,6 +210,7 @@ function article_structure(content) {
                 </article>
                 <footer id="footer"></footer>
                 <script src="../script/template.js"><\/script>
+                <script src="../script/idb-keyval-min.js"></script>
             </body>
         </html>
          `
@@ -381,9 +379,74 @@ function storeArtle(title, type, publisher, mainsStr) {
 }
 
 let index_btn = document.getElementById("writer-index-btn");
-index_btn.addEventListener("click", function () {
-    console.log("index");
+index_btn.addEventListener("click", async function () {
+    let articles = idbKeyval.createStore("articles-store", "articles")
+    let keywords = {};
+    idbKeyval.entries(articles).then(function (entries) {
+        for (let index = 0; index < entries.length; index++) {
+            let title = entries[index][0];
+            let articleID = checkArticleID(title);
+            //console.log(articleID);
+            let content = entries[index][1]["type"] + " "
+                + entries[index][1]["publisher"] + " "
+                + entries[index][1]["mainsStr"]
+            content = clearStr(content);
+            contentKeys = content.split(" ");
+            //console.log(contentKeys);
+
+            for (let i = 0; i < contentKeys.length; i++) {
+                const word = contentKeys[i].toLowerCase();
+                if (word === "" || word === " ") {
+                    continue;
+                }
+                // word exist
+                if (keywords[word]) {
+                    // if articleID exist in this word
+                    if (keywords[word][articleID]) {
+                        keywords[word][articleID] += 1;
+                    } else {
+                        // if articleID not exist in this word
+                        keywords[word][articleID] = 1;
+                    }
+                } else {
+                    // word not exist
+                    keywords[word] = {}
+                    keywords[word][articleID] = 1;
+                }
+            }
+        }
+    }).then(function () {
+        idbKeyval.set("index.json", keywords, articles)
+        alert("Built index successfully")
+    });
 })
 
+function clearStr(str) {
+    content = str.replaceAll("\n", " ")
+    content = content.replaceAll(".", " ");
+    content = content.replaceAll("-", " ");
+    content = content.replaceAll(",", " ");
+    content = content.replaceAll("“", " ");
+    content = content.replaceAll("”", " ");
+    content = content.replaceAll("…", " ");
+    content = content.replaceAll("(", " ");
+    content = content.replaceAll(")", " ");
+    // content = content.replaceAll(" ", " ");
+    // content = content.replaceAll(" ", " ");
+    // content = content.replaceAll(" ", " ");
+    return content
+}
+
+function checkArticleID(articleName) {
+    let articleNum = Object.keys(articleObj).length;
+
+    for (let index = 1; index <= articleNum; index++) {
+        let articleTitle = articleObj[index]["Title"];
+        if (articleTitle === articleName) {
+            //console.log(index);
+            return index
+        }
+    }
+}
 
 

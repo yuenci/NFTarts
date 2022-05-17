@@ -18,6 +18,7 @@
 
         butOpenFile.addEventListener('click', async function getNewFileHandle() {
             const options = {
+                suggestedName: `${title_input.value}.html`,
                 types: [
                     {
                         description: 'Text Files',

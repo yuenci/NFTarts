@@ -31,7 +31,7 @@ let articleObj = {
         "Type": "Guides",
         "Poster": "Langston Thomas",
         "Date": "May 12, 2022",
-        "Title": "PFP NFTs: Every Generative Avatar Project You Need to Know",
+        "Title": "Every Generative Avatar Project You Need to Know",
         "Address": "news/Every Generative Avatar Project You Need to Know.html"
     },
     6: {
@@ -118,15 +118,34 @@ let articleObj = {
 /////////////////////////
 let news_container = document.getElementById("News-page-news-list-container");
 if (news_container != null) {
-    for (let index = 1; index < 17; index++) {
-        let news_card = document.createElement("div");
-        news_card.className = "news-card-container";
-        news_card.innerHTML = creat_news_card(
-            articleObj[index]["Type"], articleObj[index]["Poster"],
-            articleObj[index]["Date"], articleObj[index]["Title"]
-        );
-        news_container.appendChild(news_card);
-        click_redirection(news_card, articleObj[index]["Address"])
+    let articleIDList = localStorage.getItem("articleIDList");
+    if (articleIDList === "-1") {
+        console.log("yes");
+        let articleNum = Object.keys(articleObj).length;
+        for (let index = 1; index < articleNum; index++) {
+            let news_card = document.createElement("div");
+            news_card.className = "news-card-container";
+            news_card.innerHTML = creat_news_card(
+                articleObj[index]["Type"], articleObj[index]["Poster"],
+                articleObj[index]["Date"], articleObj[index]["Title"]
+            );
+            news_container.appendChild(news_card);
+            click_redirection(news_card, articleObj[index]["Address"])
+        }
+    } else {
+        let articleIDs = articleIDList.split(",");
+        //console.log(typeof articleIDs);
+        for (let i = 0; i < articleIDs.length; i++) {
+            index = articleIDs[i]
+            let news_card = document.createElement("div");
+            news_card.className = "news-card-container";
+            news_card.innerHTML = creat_news_card(
+                articleObj[index]["Type"], articleObj[index]["Poster"],
+                articleObj[index]["Date"], articleObj[index]["Title"]
+            );
+            news_container.appendChild(news_card);
+            click_redirection(news_card, articleObj[index]["Address"])
+        }
     }
 }
 
@@ -142,3 +161,5 @@ function creat_news_card(type, poster, date, title) {
     `
     return result
 }
+
+

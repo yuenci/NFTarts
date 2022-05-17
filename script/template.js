@@ -1,3 +1,36 @@
+window.onbeforeunload = function () {
+    // if (ifInNewFile()) {
+    //     console.log(ifInNewFile());
+    //     localStorage.setItem("articleIDList", "-1");
+    //     localStorage.setItem("articleKeyWord", "-1");
+    // }
+};
+
+window.onload = function () {
+    let keyword = localStorage.getItem("articleKeyWord");
+    if (ifInNewFile()) {
+        setHeightKeyWord(keyword);
+    } else {
+        //clearLocal();
+    }
+};
+
+function setHeightKeyWord(keyword) {
+    var target = document.body.querySelectorAll("article")[0]
+    if (target) {
+        let tempHTML = target.innerHTML;
+        var replaceText = "<font style='background-color:yellow;'>$1</font>";
+        var r = new RegExp("(" + keyword + ")", "ig");
+        tempHTML = tempHTML.replace(r, replaceText);
+        target.innerHTML = tempHTML;
+    }
+}
+
+function clearLocal() {
+    localStorage.setItem("articleIDList", "-1");
+    localStorage.setItem("articleKeyWord", "-1");
+}
+
 if (document.getElementById("nav") != null) {
     document.getElementById("nav").innerHTML = `
 <div id="nav-container">
@@ -89,7 +122,7 @@ function search() {
     shadow.style.background = "#262c30";
     shadow.innerHTML = `
        <div id="nav-container">
-            <div class="nav-ele" id="logo" style="color:white;">NFTarts</div>
+            <div class="nav-ele" id="search-page-logo" style="color:white;">NFTarts</div>
             <div class="nav-ele" id="search-page-guanbi-icon">
                 <span class="iconfont icon-guanbi" style="color:white; font-size: 25px" id="close-icon"></span>
             </div>
@@ -142,7 +175,53 @@ function init_serch_page() {
         document.getElementById("shadow").remove();
         menu();
     }
+
+    let logo_btn = document.getElementById("search-page-logo");
+    logo_btn.addEventListener("click", function () {
+        let scriptTags = document.getElementsByTagName("script")
+        let fileUrl = scriptTags[0].baseURI;
+        let args = fileUrl.split("/")
+        let url = "index.html";
+        if (args[args.length - 2] == "news") {
+            url = "../" + url;
+        }
+        window.location.href = url;
+    });
+
+    let search_btn = document.getElementById("search-page-search-icon");
+    search_btn.addEventListener("click",
+        function () {
+            let searchContent = document.getElementById("search-input").value;
+            console.log(searchContent);
+            let articles = idbKeyval.createStore("articles-store", "articles")
+            idbKeyval.get('index.json', articles).then(
+                function (index) {
+                    //console.log(index);
+                    if (index[searchContent]) {
+                        let targetObj = index[searchContent];
+                        let articleIDList = Object.keys(targetObj)
+                        localStorage.setItem("articleIDList", articleIDList);
+                        localStorage.setItem("articleKeyWord", searchContent);
+                        //localStorage.getItem("temp")
+                        //localStorage.removeItem("arr");
+                    } else {
+                        localStorage.setItem("articleIDList", "");
+                        localStorage.setItem("articleKeyWord", "");
+                    }
+                    let scriptTags = document.getElementsByTagName("script")
+                    let fileUrl = scriptTags[0].baseURI;
+                    let args = fileUrl.split("/")
+                    let url = "news.html";
+                    if (args[args.length - 2] == "news") {
+                        url = "../" + url;
+                    }
+                    window.location.href = url;
+                });
+        });
+
 }
+
+
 //menu()
 function menu() {
     document.documentElement.style.overflowY = 'hidden';
@@ -481,7 +560,15 @@ click_redirection(page8_card5_text, "http://shorturl.at/qtAS0")
 let page8_card6_text = document.getElementById("page8-card6-text")
 click_redirection(page8_card6_text, "news/Elon Musk NFT First to Enter Ukrainian Hall of Fame and You Can't Buy It.html")
 
-let articleJS = document.createElement("script")
-articleJS.setAttribute("src", "./script/articles.js");
-document.body.appendChild(articleJS);
+
+function ifInNewFile() {
+    let scriptTags = document.getElementsByTagName("script")
+    let fileUrl = scriptTags[0].baseURI;
+    let args = fileUrl.split("/")
+    if (args[args.length - 2] == "news") {
+        return true;
+    } else {
+        return false;
+    }
+}
 
