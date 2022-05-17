@@ -482,3 +482,109 @@ main {
 #back-to-news-icon:hover {
     color: black !important;
 }
+
+
+#backLayer-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+#backLayer-main-image {
+    height: 95%;
+
+}
+
+#backLayer-left-container {
+    background-color: white;
+    width: 20%;
+}
+
+#backLayer-left-container {
+    height: 95%;
+}
+
+#backlayer-card-time {
+    margin-right: 10px;
+}
+
+#backLayer-left-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#backlayer-poster-time {
+    color: #929292;
+    margin: 5px 10px 10px 20px;
+}
+
+#backLayer-card-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+#backLayer-Avatar-name-tags {
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+#backLayer-icon-guanbi {
+    font-size: 30px;
+    margin: 10px;
+    position: relative;
+    top: 10px;
+}
+
+.backLayer-comment {
+    margin: 20px 10px 20px 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+
+}
+
+.backLayer-comments-container {
+    width: 100%;
+
+}
+
+.backLayer-comment-avatar {
+    width: 45px;
+    height: 40px;
+    background-color: aqua;
+    border-radius: 20px;
+    font-size: 40xp;
+    line-height: 40px;
+    text-align: center;
+}
+
+.backLayer-comment-name-time-content {
+    width: 100%;
+    margin-left: 10px;
+}
+
+.backLayer-comment-username {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.backLayer-comment-content {
+    font-size: 18px;
+    margin-left: 5px;
+    /* width: 100px;
+    max-width: 50%; */
+    display: inline-block;
+    /* white-space: normal; */
+    word-break: break-all;
+}
+
+.backLayer-comment-time {
+    font-size: 16px;
+    color: #8e8e8e;
+}

@@ -76,6 +76,10 @@
   content: "\e606";
 }
 
+.icon-love:before {
+  content: "\e8c3";
+}
+
 @font-face {
   font-family: "Inter";
   src: url("../font/Inter-Regular.otf");

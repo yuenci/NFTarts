@@ -1,5 +1,5 @@
 /* writer */
-#writer-container {
+#writer- {
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr 13fr;
@@ -469,6 +469,7 @@
 
 .waterfall-card-footer {
     font-family: Inter;
+    position: relative;
 }
 
 .waterfall-card-footer-icons {
@@ -485,22 +486,41 @@
 }
 
 .waterfall-card-footer-icons span:hover {
-    color: #929292 !important;
+    color: #929292;
+
 }
 
 .icon-xihuan {
     font-weight: 600;
 }
 
+.icon-love {
+    font-weight: 600;
+    color: red;
+    font-size: 29px !important;
+    position: relative;
+    top: 1px;
+    right: 2px;
+}
+
+.icon-love:hover {
+    color: red !important;
+}
+
 .icon-pinglun {
     font-size: 30px !important;
-    position: relative;
     top: 2px;
     font-weight: 500;
+    position: absolute;
+    left: 60px;
+    top: -7px;
 }
 
 .icon-sendfasong {
     font-size: 25px !important;
+    position: absolute;
+    left: 110px;
+    top: -5px;
 }
 
 .waterfall-card-footer {
@@ -587,4 +607,43 @@
 
 .waterfall-comment-post:hover {
     cursor: pointer;
+}
+
+#emojyContainer {
+    /* border: 1px solid black; */
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 25px;
+    box-shadow: 0 5px 8px 0 rgb(0 0 0 / 10%), 0 3px 10px 0 rgb(0 0 0 / 10%) !important;
+    background-color: white;
+    z-index: 999;
+}
+
+#emojyContainer span:hover {
+    cursor: pointer;
+}
+
+#shareContainer {
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 25px;
+    box-shadow: 0 5px 8px 0 rgb(0 0 0 / 10%), 0 3px 10px 0 rgb(0 0 0 / 10%) !important;
+    background-color: white;
+    z-index: 999;
+}
+
+#shareContainer span:hover {
+    cursor: pointer;
+    color: black !important;
+
+}
+
+#backLayer {
+    z-index: 999;
+    top: -100px;
+}
+
+#backLayer-comments-container {
+    height: 300px;
+    overflow-y: scroll !important;
 }
