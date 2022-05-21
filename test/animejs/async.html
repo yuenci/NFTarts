@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button onclick="func()">Click</button>
+    <br />
+    <button onclick="f()">Click</button>
+    <br />
+    <button id="btn3">Click</button>
+    <script>
+        async function asy() {
+            setTimeout(() => {
+                //console.log("hi");
+                return "this is from asy"
+            }, 1000);
+        }
+        function fivePromise() {
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    resolve(5);
+                }, 1000)
+            })
+        }
+
+        async function func() {
+            let val = await fivePromise();
+            console.log(val);
+            //console.log("finish");
+        }
+        /////////////////////////
+        async function f() {
+
+            let promise = new Promise((resolve, reject) => {
+                setTimeout(() => resolve("done!"), 1000)
+            });
+
+            let result = await promise; // 等待，直到 promise resolve (*)
+
+            alert(result); // "done!"
+        }
+        ///////////////////////////
+        let btn3 = document.getElementById("btn3");
+        btn3.click = () => asyncFunction();
+        function sleep(ms) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve('sleep for ' + ms + ' ms');
+                }, ms);
+            });
+        }
+        async function asyncFunction() {
+            console.time('asyncFunction total executing:');
+            const sleep1 = await sleep(2000);
+            console.log('sleep1: ' + sleep1);
+            const [sleep2, sleep3, sleep4] = await Promise.all([sleep(2000), sleep(1000), sleep(1500)]);
+            console.log('sleep2: ' + sleep2);
+            console.log('sleep3: ' + sleep3);
+            console.log('sleep4: ' + sleep4);
+            const sleepRace = await Promise.race([sleep(3000), sleep(1000), sleep(1000)]);
+            console.log('sleep race: ' + sleepRace);
+            console.timeEnd('asyncFunction total executing:');
+
+            return 'asyncFunction done.'  // 这个可以不返回，这里只是做个标记，为了显示流程
+        }
+        asyncFunction().then(data => {
+            console.log(data);       // asyncFunction return 的内容在这里获取
+        }).catch(error => {
+            console.log(error);      // asyncFunction 的错误统一在这里抓取
+        });
+
+        console.log('after asyncFunction code executing....'); // 这个代表asyncFunction函数后的代码，
+                                                       // 显示asyncFunction本身会立即返回，不会阻塞主线程
+    </script>
+</body>
+
+</html>

@@ -1,9 +1,27 @@
 /* nav part */
-.nav-ele {
-    margin: 0;
-    display: inline-block;
-    position: absolute;
-    width: 35px;
+#nav {
+    width: 100%;
+}
+
+#nav-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 50px;
+}
+
+#nav-search-menu,
+#search-page-close-menu,
+#menu-page-close-search {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#search-page-close-menu,
+#menu-page-close-search {
+    margin-right: 17px;
 }
 
 #logo {
@@ -16,15 +34,7 @@
     width: 110px;
 }
 
-#search-page-logo {
-    font-family: "BioRhyme";
-    font-weight: bold;
-    font-size: 24px;
-    vertical-align: top;
-    margin: 10px;
-    margin-left: 20px;
-    width: 110px;
-}
+
 
 #logo:hover {
     cursor: pointer;
@@ -34,18 +44,26 @@
     cursor: pointer;
 }
 
+#search,
+#menu,
+#search-page-guanbi-icon,
+#search-page-search-menu,
+#menu-page-search-icon,
+#menu-page-guanbi-icon {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+
 .icon-sousuo {
     font-size: 25px !important;
-    position: relative;
-    top: 10px;
-    right: 20px;
+
 }
+
 
 .icon-caidan {
     font-size: 25px !important;
-    position: relative;
-    top: 10px;
-    right: 10px;
+
 }
 
 .icon-sousuo:hover {
@@ -56,18 +74,24 @@
     color: #808080 !important;
 }
 
-#search {
-    right: 50px;
-    margin: 5px;
+/* search page nav */
+#search-page-guanbi-icon {
+    /* position: absolute;
+    right: 87px;
+    margin-top: 15px;
+    margin-right: 18px; */
+    color: white;
 }
 
-#menu {
-    right: 0px;
-    margin: 5px;
-}
-
-#nav-room {
-    height: 40px;
+#search-page-logo {
+    font-family: "BioRhyme";
+    font-weight: bold;
+    font-size: 24px;
+    vertical-align: top;
+    margin: 10px;
+    margin-left: 20px;
+    width: 110px;
+    color: white;
 }
 
 /* footer part */
@@ -354,13 +378,7 @@ main {
     color: rgb(162, 174, 182) !important;
 }
 
-#search-page-guanbi-icon {
-    position: absolute;
-    right: 75px;
-    margin-top: 15px;
-    margin-right: 18px;
-    color: white;
-}
+
 
 
 .icon-guanbi:hover {
@@ -368,12 +386,7 @@ main {
 }
 
 
-#search-page-search-menu {
-    position: absolute !important;
-    right: 0px !important;
-    margin-top: 5px;
-    margin-right: 22px;
-}
+
 
 #input-cotainer {
     text-align: center;
@@ -381,6 +394,7 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 #search-input {

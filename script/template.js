@@ -6,6 +6,25 @@ window.onbeforeunload = function () {
     // }
 };
 
+function typeWrite() {
+    if (!document.getElementById("typeELement")) {
+        return false;
+    }
+    var options = {
+        // strings: ['<div class="typeEle">Make It</div><br/><div class="typeEle">Happen</div><br/><div class="typeEle">Shock Everyone</div>',
+        //     '<div class="typeEle">Good Things</div><br/><div class="typeEle">Just</div><br/><div class="typeEle">Got Unique</div>'],
+        strings: ['<span>Make It</span><span>Happen</span><span>Shock Everyone</span>',
+            '<span>Good Things</span><span>Just</span><span>Got Unique</span>'],
+        typeSpeed: 40,
+        backSpeed: 10,
+        onComplete: (self) => {
+            console.log("yes");
+            //setTimeout(function () { alert("Hello"); }, 1000);
+        },
+    };
+    let typed = new Typed('#typeELement', options);
+}
+
 window.onload = function () {
     let keyword = localStorage.getItem("articleKeyWord");
     if (ifInNewFile()) {
@@ -13,7 +32,11 @@ window.onload = function () {
     } else {
         //clearLocal();
     }
+
+    //typeWrite();
 };
+
+
 
 function setHeightKeyWord(keyword) {
     var target = document.body.querySelectorAll("article")[0]
@@ -35,13 +58,14 @@ if (document.getElementById("nav") != null) {
     document.getElementById("nav").innerHTML = `
 <div id="nav-container">
     <div class="nav-ele" id="logo">NFTarts</div>
-    <div class="nav-ele" id="search">
-        <span class="iconfont icon-sousuo"></span>
+    <div id="nav-search-menu">
+        <div class="nav-ele" id="search">
+            <span class="iconfont icon-sousuo"></span>
+        </div>
+        <div class="nav-ele" id="menu">
+            <span class="iconfont icon-caidan"></span>
+        </div>
     </div>
-    <div class="nav-ele" id="menu">
-        <span class="iconfont icon-caidan"></span>
-    </div>
-    <div id="nav-room"></div>
 </div>
 `;
 }
@@ -118,19 +142,20 @@ function search() {
         document.documentElement.offsetWidth,
         document.documentElement.clientWidth
     );
-    let ht = document.body.clientHeight;
+    let ht = document.documentElement.clientHeight;
     shadow.id = "shadow";
     shadow.style.background = "#262c30";
     shadow.innerHTML = `
        <div id="nav-container">
             <div class="nav-ele" id="search-page-logo" style="color:white;">NFTarts</div>
-            <div class="nav-ele" id="search-page-guanbi-icon">
-                <span class="iconfont icon-guanbi" style="color:white; font-size: 25px" id="close-icon"></span>
+            <div id="search-page-close-menu">
+                <div class="nav-ele" id="search-page-search-menu">
+                    <span class="iconfont icon-caidan" id="page-menu-icon" style="color:white;"></span>
+                </div>
+                <div class="nav-ele" id="search-page-guanbi-icon">
+                    <span class="iconfont icon-guanbi" style="color:white; font-size: 25px" id="close-icon"></span>
+                </div>
             </div>
-            <div class="nav-ele" id="search-page-search-menu">
-                <span class="iconfont icon-caidan" id="page-menu-icon" style="color:white;"></span>
-            </div>
-            <div id="nav-room"></div>
         </div>
         <div id="input-cotainer">
             <input type="text" id="search-input" value="Search">
@@ -140,10 +165,18 @@ function search() {
     shadow.style.position = "fixed";
     shadow.style.top = "0px";
     shadow.style.left = "0px";
-    shadow.style.height = ht + "px";
+    shadow.style.height = 0 + "px";
     shadow.style.width = wh + "px";
     shadow.style.overflowY = 'hidden';
     document.body.appendChild(shadow);
+
+    anime({
+        targets: "#shadow",
+        height: ht,
+        easing: 'easeInQuart',
+        duration: 300
+    })
+
     init_serch_page();
 }
 
@@ -166,8 +199,20 @@ function init_serch_page() {
     let close_icon = document.getElementById("close-icon");
     close_icon.addEventListener("click", close_search);
     function close_search() {
-        document.getElementById("shadow").remove()
-        document.documentElement.style.overflowY = 'scroll';
+        new Promise(function (resolve) {
+            anime({
+                targets: "#shadow",
+                height: 0,
+                easing: 'easeInQuart',
+                duration: 300
+            });
+            setTimeout(function () {
+                resolve("done")
+            }, 300);
+        }).then(function () {
+            document.getElementById("shadow").remove()
+            document.documentElement.style.overflowY = 'scroll';
+        })
     }
 
     let menu_icon = document.getElementById("page-menu-icon");
@@ -232,19 +277,20 @@ function menu() {
         document.documentElement.offsetWidth,
         document.documentElement.clientWidth
     );
-    let ht = document.body.clientHeight;
+    let ht = document.documentElement.clientHeight;
     shadow.id = "shadow";
     shadow.style.background = "#262c30";
     shadow.innerHTML = `
         <div id="nav-container">
             <div class="nav-ele" id="logo" style="color:white;">NFTarts</div>
-            <div class="nav-ele" id="search-page-guanbi-icon">
-                <span class="iconfont icon-guanbi" style="color:white; font-size: 25px" id="close-icon"></span>
+            <div id="menu-page-close-search">
+                <div class="nav-ele" id="menu-page-search-icon">
+                    <span class="iconfont icon-sousuo" id="page-search-icon" style="color:white;margin-left:8px"></span>
+                </div>
+                <div class="nav-ele" id="menu-page-guanbi-icon">
+                    <span class="iconfont icon-guanbi" style="color:white; font-size: 25px" id="close-icon"></span>
+                </div>
             </div>
-            <div class="nav-ele" id="search-page-search-menu">
-                <span class="iconfont icon-sousuo" id="page-search-icon" style="color:white;margin-left:8px"></span>
-            </div>
-            <div id="nav-room"></div>
         </div>
         <div id="menu-container">
             <div id="menu-line1" class="menu-line"></div>
@@ -265,10 +311,18 @@ function menu() {
     shadow.style.position = "fixed";
     shadow.style.top = "0px";
     shadow.style.left = "0px";
-    shadow.style.height = ht + "px";
+    shadow.style.height = 0 + "px";
     shadow.style.width = wh + "px";
     shadow.style.overflowY = 'hidden';
     document.body.appendChild(shadow);
+
+    anime({
+        targets: "#shadow",
+        height: ht,
+        easing: 'easeInQuart',
+        duration: 300
+    })
+
 
     init_menu_page();
 
@@ -401,9 +455,21 @@ let backToNew = document.getElementById("newsText");
 click_redirection(backToNew, "news.html")
 
 
-
-
 //  right side social icons part
+let sideFixedIcon = document.createElement("div");
+sideFixedIcon.innerHTML = `
+    <div id="social-icons-side">
+        <span class="iconfont icon-facebook-fill icon-side" id="side-icon-facebook"></span>
+        <span class="iconfont icon-instagram-fill icon-side" id="side-icon-instagram"></span>
+        <span class="iconfont icon-twitter icon-side" id="side-icon-twitter"></span>
+        <span class="iconfont icon-linkedin-fill icon-side" id="side-icon-linkedin"></span>
+        <span class="iconfont icon-whatsapp icon-side" id="side-icon-whatsapp"></span>
+    </div>
+`
+document.body.appendChild(sideFixedIcon)
+
+
+
 if (document.getElementById("side-icon-facebook") != null) {
     let facebook_side_icon = document.getElementById("side-icon-facebook")
     let instagram_side_icon = document.getElementById("side-icon-instagram")

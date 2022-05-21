@@ -8,10 +8,12 @@ window.onload = function () {
     btn.innerHTML = "Click";
     btn.style.position = "fixed";
     btn.style.top = "200px"
+    btn.style.zIndex = "999";
     // document.body.appendChild(btn)
     // btn.addEventListener("click", function () {
     //     //console.log("hi");
-    //     console.log(window.scrollY);
+    //     let like_btns = document.getElementsByClassName("icon-xihuan");
+    //     console.log(like_btns);
     // })
 }
 
@@ -236,6 +238,7 @@ function addACard(num) {
     addEvent(num);
 }
 function getImageData(num) {
+    console.log(num);
     let description = images[num]["description"];
     let imageUrl = images[num]["imageUrl"];
     let tags = images[num]["tags"];
@@ -447,11 +450,17 @@ function shareIconType(obj) {
 
 function zoomBtnClickEvent(obj) {
     obj.addEventListener("click", function () {
+        if (this.getAttribute("type") === "backLayer") {
+            let footer = this.parentNode.parentNode.parentNode
+            let writer = footer.children[1].children[1];
+            writer.focus();
+            return false
+        }
         let cardID = this.getAttribute("cardid")
         creatMasklayer(cardID)
     })
 }
-creatMasklayer(1)
+
 function creatMasklayer(cardID) {
     // let postAvatarUrl = "./images/innis.jpg";
     // let imageUrl = "./images/NFT/1-innis-may 20 2022.jpg";
@@ -485,8 +494,8 @@ function creatMasklayer(cardID) {
     backLayer.style.height = `${cliH}px`;
     backLayer.style.width = `${cliW}px`;
     backLayer.style.backgroundColor = "rgba(0,0,0,.65)"
-    //backLayer.style.top = `${window.scrollY}px`;
-    backLayer.style.top = "0px";
+    backLayer.style.top = `${window.scrollY}px`;
+    //backLayer.style.top = "0px";
 
     backLayer.innerHTML = `
     <div id="backLayer-container">
@@ -504,65 +513,13 @@ function creatMasklayer(cardID) {
                <div><span class="iconfont icon-guanbi" id="backLayer-icon-guanbi"></span></div>
             </div>
             <div id="backLayer-comments-container">
-                <div class="backLayer-comment">
-                    <div class="backLayer-comment-avatar">I</div>
-                    <div class="backLayer-comment-name-time-content">
-                        <span class="backLayer-comment-username">{username}</span>
-                        <div class="backLayer-comment-content">ddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd</div>
-                        <div class="backLayer-comment-time">{timeFormat}</div>
-                    </div>
-                </div>
-                <div class="backLayer-comment">
-                    <div class="backLayer-comment-avatar">I</div>
-                    <div class="backLayer-comment-name-time-content">
-                        <span class="backLayer-comment-username">{username}</span>
-                        <div class="backLayer-comment-content">ddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd</div>
-                        <div class="backLayer-comment-time">{timeFormat}</div>
-                    </div>
-                </div>
-                <div class="backLayer-comment">
-                    <div class="backLayer-comment-avatar">I</div>
-                    <div class="backLayer-comment-name-time-content">
-                        <span class="backLayer-comment-username">{username}</span>
-                        <div class="backLayer-comment-content">ddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd</div>
-                        <div class="backLayer-comment-time">{timeFormat}</div>
-                    </div>
-                </div>
-                <div class="backLayer-comment">
-                    <div class="backLayer-comment-avatar">I</div>
-                    <div class="backLayer-comment-name-time-content">
-                        <span class="backLayer-comment-username">{username}</span>
-                        <div class="backLayer-comment-content">ddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd
-                        dddddddddddddddddddddddddddddd</div>
-                        <div class="backLayer-comment-time">{timeFormat}</div>
-                    </div>
-                </div>
             </div>
             </div>
-             <div>
+             <div id="backlayer-footer">
                 <div class="waterfall-card-footer">
                     <div class="waterfall-card-footer-icons">
                         <span class="iconfont icon-xihuan" cardID="${num}"></span>
-                        <span class="iconfont icon-pinglun" cardID="${num}"></span>
+                        <span class="iconfont icon-pinglun" type="backLayer" cardID="${num}"></span>
                         <span class="iconfont icon-sendfasong"></span>
                     </div>
                     <div class="waterfall-card-footer-likes">9995 likes</div>
@@ -580,15 +537,34 @@ function creatMasklayer(cardID) {
     `
 
     document.body.appendChild(backLayer);
-    document.documentElement.style.overflowY = 'hidden';
-    document.documentElement.style.overflowX = 'hidden';
+    //document.documentElement.style.overflowY = 'hidden';
+    //document.documentElement.style.overflowX = 'hidden';
+
+
+    //assign event
+    let like_btns = document.getElementsByClassName("icon-xihuan");
+    let index = like_btns.length;
+    addEvent(index);
 
     let close_btn = document.getElementById("backLayer-icon-guanbi");
     close_btn.addEventListener("click", function () {
         backLayer.remove();
         document.documentElement.style.overflowY = 'auto';
         document.documentElement.style.overflowX = 'auto';
+
+        let emojyCon = document.getElementById("emojyContainer");
+        let shareCon = document.getElementById("shareContainer");
+        if (emojyCon != null) {
+            emojyCon.remove();
+        }
+        if (shareCon != null) {
+            shareCon.remove();
+        }
     });
 
-    let titleHight = document.getElementById("backLayer-card-title")
+    let titleHight = document.getElementById("backLayer-card-title").getBoundingClientRect().height;
+    let footerHight = document.getElementById("backlayer-footer").getBoundingClientRect().height;
+    let rigsideHight = document.getElementById("backLayer-left-container").getBoundingClientRect().height;
+    let commentContainer = document.getElementById("backLayer-comments-container");
+    commentContainer.style.height = `${rigsideHight - footerHight - titleHight}px`
 }

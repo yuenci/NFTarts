@@ -1,3 +1,7 @@
+body {
+    margin: 0;
+}
+
 /* writer */
 #writer- {
     display: grid;
@@ -639,11 +643,30 @@
 }
 
 #backLayer {
-    z-index: 999;
+    z-index: 100;
     top: -100px;
 }
 
 #backLayer-comments-container {
     height: 300px;
     overflow-y: scroll !important;
+}
+
+#backLayer-comments-container::-webkit-scrollbar {
+    width: 0 !important
+}
+
+/* index page media query */
+@media screen and (max-width:375px) {
+    body {
+        background-color: yellow;
+    }
+
+    .flex-row-start {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+    }
 }
