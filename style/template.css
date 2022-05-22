@@ -571,11 +571,12 @@ main {
 .backLayer-comment-avatar {
     width: 45px;
     height: 40px;
-    background-color: aqua;
     border-radius: 20px;
-    font-size: 40xp;
+    border: 1px solid #ACADB6;
+    font-size: 30px;
     line-height: 40px;
     text-align: center;
+    color: #929292;
 }
 
 .backLayer-comment-name-time-content {

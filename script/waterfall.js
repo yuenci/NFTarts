@@ -29,12 +29,12 @@ function setTestData() {
             1: {
                 "userName": "innisv",
                 "comment": "2this is good pic1",
-                "dateTime": "2022/5/22 9:22:41"
+                "dateTime": "2022/5/20 9:22:41"
             },
             2: {
                 "userName": "yannisv",
                 "comment": "2this is good pic2",
-                "dateTime": "2022/5/22 10:22:41"
+                "dateTime": "2022/5/21 10:22:41"
             },
             3: {
                 "userName": "pheyminv",
@@ -186,6 +186,10 @@ function postBtnEvent(obj) {
             new_comment.innerHTML = template;
             comments.appendChild(new_comment);
 
+            let cardid = inputEle.getAttribute("cardid");
+            addCommentToDB(Number(cardid), value);
+            showNewCommentsNum(Number(cardid));
+
             // empty input
             inputEle.value = "";
             inputEle.focus();
@@ -209,9 +213,9 @@ function postBtnEvent(obj) {
                 timeFormat = `${date.getHours()}:${date.getMinutes()}`;
             }
             let template = `
-                <div class="backLayer-comment-avatar">${username.substring(0, 1)}</div>
+                <div class="backLayer-comment-avatar">${username.substring(0, 1).toUpperCase()}</div>
                 <div class="backLayer-comment-name-time-content">
-                    <span class="backLayer-comment-username">${username}</span>
+                    <span class="backLayer-comment-username">${username.toUpperCase()}</span>
                     <div class="backLayer-comment-content">${value}</div>
                     <div class="backLayer-comment-time">${timeFormat}</div>
                 </div>
@@ -219,7 +223,17 @@ function postBtnEvent(obj) {
             let new_comment = document.createElement("div");
             new_comment.className = "backLayer-comment";
             new_comment.innerHTML = template;
-            comments.appendChild(new_comment);
+
+            if (comments.children.length === 0) {
+                comments.appendChild(new_comment);
+            } else {
+                let firstCommment = comments.children[0];
+                comments.insertBefore(new_comment, firstCommment)
+            }
+
+            let cardid = inputEle.getAttribute("cardid");
+            addCommentToDB(Number(cardid), value);
+            showNewCommentsNum(Number(cardid));
 
             // empty input
             inputEle.value = "";
@@ -229,35 +243,78 @@ function postBtnEvent(obj) {
     }
 
 }
+
+function addCommentToDB(cardid, comment) {
+    let userName = localStorage.getItem("userName")
+    let dataTime = getDateTime();
+    // console.log(dataTime);
+
+    idbKeyval.get(cardid, imagesData).then(
+        function (val) {
+            if (val) {
+                let comments = val["comments"];
+                let commentsNum = Object.keys(comments).length;
+                comments[commentsNum + 1] = {
+                    "userName": userName,
+                    "comment": comment,
+                    "dateTime": dataTime
+                }
+                val["comments"] = comments;
+                idbKeyval.set(cardid, val, imagesData)
+            } else {
+                let template = {
+                    "likes": [],
+                    "comments": {
+                        1: {
+                            "userName": userName,
+                            "comment": comment,
+                            "dateTime": dataTime
+                        }
+                    }
+                }
+                idbKeyval.set(cardid, template, imagesData)
+            }
+        }
+    );
+}
+
+async function showNewCommentsNum(cardid) {
+    let commentsNum = await getCommentsNum(cardid);
+    //console.log(commentsNum);
+    let commentObj = document.getElementsByClassName("waterfall-card-footer-comments")[cardid - 1];
+    commentObj.innerHTML = `View all ${commentsNum} comments`
+}
 function showComments(picid) {
-    let username = localStorage.getItem("userName").toUpperCase()
+    let username = localStorage.getItem("userName").toLowerCase()
     let imagesData = idbKeyval.createStore("imagesData-store", "imagesData")
 
-    idbKeyval.get(picid, imagesData).then(
+    idbKeyval.get(Number(picid), imagesData).then(
         function (data) {
             let comments = data["comments"];
-            let comNum = Object.keys(comments);
-            for (let index = 0; index < comNum; index++) {
-                const element = array[index + 1];
-                insert(username, element.comment, element.dateTime);
+            let comNum = Object.keys(comments).length;
+            for (let index = comNum; index > 0; index--) {
+                let element = comments[index];
+                let time = timeDelta(element["dateTime"])
+                insertComment(username, element["comment"], time);
             }
         }
     );
 
-    function insert(username, value, timeFormat) {
-        let template = `
-                <div class="backLayer-comment-avatar">${username.substring(0, 1)}</div>
+}
+function insertComment(username, value, timeFormat) {
+    let template = `
+                <div class="backLayer-comment-avatar">${username.substring(0, 1).toUpperCase()}</div>
                 <div class="backLayer-comment-name-time-content">
-                    <span class="backLayer-comment-username">${username}</span>
+                    <span class="backLayer-comment-username">${username.toUpperCase()}</span>
                     <div class="backLayer-comment-content">${value}</div>
                     <div class="backLayer-comment-time">${timeFormat}</div>
                 </div>
         `
-        let new_comment = document.createElement("div");
-        new_comment.className = "backLayer-comment";
-        new_comment.innerHTML = template;
-        comments.appendChild(new_comment);
-    }
+    let comments = document.getElementById("backLayer-comments-container")
+    let new_comment = document.createElement("div");
+    new_comment.className = "backLayer-comment";
+    new_comment.innerHTML = template;
+    comments.appendChild(new_comment);
 }
 
 //./images/NFT/1-innis-may 20 2022.jpg
@@ -287,7 +344,7 @@ async function addACard(num) {
         </div>
         <div class="waterfall-card-footer">
             <div class="waterfall-card-footer-icons">
-                <span class="iconfont icon-xihuan" cardID="${num}"></span>
+                <span class="iconfont icon-xihuan love-icons" cardID="${num}"></span>
                 <span class="iconfont icon-pinglun" cardID="${num}"></span>
                 <span class="iconfont icon-sendfasong"></span>
             </div>
@@ -379,11 +436,8 @@ function addEvent(index, type = "card") {
     let emojy_btn = emojy_btns[index];
     emojy(emojy_btn);
 
-    let like_btns = document.getElementsByClassName("icon-xihuan");
+    let like_btns = document.getElementsByClassName("love-icons");
     let like_btn = like_btns[index];
-    // console.log(index);
-    // console.log(like_btns);
-    // console.log(like_btn);
     likeClickEvent(like_btn);
 
     let shart_btns = document.getElementsByClassName("icon-sendfasong")
@@ -514,26 +568,96 @@ function emojy(obj) {
 
 async function likeClickEvent(obj) {
     // console.log(obj);
-    obj.addEventListener("click", function () {
-        if (this.className == "iconfont icon-xihuan") {
+    let type = obj.getAttribute("type");
+    obj.addEventListener("click", async function () {
+        let cardid = obj.getAttribute("cardid");
+        if (this.className == "iconfont icon-xihuan love-icons") {
+            //add1
             if (confirmForm("Like this image? Get an account first!")) {
-                console.log();
-                this.className = "iconfont  icon-love"
+                this.className = "iconfont  icon-love love-icons"
+                console.log("add-522");
+
+                OperateLikeNum("add", Number(cardid));
+
+                if (type) {
+                    showNewLikesNum(Number(cardid), "backLayer");
+                } else {
+                    showNewLikesNum(Number(cardid));
+                }
+
             }
         } else {
-            //minus1
-            this.className = "iconfont icon-xihuan"
+            //minus
+            this.className = "iconfont icon-xihuan love-icons"
+            await OperateLikeNum("minus", Number(cardid))
+            if (type) {
+                showNewLikesNum(Number(cardid), "backLayer");
+            } else {
+                showNewLikesNum(Number(cardid));
+            }
         }
     })
 
-    // let cardid = obj.getAttribute("cardid")
-    // let res = await ifInLikeList(cardid)
+    let cardid = obj.getAttribute("cardid")
+    let res = await ifInLikeList(cardid)
 
-    // if (res) {
-    //     obj.className = "iconfont  icon-love";
-    // }
+    if (res) {
+        obj.className = "iconfont  icon-love love-icons";
+    }
 }
 
+function OperateLikeNum(type, cardid) {
+    // type = add / minus;
+    idbKeyval.get(cardid, imagesData).then(function (val) {
+        let userName = localStorage.getItem("userName");
+        if (val) {
+            if (type === "add") {
+                //console.log(val);
+                let likelist = val["likes"];
+                likelist.push(userName);
+                val["likes"] = likelist;
+                idbKeyval.set(cardid, val, imagesData);
+            } else if (type === "minus") {
+                //console.log("minus");
+                if (val["likes"].length === 1) {
+                    val["likes"] = [];
+                } else {
+                    let index = val["likes"].indexOf(userName);
+                    val["likes"].splice(index, 1);
+                }
+                //console.log(val);
+                idbKeyval.set(cardid, val, imagesData);
+            }
+        } else {
+            if (type === "add") {
+                //console.log("add empty");
+                let template = {
+                    "likes": [userName],
+                    "comments": {}
+                }
+                idbKeyval.set(cardid, template, imagesData)
+            }
+        }
+    });
+
+    return new Promise(function (resolve) {
+        resolve("done");
+    })
+
+}
+
+async function showNewLikesNum(cardid, type = "card") {
+    if (type === "backLayer") {
+        let num = await getLikesNum(cardid);
+        let eles = document.getElementsByClassName("waterfall-card-footer-likes");
+        let el = eles[eles.length - 1];
+        el.innerHTML = `${num} likes`
+    } else {
+        let num = await getLikesNum(cardid);
+        let element = document.getElementsByClassName("waterfall-card-footer-likes")[cardid - 1];
+        element.innerHTML = `${num} likes`
+    }
+}
 
 
 function createShareBar(x, y) {
@@ -646,7 +770,7 @@ async function creatMasklayer(cardID) {
                         <div class="waterfall-card-tags">${tags}</div>
                     </div>
                  </div>
-               <div><span class="iconfont icon-guanbi" id="backLayer-icon-guanbi"></span></div>
+               <div><span class="iconfont icon-guanbi" id="backLayer-icon-guanbi" cardID="${num}"></span></div>
             </div>
             <div id="backLayer-comments-container">
             </div>
@@ -654,7 +778,7 @@ async function creatMasklayer(cardID) {
              <div id="backlayer-footer">
                 <div class="waterfall-card-footer">
                     <div class="waterfall-card-footer-icons">
-                        <span class="iconfont icon-xihuan" cardID="${num}"></span>
+                        <span class="iconfont icon-xihuan love-icons" type="backLayer" cardID="${num}"></span>
                         <span class="iconfont icon-pinglun" type="backLayer" cardID="${num}"></span>
                         <span class="iconfont icon-sendfasong"></span>
                     </div>
@@ -678,7 +802,7 @@ async function creatMasklayer(cardID) {
 
 
     //assign event
-    let like_btns = document.getElementsByClassName("icon-xihuan");
+    let like_btns = document.getElementsByClassName("love-icons");
     let index = like_btns.length;
     addEvent(index, "backlayer");
 
@@ -696,21 +820,31 @@ async function creatMasklayer(cardID) {
         if (shareCon != null) {
             shareCon.remove();
         }
-    });
 
-    //showComments(num);
+        let cardid = close_btn.getAttribute("cardid");
+        showNewLikesNum(Number(cardid));
+        if (ifInLikeList) {
+            console.log("yes");
+            document.getElementsByClassName("love-icons")[cardid - 1].className = "iconfont  icon-love love-icons"
+        } else {
+            console.log("no");
+            document.getElementsByClassName("love-icons")[cardid - 1].className = "iconfont icon-xihuan love-icons"
+        }
+    });
 
     let titleHight = document.getElementById("backLayer-card-title").getBoundingClientRect().height;
     let footerHight = document.getElementById("backlayer-footer").getBoundingClientRect().height;
     let rigsideHight = document.getElementById("backLayer-left-container").getBoundingClientRect().height;
     let commentContainer = document.getElementById("backLayer-comments-container");
     commentContainer.style.height = `${rigsideHight - footerHight - titleHight}px`
+
+    showComments(num);
 }
 
 function getDateTime() {
     let myDate = new Date();
     let YYYY_MM_DD = [myDate.getFullYear(),
-    myDate.getMonth(),
+    myDate.getMonth() + 1,
     myDate.getDate()].join("/");
     let HH_MM_SS = [myDate.getHours(),
     myDate.getMinutes(),
@@ -720,14 +854,18 @@ function getDateTime() {
     return YYYY_MM_DD + " " + HH_MM_SS;
 }
 
-function timeDelta() {
-    let oldTime = new Date("2022/5/21 12:22:41");
+function timeDelta(time) {
+    let oldTime = new Date(time);
     let current = new Date();
     let delta = (current - oldTime) / (1000 * 3600);
+    deltam = Math.round(delta * 60)
     deltaH = Math.round(delta)
     deltaD = Math.round(delta / 24)
-    if (delta < 24) {
-        return `${delta}h`
+    if (delta < 1) {
+        return `${deltam}m`
+    }
+    else if (delta < 24) {
+        return `${deltaH}h`
     } else {
         return `${deltaD}d`
     }
@@ -742,7 +880,7 @@ function ifInLikeList(num) {
                 let likelist = val["likes"];
                 // console.log(likelist);
                 // console.log(userName);
-                if (likelist.includes(userName)) {
+                if (likelist.indexOf(userName) !== -1) {
                     resolve(true)
                 } else {
                     resolve(false);

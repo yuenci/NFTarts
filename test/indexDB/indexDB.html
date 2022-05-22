@@ -26,6 +26,8 @@
             let key_value = document.getElementById("key").value
             let value_value = document.getElementById("value").value
 
+            idbKeyval.set(key_value, value_value);
+
             if (key_value && value_value) {
                 idbKeyval.set(key_value, value_value)
                     .then(() => console.log('It worked!'))
