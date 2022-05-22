@@ -1,6 +1,5 @@
 window.onload = function () {
 
-
     addACard(1);
     addACard(2);
     let btn = document.createElement("button");
@@ -15,7 +14,47 @@ window.onload = function () {
     //     let like_btns = document.getElementsByClassName("icon-xihuan");
     //     console.log(like_btns);
     // })
+    localStorage.setItem("userName", "innisv")
+    //setTestData()
+    //console.log(getDateTime());
+    //timeDelta();
+
 }
+let imagesData = idbKeyval.createStore("imagesData-store", "imagesData")
+function setTestData() {
+    let imagesData = idbKeyval.createStore("imagesData-store", "imagesData")
+    value_value = {
+        "likes": ["innisv", "yannisv", "pheyminv", "javk", "lalsadas"],
+        "comments": {
+            1: {
+                "userName": "innisv",
+                "comment": "2this is good pic1",
+                "dateTime": "2022/5/22 9:22:41"
+            },
+            2: {
+                "userName": "yannisv",
+                "comment": "2this is good pic2",
+                "dateTime": "2022/5/22 10:22:41"
+            },
+            3: {
+                "userName": "pheyminv",
+                "comment": "2this is good pic3",
+                "dateTime": "2022/5/22 11:22:41"
+            },
+            4: {
+                "userName": "javk",
+                "comment": "2this is good pic4",
+                "dateTime": "2022/5/22 12:22:41"
+            }
+        }
+    }
+    idbKeyval.set(1, value_value, imagesData);
+}
+
+
+window.onbeforeunload = function () {
+    localStorage.setItem("userName", "-1");
+};
 
 
 
@@ -124,6 +163,9 @@ function postBtnEvent(obj) {
     let type = obj.getAttribute("type")
     if (type === null) {
         obj.addEventListener("click", function () {
+            if (!confirmForm("Want give a comment? please log in first.")) {
+                return false;
+            };
             let comments = obj.parentNode.previousElementSibling;
             let inputEle = obj.previousElementSibling
 
@@ -131,7 +173,7 @@ function postBtnEvent(obj) {
             let username, timeFormat;
             if (!isNull(value)) {
                 let date = new Date();
-                username = "Innis"
+                username = localStorage.getItem("userName").toUpperCase()
                 timeFormat = `${date.getHours()}:${date.getMinutes()}`;
             }
             let template = `
@@ -151,7 +193,9 @@ function postBtnEvent(obj) {
         });
     } else if (type === "backLayer") {
         obj.addEventListener("click", function () {
-            console.log("backLayer");
+            if (!confirmForm("Want give a comment? please log in first.")) {
+                return false;
+            };
             let rightSide = obj.parentNode.parentNode.parentNode;
             let comments = rightSide.children[0].children[1]
 
@@ -161,7 +205,7 @@ function postBtnEvent(obj) {
             let username, timeFormat;
             if (!isNull(value)) {
                 let date = new Date();
-                username = "Innis"
+                username = localStorage.getItem("userName").toUpperCase()
                 timeFormat = `${date.getHours()}:${date.getMinutes()}`;
             }
             let template = `
@@ -185,15 +229,45 @@ function postBtnEvent(obj) {
     }
 
 }
+function showComments(picid) {
+    let username = localStorage.getItem("userName").toUpperCase()
+    let imagesData = idbKeyval.createStore("imagesData-store", "imagesData")
+
+    idbKeyval.get(picid, imagesData).then(
+        function (data) {
+            let comments = data["comments"];
+            let comNum = Object.keys(comments);
+            for (let index = 0; index < comNum; index++) {
+                const element = array[index + 1];
+                insert(username, element.comment, element.dateTime);
+            }
+        }
+    );
+
+    function insert(username, value, timeFormat) {
+        let template = `
+                <div class="backLayer-comment-avatar">${username.substring(0, 1)}</div>
+                <div class="backLayer-comment-name-time-content">
+                    <span class="backLayer-comment-username">${username}</span>
+                    <div class="backLayer-comment-content">${value}</div>
+                    <div class="backLayer-comment-time">${timeFormat}</div>
+                </div>
+        `
+        let new_comment = document.createElement("div");
+        new_comment.className = "backLayer-comment";
+        new_comment.innerHTML = template;
+        comments.appendChild(new_comment);
+    }
+}
+
 //./images/NFT/1-innis-may 20 2022.jpg
 //addACard("tagsssss", "./images/NFT/12-pheymin-may 20 2022.jpg", "999", "sdasdsadsadsads", "99999");
-function addACard(num) {
+async function addACard(num) {
     if (!images[num]) {
         return false
     }
-    let likesNum = 9999;
-    let commentsNum = 99;
-
+    let likesNum = await getLikesNum(num);
+    let commentsNum = await getCommentsNum(num);
     let postAvatarUrl, posterName, tags, postTime, imageUrl, description;
     [postAvatarUrl, posterName, tags, postTime, imageUrl, description] = getImageData(num)
 
@@ -219,7 +293,7 @@ function addACard(num) {
             </div>
             <div class="waterfall-card-footer-likes">${likesNum} likes</div>
             <div class="waterfall-card-footer-description">${description}</div>
-            <div class="waterfall-card-footer-comments">View all ${commentsNum} comments</div>
+            <span class="waterfall-card-footer-comments" cardID="${num}">View all ${commentsNum} comments</span>
         </div>
         <div class="waterfall-card-comments">
         </div>
@@ -237,8 +311,39 @@ function addACard(num) {
 
     addEvent(num);
 }
+function getLikesNum(picID) {
+    return new Promise(function (resolve) {
+        let imagesData = idbKeyval.createStore("imagesData-store", "imagesData")
+        idbKeyval.get(picID, imagesData).then(
+            function (val) {
+
+                if (val) {
+                    //console.log(val.likes.length);
+                    resolve(val.likes.length)
+                } else {
+                    //console.log(val.likes.length);
+                    resolve(0);
+                }
+            })
+    })
+}
+function getCommentsNum(picID) {
+    return new Promise(function (resolve) {
+        let imagesData = idbKeyval.createStore("imagesData-store", "imagesData")
+        idbKeyval.get(picID, imagesData).then(
+            function (val) {
+                if (val) {
+                    let articleIDList = Object.keys(val.comments)
+                    //console.log(articleIDList.length);
+                    resolve(articleIDList.length)
+                } else {
+                    resolve(0);
+                }
+            })
+    })
+}
+
 function getImageData(num) {
-    console.log(num);
     let description = images[num]["description"];
     let imageUrl = images[num]["imageUrl"];
     let tags = images[num]["tags"];
@@ -260,7 +365,7 @@ function getImageData(num) {
 }
 
 
-function addEvent(index) {
+function addEvent(index, type = "card") {
     index = index - 1;
     let comment_inputs = document.getElementsByClassName("waterfall-comment-input");
     let input = comment_inputs[index];
@@ -276,7 +381,10 @@ function addEvent(index) {
 
     let like_btns = document.getElementsByClassName("icon-xihuan");
     let like_btn = like_btns[index];
-    likeClickEvent(like_btn)
+    // console.log(index);
+    // console.log(like_btns);
+    // console.log(like_btn);
+    likeClickEvent(like_btn);
 
     let shart_btns = document.getElementsByClassName("icon-sendfasong")
     let shart_btn = shart_btns[index]
@@ -285,6 +393,13 @@ function addEvent(index) {
     let zoom_btns = document.getElementsByClassName("icon-pinglun");
     let zoom_btn = zoom_btns[index]
     zoomBtnClickEvent(zoom_btn);
+
+    if (type == "card") {
+        let view_comments = document.getElementsByClassName("waterfall-card-footer-comments");
+        let view_comment = view_comments[index];
+        view_comment.addEventListener("click", () =>
+            view_comment.parentNode.children[0].children[1].click());
+    }
 }
 
 let imageID = 2;
@@ -295,13 +410,30 @@ document.addEventListener("wheel", function (e) {
     if (e.deltaY > 0) {
         //console.log('down');
         if (ifEnterClientTotally(imageID)) {
-            addACard(imageID + 1);
-            imageID += 1;
+            if (localStorage.getItem("userName") !== "-1") {
+                addACard(imageID + 1);
+                imageID += 1;
+            } else {
+                confirmForm("Want view more? please log in first.");
+            }
         }
     } else {
         //console.log('up');
     }
 })
+
+function confirmForm(str) {
+    if (localStorage.getItem("userName") !== "-1") {
+        return true;
+    } else {
+        var r = confirm(str)
+        if (r == true) {
+            window.location.href = "login.html";
+        }
+        return false;
+    }
+
+}
 
 
 function ifEnterClientTotally(num) {
@@ -380,15 +512,29 @@ function emojy(obj) {
     });
 }
 
-function likeClickEvent(obj) {
+async function likeClickEvent(obj) {
+    // console.log(obj);
     obj.addEventListener("click", function () {
         if (this.className == "iconfont icon-xihuan") {
-            this.className = "iconfont  icon-love"
+            if (confirmForm("Like this image? Get an account first!")) {
+                console.log();
+                this.className = "iconfont  icon-love"
+            }
         } else {
+            //minus1
             this.className = "iconfont icon-xihuan"
         }
     })
+
+    // let cardid = obj.getAttribute("cardid")
+    // let res = await ifInLikeList(cardid)
+
+    // if (res) {
+    //     obj.className = "iconfont  icon-love";
+    // }
 }
+
+
 
 function createShareBar(x, y) {
     let shareContainer = document.createElement("div");
@@ -461,24 +607,11 @@ function zoomBtnClickEvent(obj) {
     })
 }
 
-function creatMasklayer(cardID) {
-    // let postAvatarUrl = "./images/innis.jpg";
-    // let imageUrl = "./images/NFT/1-innis-may 20 2022.jpg";
-    // let posterName = "Innis"
-    // let tags = "#tag1 #tag2"
-    // let postTime = "May 17 2022"
-    // let num = 1;
+async function creatMasklayer(cardID) {
+
     let postAvatarUrl, posterName, tags, postTime, imageUrl, description;
     [postAvatarUrl, posterName, tags, postTime, imageUrl, description] = getImageData(cardID);
     let num = cardID
-
-    // let postAvatarUrl = postAvatarUrlArg;
-    // let imageUrl = imageUrlArg;
-    // let posterName = posterNameArg;
-    // let tags = tagsArg;
-    // let postTime = postTimeArg;
-    // let num = numArg;
-
 
     let backLayer = document.createElement("div");
     backLayer.style.position = "absolute";
@@ -492,10 +625,13 @@ function creatMasklayer(cardID) {
         document.body.clientHeight, document.documentElement.clientHeight
     );
     backLayer.style.height = `${cliH}px`;
-    backLayer.style.width = `${cliW}px`;
+    backLayer.style.width = `${cliW + 17}px`;
     backLayer.style.backgroundColor = "rgba(0,0,0,.65)"
     backLayer.style.top = `${window.scrollY}px`;
     //backLayer.style.top = "0px";
+
+    let likesNum = await getLikesNum(Number(cardID));
+
 
     backLayer.innerHTML = `
     <div id="backLayer-container">
@@ -522,7 +658,7 @@ function creatMasklayer(cardID) {
                         <span class="iconfont icon-pinglun" type="backLayer" cardID="${num}"></span>
                         <span class="iconfont icon-sendfasong"></span>
                     </div>
-                    <div class="waterfall-card-footer-likes">9995 likes</div>
+                    <div class="waterfall-card-footer-likes">${likesNum} likes</div>
                     <div id="backlayer-poster-time">${postTime}</div>
                 </div>
 
@@ -537,14 +673,14 @@ function creatMasklayer(cardID) {
     `
 
     document.body.appendChild(backLayer);
-    //document.documentElement.style.overflowY = 'hidden';
-    //document.documentElement.style.overflowX = 'hidden';
+    document.documentElement.style.overflowY = 'hidden';
+    document.documentElement.style.overflowX = 'hidden';
 
 
     //assign event
     let like_btns = document.getElementsByClassName("icon-xihuan");
     let index = like_btns.length;
-    addEvent(index);
+    addEvent(index, "backlayer");
 
     let close_btn = document.getElementById("backLayer-icon-guanbi");
     close_btn.addEventListener("click", function () {
@@ -562,9 +698,58 @@ function creatMasklayer(cardID) {
         }
     });
 
+    //showComments(num);
+
     let titleHight = document.getElementById("backLayer-card-title").getBoundingClientRect().height;
     let footerHight = document.getElementById("backlayer-footer").getBoundingClientRect().height;
     let rigsideHight = document.getElementById("backLayer-left-container").getBoundingClientRect().height;
     let commentContainer = document.getElementById("backLayer-comments-container");
     commentContainer.style.height = `${rigsideHight - footerHight - titleHight}px`
+}
+
+function getDateTime() {
+    let myDate = new Date();
+    let YYYY_MM_DD = [myDate.getFullYear(),
+    myDate.getMonth(),
+    myDate.getDate()].join("/");
+    let HH_MM_SS = [myDate.getHours(),
+    myDate.getMinutes(),
+    myDate.getSeconds()].join(":");
+
+    //console.log(YYYY_MM_DD + " " + HH_MM_SS);
+    return YYYY_MM_DD + " " + HH_MM_SS;
+}
+
+function timeDelta() {
+    let oldTime = new Date("2022/5/21 12:22:41");
+    let current = new Date();
+    let delta = (current - oldTime) / (1000 * 3600);
+    deltaH = Math.round(delta)
+    deltaD = Math.round(delta / 24)
+    if (delta < 24) {
+        return `${delta}h`
+    } else {
+        return `${deltaD}d`
+    }
+}
+
+function ifInLikeList(num) {
+    return new Promise(function (resolve) {
+        let userName = localStorage.getItem("userName");
+        idbKeyval.get(Number(num), imagesData).then(function (val) {
+            if (val) {
+                //console.log(val);
+                let likelist = val["likes"];
+                // console.log(likelist);
+                // console.log(userName);
+                if (likelist.includes(userName)) {
+                    resolve(true)
+                } else {
+                    resolve(false);
+                }
+            } else {
+                resolve(false);
+            }
+        })
+    })
 }

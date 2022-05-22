@@ -120,7 +120,7 @@ let news_container = document.getElementById("News-page-news-list-container");
 if (news_container != null) {
     let articleIDList = localStorage.getItem("articleIDList");
     if (articleIDList === "-1") {
-        console.log("yes");
+        //console.log("yes");
         let articleNum = Object.keys(articleObj).length;
         for (let index = 1; index < articleNum; index++) {
             let news_card = document.createElement("div");
@@ -130,7 +130,7 @@ if (news_container != null) {
                 articleObj[index]["Date"], articleObj[index]["Title"]
             );
             news_container.appendChild(news_card);
-            click_redirection(news_card, articleObj[index]["Address"])
+            click_redirection1(news_card, articleObj[index]["Address"])
         }
     } else {
         let articleIDs = articleIDList.split(",");
@@ -144,7 +144,7 @@ if (news_container != null) {
                 articleObj[index]["Date"], articleObj[index]["Title"]
             );
             news_container.appendChild(news_card);
-            click_redirection(news_card, articleObj[index]["Address"])
+            click_redirection1(news_card, articleObj[index]["Address"])
         }
     }
 }
@@ -162,4 +162,24 @@ function creat_news_card(type, poster, date, title) {
     return result
 }
 
+function click_redirection1(eleObj, url) {
+    let scriptTags = document.getElementsByTagName("script")
+    let fileUrl = scriptTags[0].baseURI;
+    let args = fileUrl.split("/")
+    if (args[args.length - 2] == "news") {
+        url = "../" + url;
+    }
+    if (eleObj != null) {
+        eleObj.addEventListener("click", function () {
+            window.open(url, '_blank');
+        })
+    }
+}
+
+window.onbeforeunload = function () {
+    if (document.title === "News") {
+        localStorage.setItem("articleIDList", "-1");
+        localStorage.setItem("articleKeyWord", "-1");
+    }
+};
 

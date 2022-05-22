@@ -6,36 +6,82 @@ window.onbeforeunload = function () {
     // }
 };
 
-function typeWrite() {
-    if (!document.getElementById("typeELement")) {
-        return false;
-    }
-    var options = {
-        // strings: ['<div class="typeEle">Make It</div><br/><div class="typeEle">Happen</div><br/><div class="typeEle">Shock Everyone</div>',
-        //     '<div class="typeEle">Good Things</div><br/><div class="typeEle">Just</div><br/><div class="typeEle">Got Unique</div>'],
-        strings: ['<span>Make It</span><span>Happen</span><span>Shock Everyone</span>',
-            '<span>Good Things</span><span>Just</span><span>Got Unique</span>'],
-        typeSpeed: 40,
-        backSpeed: 10,
-        onComplete: (self) => {
-            console.log("yes");
-            //setTimeout(function () { alert("Hello"); }, 1000);
-        },
-    };
-    let typed = new Typed('#typeELement', options);
-}
 
 window.onload = function () {
-    let keyword = localStorage.getItem("articleKeyWord");
-    if (ifInNewFile()) {
-        setHeightKeyWord(keyword);
-    } else {
-        //clearLocal();
+    let scriptTags = document.getElementsByTagName("script")
+    let fileUrl = scriptTags[0].baseURI;
+    let args = fileUrl.split("/")
+    if (args[args.length - 1] == "index.html") {
+        typerStart();
     }
-
-    //typeWrite();
+    if (ifInNewFile()) {
+        let keyword = localStorage.getItem("articleKeyWord");
+        setHeightKeyWord(keyword);
+    }
 };
 
+let slogan = {
+    1: {
+        1: "Make It",
+        2: "Happen",
+        3: "Shock Everyone"
+    },
+    2: {
+        1: "Good Thing",
+        2: "Just",
+        3: "Got Unique"
+    }
+}
+
+let sen_1 = document.getElementById("page1-upper-text1")
+let sen_2 = document.getElementById("page1-upper-text2")
+let sen_3 = document.getElementById("page1-upper-text3")
+
+function inserContent(obj, str) {
+    return new Promise(function (resolve) {
+        let positionID = 0;
+        let lengthNum = str.length;
+        var myVar = setInterval(function () {
+            if (positionID < lengthNum + 1) {
+                obj.innerHTML = str.substring(0, positionID) + "|"
+                positionID += 1
+            } else {
+                obj.innerHTML = str;
+                clearInterval(myVar);
+                resolve("done");
+            }
+        }, 80);
+    })
+}
+function deleteContent(obj, str) {
+    return new Promise(function (resolve) {
+
+        let lengthNum = str.length;
+        var myVar = setInterval(function () {
+            if (lengthNum >= 0) {
+                obj.innerHTML = str.substring(0, lengthNum) + "|"
+                lengthNum -= 1
+            } else {
+                obj.innerHTML = "&nbsp;"
+                clearInterval(myVar);
+                resolve("done");
+            }
+        }, 30);
+    })
+}
+
+
+async function typerStart() {
+    await inserContent(sen_1, slogan[1][1]);
+    await inserContent(sen_2, slogan[1][2]);
+    await inserContent(sen_3, slogan[1][3]);
+    await deleteContent(sen_1, slogan[1][1]);
+    await inserContent(sen_1, slogan[2][1]);
+    await deleteContent(sen_2, slogan[1][2]);
+    await inserContent(sen_2, slogan[2][2]);
+    await deleteContent(sen_3, slogan[1][3]);
+    await inserContent(sen_3, slogan[2][3]);
+}
 
 
 function setHeightKeyWord(keyword) {
@@ -49,10 +95,6 @@ function setHeightKeyWord(keyword) {
     }
 }
 
-function clearLocal() {
-    localStorage.setItem("articleIDList", "-1");
-    localStorage.setItem("articleKeyWord", "-1");
-}
 
 if (document.getElementById("nav") != null) {
     document.getElementById("nav").innerHTML = `
@@ -95,9 +137,9 @@ if (document.getElementById("footer") != null) {
 
         <div id="webItems">
             <div class="webItem">News</div>
+            <div class="webItem">Gallery</div>
             <div class="webItem">About Us</div>
             <div class="webItem">Contact Us</div>
-            <div class="webItem">Follow Us</div>
         </div>
         <div id="join">
             <div id="join-text">Come to join us! We are always looking for exploring the beauty of NFT with you.
@@ -295,8 +337,8 @@ function menu() {
         <div id="menu-container">
             <div id="menu-line1" class="menu-line"></div>
             <div id="menu-explore">EXPLORE NFT WORLD</div>
-            <div id="menu-aboutUs" class="menu-main-text">ABOUT US</div>
             <div id="menu-news" class="menu-main-text">NEWS</div>
+            <div id="menu-gallery" class="menu-main-text">Gallery</div>
             <div id="menu-contact" class="menu-main-text">CONTACT US</div>
             <div id="menu-join" class="menu-main-text">JOIN</div>
             <div id="menu-login" class="menu-main-text">LOG IN</div>
@@ -304,7 +346,7 @@ function menu() {
             <div id="menu-footer">
                 <div id="menu-faq" class="menu-footer-items">FAQ</div>
                 <div id="menu-media" class="menu-footer-items">MEDIA</div>
-                <div id="menu-follow" class="menu-footer-items">FOLLOW</div>
+                <div id="menu-about" class="menu-footer-items">ABOUT</div>
             </div>
         </div>
     `;
@@ -346,17 +388,18 @@ function init_menu_page() {
     let login_btn = document.getElementById("menu-login");
     click_redirection(login_btn, "login.html")
 
-    let menu_itemNames = ["menu-aboutUs", "menu-news", "menu-contact", "menu-join"]
-    let menu_item_url = ["aboutUs.html", "news.html", "contactUs.html", "joinUs.html"]
+    let menu_itemNames = ["menu-news", "menu-gallery", "menu-contact", "menu-join",
+        "menu-login", "menu-faq", "menu-about"]
+    let menu_item_url = ["news.html", "gallery.html", "contactUs.html", "joinUs.html",
+        "login.html", "FAQ.html", "aboutUs.html"]
     for (let index = 0; index < menu_itemNames.length; index++) {
         const element = menu_itemNames[index];
         let obj = document.getElementById(element)
         click_redirection(obj, menu_item_url[index])
     }
+
+
 }
-// window.onresize = function () {
-//     console.log(document.documentElement.clientWidth);
-// }
 
 window.onresize = function () {
     let wh = document.documentElement.scrollWidth
@@ -365,20 +408,6 @@ window.onresize = function () {
         shadow.style.width = wh + "px";
     }
 }
-
-
-// window.οnresize = function () {
-//     console.log("yes");
-//     let wh = Math.max(
-//         document.body.scrollHeight, document.documentElement.scrollWidth,
-//         document.body.offsetHeight, document.documentElement.offsetWidth,
-//         document.body.clientHeight, document.documentElement.clientWidth
-//     );
-//     let ht = document.body.clientHeight;
-//     let shadow = document.getElementById("shadow");
-//     shadow.style.height = ht + "px";
-//     shadow.style.width = wh + "px";
-// }
 
 
 
@@ -466,7 +495,13 @@ sideFixedIcon.innerHTML = `
         <span class="iconfont icon-whatsapp icon-side" id="side-icon-whatsapp"></span>
     </div>
 `
-document.body.appendChild(sideFixedIcon)
+if (document.documentElement.clientWidth > 1000) {
+    let title = document.title;
+    if (title != "News Writer" && title != "NFT Arts Show") {
+        document.body.appendChild(sideFixedIcon)
+    }
+}
+
 
 
 
@@ -524,7 +559,7 @@ let apu_logo_btn = document.getElementById("apu-logo");
 click_redirection(apu_logo_btn, "https://www.apu.edu.my/")
 
 let webItems_btns = document.getElementsByClassName("webItem");
-let webItems_urls = ["news.html", "aboutUs.html", "contactUs.html", "followUs.html"]
+let webItems_urls = ["news.html", "gallery.html", "aboutUs.html", "contactUs.html"]
 for (let index = 0; index < webItems_btns.length; index++) {
     let element = webItems_btns[index];
     let url = webItems_urls[index];
@@ -578,6 +613,8 @@ click_redirection(page1_card2_text, "news/Kuala Lumpur to go digital with a majo
 let page2_btn = document.getElementById("page2-textBox-btn1");
 click_redirection(page2_btn, "news/About NFTarts.html");
 
+let page3_title = document.getElementById("page3-title")
+click_redirection(page3_title, "news/Are NFTs The Future For The Art World_.html")
 let page3_btn = document.getElementById("page3-btn");
 click_redirection(page3_btn, "news/The NFT Events You Won’t Want to Miss at Bitcoin 2022.html");
 
@@ -588,6 +625,8 @@ click_redirection(page4_card3, "news/The Best NFT Memes of 2022_ February.html")
 let page4_card4 = document.getElementById("page4-card4-text");
 click_redirection(page4_card4, "news/Every Generative Avatar Project You Need to Know.html");
 
+let page5_title = document.getElementById("page5-title")
+click_redirection(page5_title, "news/Are NFTs The Future For The Art World_.html")
 let page5_btn = document.getElementById("page5-btn");
 click_redirection(page5_btn, "news/NFTs Are Shaking Up the Art World—But They Could Change So Much More.html");
 
@@ -606,6 +645,8 @@ click_redirection(page6_card4_text, "https://www.youtube.com/watch?v=0pWTRsztTtY
 let page6_card5_text = document.getElementById("page6-card5-text")
 click_redirection(page6_card5_text, "news/To make the NFTs have any value, they need Ethereum to give the collectible value.html")
 
+let page7_title = document.getElementById("page7-title")
+click_redirection(page7_title, "news/Are NFTs The Future For The Art World_.html")
 let page7_btn = document.getElementById("page7-btn");
 click_redirection(page7_btn, "news/Are NFTs The Future For The Art World_.html")
 
@@ -638,4 +679,21 @@ function ifInNewFile() {
         return false;
     }
 }
+
+function addAnime() {
+    let scriptTags = document.getElementsByTagName("script")
+    let fileUrl = scriptTags[0].baseURI;
+    let args = fileUrl.split("/");
+    let jstag = document.createElement("script");
+    if (args[args.length - 2] == "news") {
+        jstag.src = "../script/anime.min.js"
+    } else {
+        jstag.src = "./script/anime.min.js"
+    }
+    document.body.appendChild(jstag);
+}
+addAnime();
+
+
+
 

@@ -9,23 +9,7 @@ window.onload = function () {
     checkAllPermission();
 
 }
-// TODO check the permission status
-// function checkAllPermission() {
-//     idbKeyval.keys().then(function (keys) {
-//         console.log(keys);
-//         for (let index = 0; index < keys.length; index += 2) {
-//             idbKeyval.get(keys[i]).then(
-//                 function (fileHandle) {
-//                     if (await verifyPermission(fileHandle, true) === false) {
-//                         console.log("false");
-//                     } else {
-//                         console.log("true");
-//                     }
-//                 }
-//             );
-//         }
-//     });
-// }
+
 function checkAllPermission() {
     idbKeyval.keys().then(function (keys) {
         for (let index = 0; index < keys.length; index += 2) {
@@ -37,6 +21,7 @@ function checkAllPermission() {
                         mode: 'readwrite'
                     };
                     let res = (await handle.queryPermission(options)) === 'granted'
+                    //let res = true;
                     redCard(handle.name, res);
                 }
             );

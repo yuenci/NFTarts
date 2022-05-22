@@ -3,7 +3,7 @@ body {
 }
 
 /* writer */
-#writer- {
+#writer-container {
     display: grid;
     grid-template-columns: 1fr 4fr;
     grid-template-rows: 1fr 13fr;
@@ -474,6 +474,7 @@ body {
 .waterfall-card-footer {
     font-family: Inter;
     position: relative;
+    padding-bottom: 10px;
 }
 
 .waterfall-card-footer-icons {
@@ -485,7 +486,7 @@ body {
 .waterfall-card-footer-icons span {
     font-size: 25px;
     margin: 8px;
-    height: 100%;
+    /* height: 100%; */
     line-height: 30px;
 }
 
@@ -658,15 +659,483 @@ body {
 
 /* index page media query */
 @media screen and (max-width:375px) {
-    body {
-        background-color: yellow;
+    /* index page */
+
+    #page1-upper-text1,
+    #page1-upper-text2,
+    #page1-upper-text3 {
+        font-size: 50px;
     }
 
-    .flex-row-start {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        flex-wrap: wrap;
+    .pic-cir {
+        border-radius: 100%;
+        width: 80px;
+        height: 80px;
+    }
+
+    #page2-img-container {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    #page2-text-container {
         align-items: center;
+    }
+
+    #page3-card,
+    #page5-card,
+    #page7-card {
+        width: 60%;
+        height: 70%;
+        padding: 20px 50px 20px 50px;
+        margin: auto;
+    }
+
+    #page3-title,
+    #page5-title,
+    #page7-title {
+        font-size: 30px;
+    }
+
+    #page3-text,
+    #page5-text,
+    #page7-text {
+        font-size: 16px;
+    }
+
+    .card-line-page4 {
+        display: none;
+    }
+
+    .ma-2949 {
+        margin: 10px;
+    }
+
+    .btn-yellow {
+        font-size: 16px;
+        margin: 10px 0px 10px 0px;
+        width: 150px;
+        height: 50px;
+    }
+
+    .btn-white {
+        font-size: 16px;
+        margin: 10px 0px 10px 0px;
+        width: 150px;
+        height: 50px;
+    }
+
+    .card-news-title {
+        font-family: "AbhayaLibre";
+        font-weight: bold;
+        font-size: 24px;
+        height: 24px;
+    }
+
+    .fz-32 {
+        font-size: 24px;
+    }
+
+    .mat-70 {
+        margin-top: 20px;
+    }
+
+    .h-350 {
+        height: 250px;
+    }
+
+    .h-420 {
+        height: 500px;
+    }
+
+    .h-250 {
+        height: 250px;
+        width: 100%;
+    }
+
+    #search-input {
+        font-size: 30px;
+    }
+
+    .menu-main-text {
+        font-size: 30px;
+    }
+
+    /* aritcle page */
+    #backToNews {
+        margin: 30px 20px 30px 20px;
+    }
+
+    #articleTitle {
+        font-size: 30px;
+        width: 80%;
+        margin: 0px auto 30px auto;
+    }
+
+    article {
+        width: 80%;
+    }
+
+    /* contact page */
+    #contact-container {
+        width: 80%;
+        margin: 0px auto 0px auto;
+    }
+
+    #contact-page-title {
+        font-size: 50px;
+    }
+
+    /* join page */
+    #join-container-title {
+        font-size: 50px;
+    }
+
+    #join-container {
+        width: 80%;
+        margin: 0px auto 0px auto;
+    }
+
+    /* news */
+    #News-page-title {
+        font-size: 50px;
+    }
+
+    .News-card {
+        min-width: 300px;
+    }
+
+    #News-cards-container {
+        flex-wrap: wrap;
+    }
+
+    #News-page-news-list-container {
+        min-width: 300px;
+    }
+
+    #News-page-lower {
+        flex-wrap: wrap;
+    }
+
+    #News-page-want-more {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    /* login */
+    #login-page-container {
+        width: 90% !important;
+        margin: 0px auto 0px auto !important;
+    }
+
+    #login-title {
+        font-size: 30px !important;
+    }
+
+    #login-username,
+    #login-password {
+        width: 250px;
+        font-size: 20px;
+        margin: 10px 0px 10px 0px;
+    }
+}
+
+/* @media screen and (min-width: 375px) and(max-width:820px) { */
+@media screen and (min-width:376px) and (max-width:820px) {
+
+    #page1-upper-text1,
+    #page1-upper-text2,
+    #page1-upper-text3 {
+        font-size: 50px;
+    }
+
+    #page1-texts {
+        margin-top: 20px;
+    }
+
+    #page1-upper {
+        flex-wrap: nowrap;
+    }
+
+    #page1-lower {
+        flex-wrap: wrap;
+        margin-bottom: 30px;
+    }
+
+    .h-420 {
+        width: 45%;
+    }
+
+    .palr-15p {
+        padding-right: 10%;
+        padding-left: 10%;
+    }
+
+    #page2-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #page2-text-container {
+        align-items: center;
+        width: 600px;
+    }
+
+    .patb-200 {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    #page2-img-container {
+        width: 600px;
+    }
+
+    .pic-cir {
+        border-radius: 100%;
+        width: 160px;
+        height: 160px;
+    }
+
+    #page4-upper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #page4-lower {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .h-250 {
+        height: 250px;
+        width: 100%;
+    }
+
+    #page6-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .w-380 {
+        width: 100%;
+    }
+
+    .w-400 {
+        width: 100%;
+    }
+
+    .mat-70 {
+        margin-top: 35px;
+    }
+
+    .h-350 {
+        height: 250px;
+    }
+
+    /* aritcle page */
+    #backToNews {
+        margin: 30px 20px 30px 20px;
+    }
+
+    #articleTitle {
+        font-size: 60px;
+        width: 80%;
+        margin: 60px auto 30px auto;
+    }
+
+    article {
+        width: 80%;
+    }
+
+    /* contact page */
+    #contact-container {
+        width: 80%;
+        margin: 0px auto 0px auto;
+    }
+
+    #contact-page-title {
+        font-size: 60px;
+    }
+
+    /* join page */
+    #join-container-title {
+        font-size: 60px;
+    }
+
+    #join-container {
+        width: 80%;
+        margin: 0px auto 0px auto;
+    }
+
+    /* news */
+    #News-page-title {
+        font-size: 60px;
+    }
+
+    .News-card {
+        min-width: 300px;
+    }
+
+    #News-cards-container {
+        flex-wrap: wrap;
+    }
+
+    #News-page-news-list-container {
+        min-width: 300px;
+    }
+
+    #News-page-lower {
+        flex-wrap: nowrap;
+    }
+
+    #News-page-want-more {
+        width: 25%;
+    }
+
+    /* login */
+    #login-page-container {
+        width: 80% !important;
+        margin: 0px auto 0px auto !important;
+        height: 500px;
+    }
+
+    #login-title {
+        font-size: 30px !important;
+    }
+
+    #login-username,
+    #login-password {
+        width: 600px;
+        font-size: 20px;
+        margin: 30px auto 30px auto;
+    }
+}
+
+@media screen and (min-width:821px) and (max-width:1280px) {
+
+    #page1-upper-text1,
+    #page1-upper-text2,
+    #page1-upper-text3 {
+        font-size: 90px;
+    }
+
+    #page2-text-container {
+        width: 350px;
+    }
+
+    #page2-img-container {
+        width: 500px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        padding: 0;
+    }
+
+    .pic-cir {
+        border-radius: 100%;
+        width: 160px;
+        height: 160px;
+    }
+
+    #page4-upper {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #page4-lower {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    #page6-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .w-380 {
+        width: 100%;
+    }
+
+    .w-400 {
+        width: 100%;
+    }
+
+    .mat-70 {
+        margin-top: 40px;
+    }
+
+    .h-350 {
+        height: 250px;
+    }
+
+    /* aritcle page */
+
+
+    #articleTitle {
+        font-size: 80px;
+        width: 70%;
+        margin: 0px auto 30px auto;
+    }
+
+    article {
+        width: 70%;
+    }
+
+    /* contact page */
+    #contact-container {
+        width: 70%;
+        margin: 0px auto 0px auto;
+    }
+
+    #contact-page-title {
+        font-size: 80px;
+    }
+
+    /* join page */
+    #join-container-title {
+        font-size: 80px;
+    }
+
+    #join-container {
+        width: 70%;
+        margin: 0px auto 0px auto;
+    }
+}
+
+@media screen and (min-width:1281px)and (max-width:1800px) {
+
+    /* index */
+    .palr-15p {
+        padding-right: 10%;
+        padding-left: 10%;
+    }
+
+    #page2-img-container {
+        width: 650px;
+    }
+
+    .pic-cir {
+        border-radius: 100%;
+        width: 200px;
+        height: 200px;
+    }
+
+    .w-650 {
+        width: 500px;
+    }
+
+    .card-line-page4 {
+        display: none;
+    }
+
+    #page4-lower {
+        flex-wrap: nowrap;
+    }
+
+    .mab-100 {
+        flex-wrap: nowrap;
     }
 }
