@@ -11,6 +11,11 @@ let slogan = {
     }
 }
 
+window.onload = function () {
+    typerStart();
+}
+
+
 let sen_1 = document.getElementById("page1-upper-text1")
 let sen_2 = document.getElementById("page1-upper-text2")
 let sen_3 = document.getElementById("page1-upper-text3")
@@ -31,9 +36,7 @@ function inserContent(obj, str) {
         }, 80);
     })
 }
-window.onload = function () {
-    typerStart();
-}
+
 
 function deleteContent(obj, str) {
     return new Promise(function (resolve) {

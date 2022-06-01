@@ -18,7 +18,27 @@ window.onload = function () {
         let keyword = localStorage.getItem("articleKeyWord");
         setHeightKeyWord(keyword);
     }
+
+    //writeIndexToDB();
 };
+
+
+let jsonDataInsert = document.createElement("script")
+if (ifInNewFile()) {
+    jsonDataInsert.src = "../script/index.json?callback=getJson"
+} else {
+    jsonDataInsert.src = "./script/index.json?callback=getJson"
+}
+jsonDataInsert.type = "text/javascript";
+document.body.appendChild(jsonDataInsert);
+
+function getJson(data) {
+    //console.log(data);
+    localStorage.setItem("indexJson", JSON.stringify(data));
+}
+
+
+
 
 let slogan = {
     1: {
@@ -149,7 +169,7 @@ if (document.getElementById("footer") != null) {
     </div>
     <div id="footer-line"></div>
     <div id="footer-bottom">
-        <div id="copyright">© 2022</div>
+        <div id="copyright">© 2022 FDD Team2</div>
         <div id="policy">PRIVACY & COOKIES POLICY</div>
         <div id="apu-logo">
             <div id="apu-log-a">A</div>
@@ -237,6 +257,12 @@ function init_serch_page() {
             serch_input.style.color = "#fbef53";
         }
     }
+    serch_input.addEventListener("keyup", function (event) {
+        event.preventDefault();
+        if (event.key === "Enter") {
+            document.getElementById("search-page-search-icon").click();
+        }
+    });
 
     let close_icon = document.getElementById("close-icon");
     close_icon.addEventListener("click", close_search);
@@ -282,31 +308,27 @@ function init_serch_page() {
             let searchContent = document.getElementById("search-input").value;
             console.log(searchContent);
             let articles = idbKeyval.createStore("articles-store", "articles")
-            idbKeyval.get('index.json', articles).then(
-                function (index) {
-                    //console.log(index);
-                    if (index[searchContent]) {
-                        let targetObj = index[searchContent];
-                        let articleIDList = Object.keys(targetObj)
-                        localStorage.setItem("articleIDList", articleIDList);
-                        localStorage.setItem("articleKeyWord", searchContent);
-                        //localStorage.getItem("temp")
-                        //localStorage.removeItem("arr");
-                    } else {
-                        localStorage.setItem("articleIDList", "");
-                        localStorage.setItem("articleKeyWord", "");
-                    }
-                    let scriptTags = document.getElementsByTagName("script")
-                    let fileUrl = scriptTags[0].baseURI;
-                    let args = fileUrl.split("/")
-                    let url = "news.html";
-                    if (args[args.length - 2] == "news") {
-                        url = "../" + url;
-                    }
-                    window.location.href = url;
-                });
-        });
+            //console.time("search");
+            let index = JSON.parse(localStorage.getItem("indexJson"));
+            if (index[searchContent]) {
+                let targetObj = index[searchContent];
+                let articleIDList = Object.keys(targetObj)
+                localStorage.setItem("articleIDList", articleIDList);
+                localStorage.setItem("articleKeyWord", searchContent);
 
+            } else {
+                localStorage.setItem("articleIDList", "");
+                localStorage.setItem("articleKeyWord", "");
+            }
+            let scriptTags = document.getElementsByTagName("script")
+            let fileUrl = scriptTags[0].baseURI;
+            let args = fileUrl.split("/")
+            let url = "news.html";
+            if (args[args.length - 2] == "news") {
+                url = "../" + url;
+            }
+            window.location.href = url;
+        });
 }
 
 
@@ -407,6 +429,16 @@ window.onresize = function () {
     if (shadow != null) {
         shadow.style.width = wh + "px";
     }
+    let social_sidebar = document.getElementById("social-icons-side");
+    if (document.documentElement.clientWidth < 1000) {
+        if (social_sidebar) {
+            social_sidebar.remove();
+        }
+    } else {
+        if (!social_sidebar) {
+            add_social_icons();
+        }
+    }
 }
 
 
@@ -485,8 +517,9 @@ click_redirection(backToNew, "news.html")
 
 
 //  right side social icons part
-let sideFixedIcon = document.createElement("div");
-sideFixedIcon.innerHTML = `
+function add_social_icons() {
+    let sideFixedIcon = document.createElement("div");
+    sideFixedIcon.innerHTML = `
     <div id="social-icons-side">
         <span class="iconfont icon-facebook-fill icon-side" id="side-icon-facebook"></span>
         <span class="iconfont icon-instagram-fill icon-side" id="side-icon-instagram"></span>
@@ -495,12 +528,14 @@ sideFixedIcon.innerHTML = `
         <span class="iconfont icon-whatsapp icon-side" id="side-icon-whatsapp"></span>
     </div>
 `
-if (document.documentElement.clientWidth > 1000) {
-    let title = document.title;
-    if (title != "News Writer" && title != "NFT Arts Show") {
-        document.body.appendChild(sideFixedIcon)
+    if (document.documentElement.clientWidth > 1000) {
+        let title = document.title;
+        if (title != "News Writer" && title != "NFT Arts Show") {
+            document.body.appendChild(sideFixedIcon)
+        }
     }
-}
+};
+
 
 
 
@@ -681,11 +716,11 @@ function ifInNewFile() {
 }
 
 function addAnime() {
-    let scriptTags = document.getElementsByTagName("script")
-    let fileUrl = scriptTags[0].baseURI;
-    let args = fileUrl.split("/");
+    // let scriptTags = document.getElementsByTagName("script")
+    // let fileUrl = scriptTags[0].baseURI;
+    // let args = fileUrl.split("/");
     let jstag = document.createElement("script");
-    if (args[args.length - 2] == "news") {
+    if (ifInNewFile()) {
         jstag.src = "../script/anime.min.js"
     } else {
         jstag.src = "./script/anime.min.js"
@@ -693,6 +728,11 @@ function addAnime() {
     document.body.appendChild(jstag);
 }
 addAnime();
+
+let error_page_back_btn = document.getElementById("Error-page-btn")
+click_redirection(error_page_back_btn, "index.html")
+
+
 
 
 

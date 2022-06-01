@@ -402,6 +402,23 @@ index_btn.addEventListener("click", async function () {
         }
     }).then(function () {
         idbKeyval.set("index.json", keywords, articles)
+        // async function getNewFileHandle() {
+        //     const options = {
+        //         suggestedName: `index.json`,
+        //         types: [
+        //             {
+        //                 description: 'Text Files',
+        //                 accept: {
+        //                     'text/plain': ['.json'],
+        //                 },
+        //             },
+        //         ],
+        //     };
+        //     const handle = await window.showSaveFilePicker(options);
+        //     const writable = await handle.createWritable();
+        //     await writable.write(articles);
+        //     await writable.close();
+        // }
         alert("Built index successfully")
     });
 })

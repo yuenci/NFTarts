@@ -57,67 +57,182 @@ window.onbeforeunload = function () {
 };
 
 
+var images;
+let ImageJsonDataInsert = document.createElement("script")
+if (ifInNewFile()) {
+    ImageJsonDataInsert.src = "../script/images.json?callback=getJson"
+} else {
+    ImageJsonDataInsert.src = "./script/images.json?callback=getJson"
+}
+ImageJsonDataInsert.type = "text/javascript";
+document.body.appendChild(ImageJsonDataInsert);
 
-let images = {
+
+function getJson(data) {
+    images = data;
+}
+
+
+let images1 = {
     1: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#NFT #LOGO #World",
         "imageUrl": "./images/NFT/1-innis-may 20 2022.jpg",
-        "description": "This is a description"
+        "description": "NFT Arts is the best!"
     },
     2: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#Sky #pasture #pony",
         "imageUrl": "./images/NFT/2-yannis-may 20 2022.jpg",
         "description": "This is a description"
     },
     3: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#Astronaut  #mushroom  #painting",
         "imageUrl": "./images/NFT/3-pheymin-may 20 2022.jpg",
         "description": "This is a description"
     },
     4: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#Bitcoin #Bull  #Wealth",
         "imageUrl": "./images/NFT/4-innis-may 20 2022.jpg",
         "description": "This is a description"
     },
     5: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#Astronaut #Colorful #Happy",
         "imageUrl": "./images/NFT/5-yannis-may 20 2022.jpg",
         "description": "This is a description"
     },
     6: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#Rainbow cat #Fanny #Cool",
         "imageUrl": "./images/NFT/6-pheymin-may 20 2022.jpg",
         "description": "This is a description"
     },
     7: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#Mona Lisa #elegant  #color lump",
         "imageUrl": "./images/NFT/7-innis-may 20 2022.jpg",
         "description": "This is a description"
     },
     8: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#Saibo #Man #Head",
         "imageUrl": "./images/NFT/8-yannis-may 20 2022.jpg",
         "description": "This is a description"
     },
     9: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#Love #Monkey",
         "imageUrl": "./images/NFT/9-pheymin-may 20 2022.jpg",
         "description": "This is a description"
     },
     10: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#Meteorite #courage #peak",
         "imageUrl": "./images/NFT/10-innis-may 20 2022.png",
         "description": "This is a description"
     },
     11: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#Cool #branch #Young",
         "imageUrl": "./images/NFT/11-yannis-may 20 2022.png",
         "description": "This is a description"
     },
     12: {
-        "tags": "#tag1 #tag2 #tag3",
+        "tags": "#Astronaut #mask #Flower",
         "imageUrl": "./images/NFT/12-pheymin-may 20 2022.jpg",
         "description": "This is a description"
+    },
+    13: {
+        "tags": "#nft #digitalart #crypto",
+        "imageUrl": "./images/NFT/13-innis-may 26 2022.jpg",
+        "description": "Colour is my day-long obsession, joy, and torment."
+    },
+    14: {
+        "tags": "#nft #nftcolletor #cyber",
+        "imageUrl": "./images/NFT/14-yannis-may 26 2022.jpg",
+        "description": "Curiosity about life in all of its aspects, I think, is still the secret of great creative people."
+    },
+    15: {
+        "tags": "#daily #nft #scific",
+        "imageUrl": "./images/NFT/15-pheymin-may 26 2022.jpg",
+        "description": "Art, freedom, and creativity will change society faster than politics."
+    },
+    16: {
+        "tags": "#scifiart #fantasy #nft",
+        "imageUrl": "./images/NFT/16-innis-may 26 2022.jpg",
+        "description": "Go and make interesting mistakes, make amazing mistakes, make glorious and fantastic mistakes. Break rules. Leave the world more interesting for your being here. Make. Good. Art."
+    },
+    17: {
+        "tags": "#art #nftworld #nftdrop",
+        "imageUrl": "./images/NFT/17-yannis-may 26 2022.jpg",
+        "description": "Art is as natural as sunshine and as vital as nourishment."
+    },
+    18: {
+        "tags": "#nftcollector #art #color",
+        "imageUrl": "./images/NFT/18-pheymin-may 26 2022.jpg",
+        "description": "Great things are done by a series of small things brought together."
+    },
+    19: {
+        "tags": "#crypto #bird #art",
+        "imageUrl": "./images/NFT/19-innis-may 26 2022.jpg",
+        "description": "I would like to paint the way a bird sings."
+    },
+    20: {
+        "tags": "#artist #blockchain #art",
+        "imageUrl": "./images/NFT/20-yannis-may 26 2022.jpg",
+        "description": "Logic will get you from A to B. Imagination will take you everywhere."
+    },
+    21: {
+        "tags": "#nftorganisation #paint #unique",
+        "imageUrl": "./images/NFT/21-pheymin-may 26 2022.jpg",
+        "description": "Being an artist is the same as being a wizard… only instead of a wand, you use a pencil for your magic."
+    },
+    22: {
+        "tags": "#paint #digitalart #artgallery",
+        "imageUrl": "./images/NFT/22-innis-may 26 2022.jpg",
+        "description": "Art is not what you see, but what you make others see."
+    }, 23: {
+        "tags": "#nft #funart #myartwork",
+        "imageUrl": "./images/NFT/23-yannis-may 30 2022.png",
+        "description": "When love and skill work together, expect a masterpiece."
+    },
+    24: {
+        "tags": "#photography #photoshot #style",
+        "imageUrl": "./images/NFT/24-pheymin-may 30 2022.jpg",
+        "description": "To be an artist is to believe in life."
+    },
+    25: {
+        "tags": "#artsy #artlife #artoftheday",
+        "imageUrl": "./images/NFT/25-innis-may 30 2022.jpg",
+        "description": "There is no blue without yellow and without orange."
+    },
+    26: {
+        "tags": "#digitalart #cartoonist #illustration",
+        "imageUrl": "./images/NFT/26-yannis-may 30 2022.gif",
+        "description": "The moment you think you understand a great work of art, its dead for you."
+    },
+    27: {
+        "tags": "#nft #funart #myartwork",
+        "imageUrl": "./images/NFT/27-pheymin-may 30 2022.png",
+        "description": "The artist sees what others only catch a glimpse of."
+    },
+    28: {
+        "tags": "#onlineart #nft #practice",
+        "imageUrl": "./images/NFT/28-innis-may 30 2022.png",
+        "description": "My greatest piece of art would be capturing the way happiness feels."
+
+    },
+    29: {
+        "tags": "#nft #funart #myartwork",
+        "imageUrl": "./images/NFT/29-yannis-may 30 2022.png",
+        "description": "The only way to be truly satisfied is to do what you believe is great work."
+    },
+    30: {
+        "tags": "#makearteveryday #abstractart #coolart",
+        "imageUrl": "./images/NFT/30-pheymin-may 30 2022.png",
+        "description": "The most seductive thing about art is the personality of the artist himself."
+    },
+    31: {
+        "tags": "#visualart #funart #myart",
+        "imageUrl": "./images/NFT/31-innis-may 30 2022.png",
+        "description": "All the lights are sparking for you, it seems."
+    },
+    32: {
+        "tags": "#artlife #contemporaryart #myartwork",
+        "imageUrl": "./images/NFT/32-yannis-may 30 2022.gif",
+        "description": "Great design is achieved not when there is nothing left to add, but when there is nothing left to take away."
     }
 }
 
@@ -407,6 +522,7 @@ function getImageData(num) {
 
 
     let imageData = imageUrl.replace(".jpg", "")
+    imageData = imageUrl.replace(".gif", "")
     imageData = imageData.replace(".png", "").split("-")
     let posterName = imageData[1].toUpperCase();
     let postTime = imageData[2].toUpperCase();

@@ -657,6 +657,148 @@ body {
     width: 0 !important
 }
 
+#aboutUS-container {
+    margin-left: 15%;
+    margin-right: 15%;
+}
+
+#aboutUS-title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+#aboutUS-title {
+    font-size: 26px;
+    font-family: AbhayaLibre;
+    display: inline-block;
+}
+
+.aboutUS-members-card-line,
+#aboutUS-title-line {
+    width: 40px;
+    height: 5px;
+    background-color: black;
+    margin: 10px;
+}
+
+#aboutUS-slogan {
+    font-size: 70px;
+    font-family: AbhayaLibre;
+}
+
+#aboutUS-data-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.aboutUS-data-card {
+    text-align: center;
+}
+
+.aboutUS-data-number {
+    font-size: 26px;
+    font-family: "Times New Roman";
+    font-size: 80px;
+    line-height: 92px;
+}
+
+.aboutUS-data-title {
+    font-family: Inter;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 100;
+}
+
+#aboutUS-data-intake {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px;
+}
+
+#aboutUS-data-intake-box {
+    width: 445px;
+    height: 46px;
+    border: 1px solid black;
+    text-align: center;
+    line-height: 46px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-family: "Inter";
+}
+
+.aboutUS-members-card {
+    display: flex;
+    flex-direction: row;
+    margin: 40px 0px 40px 0px;
+}
+
+.aboutUS-members-card-left {
+    width: 50%;
+    padding-left: 10%;
+    padding-right: 10%;
+    background-color: #fcf113;
+    display: flex;
+    flex-direction: column;
+}
+
+.aboutUS-members-card-right {
+    width: 30%;
+}
+
+.aboutUS-members-image {
+    width: 100%;
+}
+
+.aboutUS-members-card-name {
+    margin-top: 40px;
+    font-size: 70px;
+    font-family: AbhayaLibre;
+}
+
+.aboutUS-members-card-position {
+    margin-bottom: 40px;
+    font-size: 26px;
+    font-family: AbhayaLibre;
+}
+
+.aboutUS-members-card-desciption {
+    margin-bottom: 40px;
+    font-size: 20px;
+    font-family: AbhayaLibre;
+}
+
+.aboutUS-members-card-contact-btn {
+    margin-bottom: 40px;
+    font-size: 20px;
+    font-family: AbhayaLibre;
+}
+
+.aboutUS-members-card-contact-btn {
+    border: 1px solid black !important;
+    width: 180px !important;
+    height: 60px !important;
+    margin: 0px !important;
+}
+
+#aboutUS-who-are-we {
+    margin-top: 40px;
+    font-size: 70px;
+    font-family: AbhayaLibre;
+    text-align: center;
+}
+
+.aboutUS-members-card-line {
+    margin-left: 0px !important;
+    margin-top: 0px !important;
+}
+
+
+
 /* index page media query */
 @media screen and (max-width:375px) {
     /* index page */
