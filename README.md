@@ -10,8 +10,6 @@
     <img src="https://github.com/yuenci/NFTarts/blob/master/images/nftart.png" alt="Logo" width="200">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
-
   <p align="center">
     A great modern website that introduces the art of NFT arts 💎
     <br />
