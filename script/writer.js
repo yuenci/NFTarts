@@ -1,9 +1,12 @@
 window.onload = function () {
+    // access default DB, loop for the permission
     idbKeyval.entries().then(function (entries) {
-        for (let index = 0; index < entries.length; index += 2) {
-            let title = entries[index][0]
-            let time = entries[index + 1][1]
-            creat_card(title, time)
+        if (entries.length > 0) {
+            for (let index = 0; index < entries.length; index += 2) {
+                let title = entries[index][0]
+                let time = entries[index + 1][1]
+                creat_card(title, time)
+            }
         }
     })
     checkAllPermission();
@@ -12,19 +15,27 @@ window.onload = function () {
 
 function checkAllPermission() {
     idbKeyval.keys().then(function (keys) {
-        for (let index = 0; index < keys.length; index += 2) {
-            idbKeyval.get(keys[index]).then(
-                async function (handle) {
-                    // console.log(index);
-                    // console.log(handle);
-                    const options = {
-                        mode: 'readwrite'
-                    };
-                    let res = (await handle.queryPermission(options)) === 'granted'
-                    //let res = true;
-                    redCard(handle.name, res);
+        console.log(keys.length);
+        if (keys.length > 0) {
+            for (let index = 0; index < keys.length; index += 2) {
+                try {
+                    idbKeyval.get(keys[index]).then(
+                        async function (handle) {
+                            // console.log(index);
+                            // console.log(handle);
+                            const options = {
+                                mode: 'readwrite'
+                            };
+                            let res = (await handle.queryPermission(options)) === 'granted'
+                            //let res = true;
+                            redCard(handle.name, res);
+                        }
+                    );
+                } catch {
+                    //pass
                 }
-            );
+
+            }
         }
     });
 }
@@ -126,7 +137,9 @@ function ifEmpty() {
 
 // post btn click event
 let post_btn = document.getElementById("writer-post-btn");
+post_btn.addEventListener('click', () => storeDBTODB());
 post_btn.addEventListener('click', async function getNewFileHandle() {
+    // store to local
     if (ifEmpty()) {
         const options = {
             suggestedName: `${title_input.value}.html`,
@@ -155,7 +168,32 @@ post_btn.addEventListener('click', async function getNewFileHandle() {
         alert("Please check if empty value exist")
     }
 
+
 });
+
+function storeDBTODB() {
+    if (ifEmpty()) {
+        let articles = idbKeyval.createStore("articles-store", "articles")
+
+        let time_List = new Date().toDateString().split(" ");
+        let timeFormat = time_List[1] + " " + time_List[2] + "," + time_List[3];
+
+        let data = {
+            "Type": title_type.value,
+            "Poster": title_publisher.value,
+            "Date": timeFormat,
+            "Title": title_value = title_input.value,
+            "Address": `news/${title_value}.html`
+        }
+
+        idbKeyval.keys(articles).then(
+            function (keys) {
+                let length = keys.length;
+                idbKeyval.set(length, data, articles);
+            }
+        );
+    }
+}
 
 function article_structure(content) {
     let title_value = title_input.value;
@@ -173,7 +211,8 @@ function article_structure(content) {
 
     paragraphStr = paragraphList.join("\n")
     result = `
-    <!DOCTYPE html>
+    <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    <html xmlns="http://www.w3.org/1999/xhtml">
     <html lang="en">
         <head>
             <meta charset="UTF-8">

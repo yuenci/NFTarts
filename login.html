@@ -1,4 +1,14 @@
-<!DOCTYPE html>
+<!--
+ * @Author: Innis
+ * @Description: 
+ * @Date: 2022-06-12 12:49:42
+ * @LastEditTime: 2022-06-14 10:56:22
+ * @FilePath: \WebSite v 0.4.2\login.html
+-->
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
 <html lang="en">
 
 <head>
@@ -10,71 +20,6 @@
     <link rel="stylesheet" href="./style/style.css">
     <link rel="stylesheet" href="./style/iconfont.css">
     <link rel="stylesheet" href="./style/frame.css">
-    <style>
-        #login-btn:hover {
-            cursor: pointer;
-            background-color: #262c30;
-            color: white;
-        }
-
-        #login-btn {
-            font-family: "Inter";
-            font-size: 20px;
-            margin: 30px 0px 30px 0px;
-            background-color: #f0f4f6;
-            color: black;
-            width: 150px;
-            height: 50px;
-            border: 1px solid white;
-            transition: all 0.2s;
-            font-family: AbhayaLibre;
-        }
-
-        #login-page {
-            height: 95vh;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            justify-items: center;
-            font-family: AbhayaLibre;
-        }
-
-        #login-page-container {
-            width: 60%;
-            height: 60%;
-            margin: auto auto auto auto;
-            border: 5px solid #f0f4f6;
-            font-family: AbhayaLibre;
-        }
-
-        #login-title {
-            font-size: 50px;
-            margin: 30px 0px 30px 30px;
-        }
-
-        input {
-            height: 50px;
-            font-size: 30px;
-            margin: 30px 0px 30px 0px;
-            font-family: AbhayaLibre;
-        }
-
-        #login-input-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        #login-text {
-            text-decoration: underline;
-            font-size: 20px;
-        }
-
-        #login-text:hover {
-            cursor: pointer;
-        }
-    </style>
-    <script src="./script/"></script>
 </head>
 
 <body>
@@ -83,104 +28,18 @@
         <div id="login-page-container">
             <div id="login-title">Login To New World</div>
             <div id="login-input-container">
-                <div id="username-container">
-                    <input id="login-username" type="text" value="Enter your username" size="50"
-                        onclick="this.value=''">
-                </div>
-                <div id="password-container">
-                    <input id="login-password" type="text" value="Enter your password" size="50"
-                        onclick="this.value='';this.type='password'">
-                </div>
-                <button id="login-btn">Login</button>
-                <div id="login-text">No account yet? Contact us to get one!</div>
+                <input id="login-username" type="text" value="Enter your username" onclick="this.value=''">
+                <input id="login-password" type="text" value="Enter your password"
+                    onclick="this.value='';this.type='password'" onfocus="this.value='';this.type='password'">
             </div>
+            <button id="login-btn">Login</button>
+            <div id="login-text">No account yet? Contact us to get one!</div>
         </div>
     </div>
     <footer id="footer"></footer>
     <script src="./script/template.js"></script>
-    <script>
-        let login_btn = document.getElementById("login-btn");
-        login_btn.addEventListener("click", function () {
-            let username_value = document.getElementById("login-username").value.toLowerCase();
-            let password_value = document.getElementById("login-password").value.toLowerCase();
-
-            if (username_value && password_value) {
-                if (username_value != "Enter your username"
-                    && password_value != "Enter your password") {
-                    let res = verify(username_value, password_value);
-                    if (res) {
-                        if (res == "admin") {
-                            window.location.href = "writer.html";
-                        } else {
-                            localStorage.setItem("userName", username_value.toLowerCase())
-                            window.location.href = "gallery.html";
-                        }
-                    } else {
-                        let r = confirm("Need help? Contact us!")
-                        if (r) {
-                            window.location.href = "contactUs.html";
-                        }
-                    }
-                } else {
-                    alert("Please enter invalid value")
-                }
-            } else {
-                alert("Please enter invalid value")
-            }
-        })
-
-        function verify(name, password) {
-            let userInfo = {
-                "yannis": {
-                    "password": 112233,
-                    "role": "admin"
-                },
-                "pheymin": {
-                    "password": 332211,
-                    "role": "admin"
-                },
-                "innis": {
-                    "password": 221133,
-                    "role": "admin"
-                },
-                "yannisv": {
-                    "password": 112233,
-                    "role": "nfter"
-                },
-                "pheyminv": {
-                    "password": 332211,
-                    "role": "nfter"
-                },
-                "innisv": {
-                    "password": 221133,
-                    "role": "nfter"
-                }
-            }
-
-            if (name in userInfo) {
-                if (userInfo[name]["password"] == password) {
-                    if (userInfo[name]["role"] == "nfter") {
-                        return "nfter"
-                    } else if (userInfo[name]["role"] == "admin") {
-                        return "admin"
-                    }
-                }
-                else {
-                    alert(`Password is wrong`)
-                    return false
-                }
-            } else {
-                alert(`User ${name} does not exist`)
-                return false
-            }
-        }
-
-        let get_account = document.getElementById("login-text");
-        get_account.addEventListener("click", function () {
-            window.location.href = "contactUs.html";
-        })
-    </script>
     <script src="./script/idb-keyval-min.js"></script>
+    <script src="./script/scrpt.js"></script>
 </body>
 
 </html>

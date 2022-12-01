@@ -20,6 +20,7 @@ window.onload = function () {
     }
 
     //writeIndexToDB();
+    add_social_icons();
 };
 
 
@@ -240,6 +241,11 @@ function search() {
     })
 
     init_serch_page();
+
+    let social_sidebar = document.getElementById("social-icons-side")
+    if (social_sidebar) {
+        social_sidebar.remove();
+    }
 }
 
 function init_serch_page() {
@@ -280,6 +286,7 @@ function init_serch_page() {
         }).then(function () {
             document.getElementById("shadow").remove()
             document.documentElement.style.overflowY = 'scroll';
+            add_social_icons();
         })
     }
 
@@ -307,7 +314,6 @@ function init_serch_page() {
         function () {
             let searchContent = document.getElementById("search-input").value;
             console.log(searchContent);
-            let articles = idbKeyval.createStore("articles-store", "articles")
             //console.time("search");
             let index = JSON.parse(localStorage.getItem("indexJson"));
             if (index[searchContent]) {
@@ -380,6 +386,8 @@ function menu() {
     shadow.style.overflowY = 'hidden';
     document.body.appendChild(shadow);
 
+    menuStyle();
+
     anime({
         targets: "#shadow",
         height: ht,
@@ -390,6 +398,41 @@ function menu() {
 
     init_menu_page();
 
+    let social_sidebar = document.getElementById("social-icons-side")
+    if (social_sidebar) {
+        social_sidebar.remove();
+    }
+}
+
+function menuStyle() {
+    let height = document.documentElement.clientHeight;
+
+    let menu_container = document.getElementById("menu-container");
+    let menu_explore = document.getElementById("menu-explore");
+    let menu_line2 = document.getElementById("menu-line2");
+    let menu_footer = document.getElementById("menu-footer");
+
+    if (height < 550) {
+        let texts = [document.getElementById("menu-news"), document.getElementById("menu-gallery"),
+        document.getElementById("menu-contact"), document.getElementById("menu-join"),
+        document.getElementById("menu-login"),]
+        for (let index = 0; index < texts.length; index++) {
+            const element = texts[index];
+            element.style.fontSize = "30px"
+        }
+        menu_container.style.top = "20px";
+        menu_explore.style.margin = "20px auto 20px auto";
+        menu_line2.style.marginTop = "20px";
+        menu_footer.style.margin = "20px auto 20px auto";
+    } else if (height < 650) {
+        menu_container.style.top = "20px";
+        menu_explore.style.margin = "20px auto 20px auto";
+        menu_line2.style.marginTop = "20px";
+        menu_footer.style.margin = "20px auto 20px auto";
+    } else if (height < 780) {
+        menu_explore.style.margin = "20px auto 20px auto";
+        menu_line2.style.marginTop = "20px";
+    }
 }
 
 function init_menu_page() {
@@ -398,6 +441,7 @@ function init_menu_page() {
     function close_search() {
         document.getElementById("shadow").remove()
         document.documentElement.style.overflowY = 'scroll';
+        add_social_icons();
     }
 
     let search_icon = document.getElementById("page-search-icon");
@@ -420,6 +464,16 @@ function init_menu_page() {
         click_redirection(obj, menu_item_url[index])
     }
 
+    let media_btn = document.getElementById("menu-media");
+    media_btn.onclick = function () {
+        if (confirm("Need NFT media resources? Contact us!")) {
+            if (ifInNewFile()) {
+                window.location.href = "../contactUs.html";
+            } else {
+                window.location.href = "./contactUs.html";
+            }
+        }
+    }
 
 }
 
@@ -534,6 +588,7 @@ function add_social_icons() {
             document.body.appendChild(sideFixedIcon)
         }
     }
+    sidebarEvent();
 };
 
 
@@ -541,6 +596,10 @@ function add_social_icons() {
 
 
 if (document.getElementById("side-icon-facebook") != null) {
+    sidebarEvent();
+}
+
+function sidebarEvent() {
     let facebook_side_icon = document.getElementById("side-icon-facebook")
     let instagram_side_icon = document.getElementById("side-icon-instagram")
     let twitter_side_icon = document.getElementById("side-icon-twitter")
@@ -567,7 +626,6 @@ if (document.getElementById("side-icon-facebook") != null) {
         window.open(`https://web.whatsapp.com/`, '_blank');
     });
 }
-
 
 // button event
 function click_redirection(eleObj, url) {
@@ -729,9 +787,12 @@ function addAnime() {
 }
 addAnime();
 
-let error_page_back_btn = document.getElementById("Error-page-btn")
-click_redirection(error_page_back_btn, "index.html")
+// let error_page_back_btn = document.getElementById("Error-page-btn")
+// click_redirection(error_page_back_btn, "index.html")
 
+
+let copyright = document.getElementById("copyright")
+click_redirection(copyright, "404.html")
 
 
 

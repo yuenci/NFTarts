@@ -117,39 +117,80 @@ let articleObj = {
 
 /////////////////////////
 let news_container = document.getElementById("News-page-news-list-container");
-if (news_container != null) {
+let anchor = document.getElementById("news-cards-inser-anchor");
+
+window.onload = function () {
+    let articleIDList = localStorage.getItem("articleIDList");
+    if (!articleIDList) {
+        localStorage.setItem("articleKeyWord", "-1");
+    }
+
+    if (news_container != null) {
+        loadNewsCards();
+    }
+}
+
+function loadNewsCards() {
     let articleIDList = localStorage.getItem("articleIDList");
     if (articleIDList === "-1") {
-        //console.log("yes");
-        let articleNum = Object.keys(articleObj).length;
-        for (let index = 1; index < articleNum; index++) {
-            let news_card = document.createElement("div");
-            news_card.className = "news-card-container";
-            news_card.innerHTML = creat_news_card(
-                articleObj[index]["Type"], articleObj[index]["Poster"],
-                articleObj[index]["Date"], articleObj[index]["Title"]
-            );
-            news_container.appendChild(news_card);
-            click_redirection1(news_card, articleObj[index]["Address"])
-        }
+        // get article from index
+        loadNewsFromLocalIndex();
+
+        // get article from DB
+        loadNewsFromDB();
+
     } else {
+        // get article from localStorage
         let articleIDs = articleIDList.split(",");
         //console.log(typeof articleIDs);
         for (let i = 0; i < articleIDs.length; i++) {
-            index = articleIDs[i]
-            let news_card = document.createElement("div");
-            news_card.className = "news-card-container";
-            news_card.innerHTML = creat_news_card(
-                articleObj[index]["Type"], articleObj[index]["Poster"],
-                articleObj[index]["Date"], articleObj[index]["Title"]
-            );
-            news_container.appendChild(news_card);
-            click_redirection1(news_card, articleObj[index]["Address"])
+            creatNewsCard(articleObj[articleIDs[i]]);
         }
     }
 }
 
 
+function loadNewsFromLocalIndex() {
+    let articleNum = Object.keys(articleObj).length;
+    for (let index = 1; index < articleNum; index++) {
+        creatNewsCard(articleObj[index]);
+    }
+}
+
+
+function loadNewsFromDB() {
+    let articles = idbKeyval.createStore("articles-store", "articles")
+    idbKeyval.keys(articles).then(
+        function (keys) {
+            let length = keys.length;
+            for (let index = 0; index < length; index++) {
+                //
+                idbKeyval.get(index, articles).then(
+                    function (val) {
+                        creatNewsCard(val);
+                    }
+                );
+
+            }
+
+        }
+    );
+}
+
+
+
+function creatNewsCard(DataObj) {
+    let news_card = document.createElement("div");
+    news_card.className = "news-card-container";
+    news_card.innerHTML = `
+        <span class="news-type">${DataObj["Type"]}</span>
+        <span class="news-publisher">${DataObj["Poster"]}</span>
+        <div class="news-title">${DataObj["Title"]}</div>
+        <div class="news-datetime">${DataObj["Date"]}</div>
+    `
+    insertAfter(news_card, anchor);
+    click_redirection1(news_card, DataObj["Address"])
+}
 function creat_news_card(type, poster, date, title) {
     let result = `
     <div class="news-card-container">
@@ -160,6 +201,15 @@ function creat_news_card(type, poster, date, title) {
     </div>
     `
     return result
+}
+
+function insertAfter(newElement, targetElement) {
+    var parent = targetElement.parentNode;
+    if (parent.lastChild == targetElement) {
+        parent.appendChild(newElement);
+    } else {
+        parent.insertBefore(newElement, targetElement.nextSibling);
+    }
 }
 
 function click_redirection1(eleObj, url) {
