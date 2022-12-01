@@ -25,8 +25,22 @@ window.onload = function () {
 
 
 let jsonDataInsert = document.createElement("script")
-if (ifInNewFile()) {
-    jsonDataInsert.src = "../script/index.json?callback=getJson"
+function ifIndex() {
+    let scriptTags = document.getElementsByTagName("script")
+    let fileUrl = scriptTags[0].baseURI;
+    let args = fileUrl.split("/");
+
+    if (args[args.length - 2].toLowerCase() == "nftarts" || args[args.length - 2] == "index.html") {
+        return true;
+    }
+
+    return false;
+}
+
+
+
+if (ifIndex()) {
+    jsonDataInsert.src = "script/index.json?callback=getJson"
 } else {
     jsonDataInsert.src = "../script/index.json?callback=getJson"
 }
