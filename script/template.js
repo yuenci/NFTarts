@@ -11,7 +11,7 @@ window.onload = function () {
     let scriptTags = document.getElementsByTagName("script")
     let fileUrl = scriptTags[0].baseURI;
     let args = fileUrl.split("/")
-    if (args[args.length - 1] == "index.html") {
+    if (ifIndex()) {
         typerStart();
     }
     if (ifInNewFile()) {
