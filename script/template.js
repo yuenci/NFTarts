@@ -28,7 +28,7 @@ let jsonDataInsert = document.createElement("script")
 if (ifInNewFile()) {
     jsonDataInsert.src = "../script/index.json?callback=getJson"
 } else {
-    jsonDataInsert.src = "./script/index.json?callback=getJson"
+    jsonDataInsert.src = "../script/index.json?callback=getJson"
 }
 jsonDataInsert.type = "text/javascript";
 document.body.appendChild(jsonDataInsert);
@@ -195,6 +195,11 @@ function click_redirection(eleObj, url) {
     if (args[args.length - 2] == "news") {
         url = "../" + url;
     }
+
+    if (args[args.length - 2] == "html") {
+        url = "../" + url;
+    }
+
     if (eleObj != null) {
         eleObj.addEventListener("click", function () {
             //console.log(url);
@@ -470,12 +475,12 @@ function init_menu_page() {
     }
 
     let login_btn = document.getElementById("menu-login");
-    click_redirection(login_btn, "html/login.html")
+    click_redirection(login_btn, "login.html")
 
     let menu_itemNames = ["menu-news", "menu-gallery", "menu-contact", "menu-join",
         "menu-login", "menu-faq", "menu-about"]
-    let menu_item_url = ["news.html", "gallery.html", "contactUs.html", "joinUs.html",
-        "html/login.html", "FAQ.html", "aboutUs.html"]
+    let menu_item_url = ["html/news.html", "html/gallery.html", "html/contactUs.html", "html/joinUs.html",
+        "html/login.html", "html/FAQ.html", "html/aboutUs.html"]
     for (let index = 0; index < menu_itemNames.length; index++) {
         const element = menu_itemNames[index];
         let obj = document.getElementById(element)
@@ -585,7 +590,7 @@ if (articleTitle != null) {
 }
 
 let backToNew = document.getElementById("newsText");
-click_redirection(backToNew, "news.html")
+click_redirection(backToNew, "html/news.html")
 
 
 //  right side social icons part
@@ -649,14 +654,14 @@ function sidebarEvent() {
 
 
 let join_btn = document.getElementById("join-btn");
-click_redirection(join_btn, "joinUs.html")
+click_redirection(join_btn, "html/joinUs.html")
 let policy_btn = document.getElementById("policy");
-click_redirection(policy_btn, "policy.html")
+click_redirection(policy_btn, "html/policy.html")
 let apu_logo_btn = document.getElementById("apu-logo");
 click_redirection(apu_logo_btn, "https://www.apu.edu.my/")
 
 let webItems_btns = document.getElementsByClassName("webItem");
-let webItems_urls = ["news.html", "gallery.html", "aboutUs.html", "contactUs.html"]
+let webItems_urls = ["html/news.html", "html/gallery.html", "html/aboutUs.html", "html/contactUs.html"]
 for (let index = 0; index < webItems_btns.length; index++) {
     let element = webItems_btns[index];
     let url = webItems_urls[index];
@@ -689,7 +694,7 @@ if (document.getElementById("social-icons") != null) {
 
 
 let page1_contact_btn = document.getElementById("page1-upper-right-text3");
-click_redirection(page1_contact_btn, "contactUs.html")
+click_redirection(page1_contact_btn, "html/contactUs.html")
 
 let page4_contact_btn = document.getElementById("page4-card1-btn");
 click_redirection(page4_contact_btn, "contactUs.html")
@@ -785,7 +790,7 @@ function addAnime() {
     if (ifInNewFile()) {
         jstag.src = "../script/anime.min.js"
     } else {
-        jstag.src = "./script/anime.min.js"
+        jstag.src = "../script/anime.min.js"
     }
     document.body.appendChild(jstag);
 }
