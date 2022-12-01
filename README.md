@@ -28,7 +28,7 @@
 
 A simple website consists of multiple interlinked web pages with related contents. Design and development are the two stages that each web page goes through. A web page's appearance is defined by web design, while its functionality is defined by web development.
 
-In addition, to maintain consistency, simplicity, feedback, and fault tolerance, a successful website must follow the User Interface Design Principles. (Chappal, 2021) It provides a couple of rules guiding web developers in designing responsive and errorless websites. Likewise, the website's appearance and interaction with users may be improved through five essential multimedia features. Text, images, audio, video, and animation are all included. (Simply Effective Web Design Inc., n.d.)
+In addition, to maintain consistency, simplicity, feedback, and fault tolerance, a successful website must follow the User Interface Design Principles. It provides a couple of rules guiding web developers in designing responsive and errorless websites. Likewise, the website's appearance and interaction with users may be improved through five essential multimedia features. Text, images, audio, video, and animation are all included. (Simply Effective Web Design Inc., n.d.)
 
 Furthermore, a completely working website contains various functionalities enabled by the scripting language JavaScript (JS). The combination of Hypertext Markup Language (HTML) + Cascading Style Sheets (CSS) + JS is frequently used for building a website. In short, HTML is used to create a website's structure; CSS is used to design the site's general layout, and JS is used to build the site's functionality.
 
