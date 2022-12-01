@@ -799,8 +799,8 @@ function addAnime() {
 
     let jstag = document.createElement("script");
 
-    if (args[args.length - 1] == "NFTarts" || args[args.length - 1] == "index.html") {
-        jstag.src = "script/anime.min.js"
+    if (args[args.length - 1] == "nftarts" || args[args.length - 1] == "index.html") {
+        return;
     }
 
     jstag.src = "../script/anime.min.js";
