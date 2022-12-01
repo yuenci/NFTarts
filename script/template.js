@@ -187,6 +187,24 @@ if (document.getElementById("footer") != null) {
 `;
 }
 
+// button event
+function click_redirection(eleObj, url) {
+    let scriptTags = document.getElementsByTagName("script")
+    let fileUrl = scriptTags[0].baseURI;
+    let args = fileUrl.split("/")
+    if (args[args.length - 2] == "news") {
+        url = "../" + url;
+    }
+    if (eleObj != null) {
+        eleObj.addEventListener("click", function () {
+            //console.log(url);
+            window.location.href = url;
+        })
+    }
+}
+
+
+
 let logoObj = document.getElementById("logo")
 click_redirection(logoObj, "index.html")
 
@@ -452,12 +470,12 @@ function init_menu_page() {
     }
 
     let login_btn = document.getElementById("menu-login");
-    click_redirection(login_btn, "login.html")
+    click_redirection(login_btn, "html/login.html")
 
     let menu_itemNames = ["menu-news", "menu-gallery", "menu-contact", "menu-join",
         "menu-login", "menu-faq", "menu-about"]
     let menu_item_url = ["news.html", "gallery.html", "contactUs.html", "joinUs.html",
-        "login.html", "FAQ.html", "aboutUs.html"]
+        "html/login.html", "FAQ.html", "aboutUs.html"]
     for (let index = 0; index < menu_itemNames.length; index++) {
         const element = menu_itemNames[index];
         let obj = document.getElementById(element)
@@ -627,21 +645,7 @@ function sidebarEvent() {
     });
 }
 
-// button event
-function click_redirection(eleObj, url) {
-    let scriptTags = document.getElementsByTagName("script")
-    let fileUrl = scriptTags[0].baseURI;
-    let args = fileUrl.split("/")
-    if (args[args.length - 2] == "news") {
-        url = "../" + url;
-    }
-    if (eleObj != null) {
-        eleObj.addEventListener("click", function () {
-            window.location.href = url;
-            //console.log(url);
-        })
-    }
-}
+
 
 
 let join_btn = document.getElementById("join-btn");
