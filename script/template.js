@@ -810,7 +810,7 @@ function addAnime() {
     let scriptTags = document.getElementsByTagName("script")
     let fileUrl = scriptTags[0].baseURI;
     let args = fileUrl.split("/");
-    console.log(args);
+    //console.log(args);
     let jstag = document.createElement("script");
 
     if (args[args.length - 2].toLowerCase() == "nftarts" || args[args.length - 2] == "index.html") {
