@@ -793,15 +793,17 @@ function ifInNewFile() {
 }
 
 function addAnime() {
-    // let scriptTags = document.getElementsByTagName("script")
-    // let fileUrl = scriptTags[0].baseURI;
-    // let args = fileUrl.split("/");
+    let scriptTags = document.getElementsByTagName("script")
+    let fileUrl = scriptTags[0].baseURI;
+    let args = fileUrl.split("/");
+
     let jstag = document.createElement("script");
-    if (ifInNewFile()) {
-        jstag.src = "../script/anime.min.js"
-    } else {
-        jstag.src = "../script/anime.min.js"
+
+    if (args[args.length - 1] == "NFTarts" || args[args.length - 1] == "index.html") {
+        jstag.src = "script/anime.min.js"
     }
+
+    jstag.src = "../script/anime.min.js";
     document.body.appendChild(jstag);
 }
 addAnime();
