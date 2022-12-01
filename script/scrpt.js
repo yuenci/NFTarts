@@ -90,9 +90,12 @@ function verify(name, password) {
 }
 
 let get_account = document.getElementById("login-text");
-get_account.addEventListener("click", function () {
-    window.location.href = "contactUs.html";
-})
+if (get_account) {
+    get_account.addEventListener("click", function () {
+        window.location.href = "contactUs.html";
+    })
+}
+
 
 
 //about us

@@ -26,7 +26,7 @@ let commentsJsonDataInsert = document.createElement("script")
 if (ifInNewFile()) {
     commentsJsonDataInsert.src = "../script/comment.json?callback=getAllDataJson"
 } else {
-    commentsJsonDataInsert.src = "./script/comment.json?callback=getAllDataJson"
+    commentsJsonDataInsert.src = "../script/comment.json?callback=getAllDataJson"
 }
 commentsJsonDataInsert.type = "text/javascript";
 document.body.appendChild(commentsJsonDataInsert);
@@ -83,7 +83,7 @@ let ImageJsonDataInsert = document.createElement("script")
 if (ifInNewFile()) {
     ImageJsonDataInsert.src = "../script/images.json?callback=getJson"
 } else {
-    ImageJsonDataInsert.src = "./script/images.json?callback=getJson"
+    ImageJsonDataInsert.src = "../script/images.json?callback=getJson"
 }
 ImageJsonDataInsert.type = "text/javascript";
 document.body.appendChild(ImageJsonDataInsert);
@@ -318,7 +318,7 @@ async function addACard(num) {
             </div>
         </div>
         <div class="waterfall-card-image-container">
-            <img src="${imageUrl}" class="waterfall-card-image">
+            <img src=".${imageUrl}" class="waterfall-card-image">
         </div>
         <div class="waterfall-card-footer">
             <div class="waterfall-card-footer-icons">
@@ -391,11 +391,11 @@ function getImageData(num) {
     let postTime = imageData[2].toUpperCase();
     let postAvatarUrl = ""
     if (posterName === "INNIS") {
-        postAvatarUrl = "./images/innis.jpg"
+        postAvatarUrl = "../images/innis.jpg"
     } else if (posterName === "YANNIS") {
-        postAvatarUrl = "./images/yannis.jpg"
+        postAvatarUrl = "../images/yannis.jpg"
     } else if (posterName === "PHEYMIN") {
-        postAvatarUrl = "./images/pheymin.jpg"
+        postAvatarUrl = "../images/pheymin.jpg"
     }
     return [postAvatarUrl, posterName, tags, postTime, imageUrl, description];
 }
@@ -810,7 +810,7 @@ async function creatMasklayer(cardID) {
 
     backLayer.innerHTML = `
     <div id="backLayer-container">
-        <img src="${imageUrl}" alt="" id="backLayer-main-image">
+        <img src=".${imageUrl}" alt="" id="backLayer-main-image">
         <div id="backLayer-left-container">
             <div>
             <div id="backLayer-card-title">

@@ -189,6 +189,15 @@ if (document.getElementById("footer") != null) {
 
 // button event
 function click_redirection(eleObj, url) {
+    if (eleObj === null) return;
+
+    if (url.substring(0, 8) == "https://" || url.substring(0, 7) == "http://") {
+        eleObj.addEventListener("click", function () {
+            window.location.href = url;
+        })
+        return;
+    }
+
     let scriptTags = document.getElementsByTagName("script")
     let fileUrl = scriptTags[0].baseURI;
     let args = fileUrl.split("/")
@@ -624,6 +633,7 @@ if (document.getElementById("side-icon-facebook") != null) {
 
 function sidebarEvent() {
     let facebook_side_icon = document.getElementById("side-icon-facebook")
+    if (facebook_side_icon === null) return;
     let instagram_side_icon = document.getElementById("side-icon-instagram")
     let twitter_side_icon = document.getElementById("side-icon-twitter")
     let linkedin_side_icon = document.getElementById("side-icon-linkedin")
@@ -801,7 +811,7 @@ addAnime();
 
 
 let copyright = document.getElementById("copyright")
-click_redirection(copyright, "404.html")
+click_redirection(copyright, "html/404.html")
 
 
 
