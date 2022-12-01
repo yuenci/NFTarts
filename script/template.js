@@ -799,7 +799,7 @@ function addAnime() {
     console.log(args);
     let jstag = document.createElement("script");
 
-    if (args[args.length - 1].toLowerCase() == "nftarts" || args[args.length - 1] == "index.html") {
+    if (args[args.length - 2].toLowerCase() == "nftarts" || args[args.length - 2] == "index.html") {
         return;
     }
 
