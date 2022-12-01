@@ -117,7 +117,7 @@ Yannis - [@lengzhiyan1015](https://www.facebook.com/lengzhiyan1015)
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See [LICENSE](./LICENSE) for more information.
+Distributed under the GPL License. See [LICENSE](./LICENSE) for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
