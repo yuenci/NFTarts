@@ -13,7 +13,7 @@
   <h3 align="center">Best-README-Template</h3>
 
   <p align="center">
-    A great modern website that introduces the art of NFT.
+    A great modern website that introduces the art of NFT arts 💎.
     <br />
   </p>
 </div>
