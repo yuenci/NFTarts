@@ -19,11 +19,11 @@ function loginToACC() {
     let password_value = document.getElementById("login-password").value.toLowerCase();
 
     if (username_value && password_value) {
-        if (username_value != "Enter your username"
-            && password_value != "Enter your password") {
+        if (username_value !== "Enter your username"
+            && password_value !== "Enter your password") {
             let res = verify(username_value, password_value);
             if (res) {
-                if (res == "admin") {
+                if (res === "admin") {
                     window.location.href = "writer.html";
                 } else {
                     localStorage.setItem("userName", username_value.toLowerCase())
@@ -72,10 +72,10 @@ function verify(name, password) {
     }
 
     if (name in userInfo) {
-        if (userInfo[name]["password"] == password) {
-            if (userInfo[name]["role"] == "nfter") {
+        if (userInfo[name]["password"] === password) {
+            if (userInfo[name]["role"] === "nfter") {
                 return "nfter"
-            } else if (userInfo[name]["role"] == "admin") {
+            } else if (userInfo[name]["role"] === "admin") {
                 return "admin"
             }
         }
