@@ -1,4 +1,4 @@
-import { uploadImage } from "./storage.js";
+import { uploadImage } from "./FB_storage.js";
 
 
 let uploadArea = document.getElementById("upload-area");
@@ -23,9 +23,20 @@ fileInput.addEventListener("change", () => {
 
 // open file selector on div click
 uploadArea.addEventListener("click", () => {
+    if (currentCard !== null) {
+        if (ifCardAvailable(currentCard)) {
+            alert("Please add tags and description to the current card before uploading another card");
+            return;
+        }
+    }
     fileInput.click();
 }
 );
+
+function ifCardAvailable(card) {
+    if (card.tags === null || card.desc === "") return false;
+    return true;
+}
 
 // set tags input box
 let currentCard = null;
@@ -35,20 +46,41 @@ tagsInput.disabled = true;
 
 tagsInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-        let tags = tagsInput.value.split(" ");
-        newTags = [];
-        for (let tag of tags) {
-            // if tag is not start with #, then add # to the start of the tag
-            if (!/^#/.test(tag)) {
-                tag = "#" + tag;
-            }
-            newTags.push(tag);
-        }
-        tagsInput.value = "";
-        console.log(newTags);
+        let inputVal = tagsInput.value;
 
-        if (currentCard) currentCard.tags = newTags;
+        if (tagsInput.placeholder.includes("tags")) {
+            addTags(inputVal);
+        } else if (tagsInput.placeholder.includes("description")) {
+            addDesc(inputVal);
+        } else {
+            console.log("error");
+        }
     }
+});
+
+function addTags(inputVal) {
+    let tags = inputVal.split(" ");
+    let newTags = [];
+    for (let tag of tags) {
+        // if tag is not start with #, then add # to the start of the tag
+        if (tag === "") continue;
+        if (!/^#/.test(tag)) {
+            tag = "#" + tag;
+        }
+        newTags.push(tag);
+    }
+    tagsInput.value = "";
+    //console.log(newTags);
+
+    if (currentCard) currentCard.updateTags(newTags);
+}
+
+function addDesc(inputVal) {
+    if (inputVal) currentCard.updateDesc(inputVal);
+}
+
+tagsInput.addEventListener("blur", () => {
+    tagsInput.disabled == true;
 });
 
 let tagsInputContainer = document.getElementById("tags-input-container");
@@ -71,6 +103,7 @@ class UploadCard {
         this.name = fileName.split(".")[0];
         this.type = fileName.split(".")[1];
         this.tags = [];
+        this.desc = "";
         this.cardDom = null;
         this.createCard();
     }
@@ -87,8 +120,14 @@ class UploadCard {
                     <span class="card-file-name">${this.fileName}</span>
                     <span class="delete-icon">×</span>
                 </div>
+                <div class="card-right-middle">
+                    <div class="card_size">${this.size}</div>
+                    <div class="card_icons">
+                        <div class="card_tags"><i class="fa-solid fa-hashtag"></i></div>
+                        <div class="card_desc"><i class="fa-regular fa-file-lines"></i></div>
+                    </div>
+                </div>
                 
-                <div class="card_size">${this.size}</div>
                 <div class="card_progress">
                     <div class="card_progress_bar">
                         <div class="progress"></div>
@@ -109,8 +148,13 @@ class UploadCard {
         // add tags
         this.addTagsEvent();
 
+        // add description
+        this.addDescEvent();
+
         // add card to upload area
         document.getElementById("upload-list").appendChild(card);
+
+
     }
 
 
@@ -147,9 +191,11 @@ class UploadCard {
 
     }
 
+
     addTagsEvent() {
         const card = this.cardDom;
-        let cardImage = card.querySelector(".card_image");
+        currentCard = this;
+        let cardImage = card.querySelector(".fa-hashtag");
 
         cardImage.addEventListener("click", () => {
             tagsInput.disabled = false;
@@ -158,8 +204,19 @@ class UploadCard {
             // set placeholder
             tagsInput.setAttribute("placeholder", "Type the tags and press Enter to confirm.");
         });
+    }
 
-
+    addDescEvent() {
+        const card = this.cardDom;
+        currentCard = this;
+        let cardDesc = card.querySelector(".fa-file-lines");
+        cardDesc.addEventListener("click", () => {
+            tagsInput.disabled = false;
+            //focus on input box
+            tagsInput.focus();
+            // set placeholder
+            tagsInput.setAttribute("placeholder", "Type the description and press Enter to confirm.");
+        });
     }
 
     simulateProgress() {
@@ -183,6 +240,26 @@ class UploadCard {
             }
         }, 100);
     }
+
+    updateTags(tags) {
+        this.tags = tags;
+        if (tags.length === 0) {
+            console.log("length is 0");
+            this.cardDom.querySelector(".card_tags").classList.remove("card_icon_active");
+        } else {
+            console.log("length is not 0");
+            this.cardDom.querySelector(".card_tags").classList.add("card_icon_active");
+        }
+    }
+
+    updateDesc(desc) {
+        this.desc = desc;
+        if (desc.length === 0) {
+            this.cardDom.querySelector(".card_desc").classList.remove("card_icon_active");
+        } else {
+            this.cardDom.querySelector(".card_desc").classList.add("card_icon_active");
+        }
+    }
 }
 
 
@@ -190,37 +267,22 @@ class UploadCard {
 let uploadBtn = document.getElementById("upload-btn");
 uploadBtn.addEventListener("click", () => {
     for (let card of UploadCardList) {
-        if (card.imageUrl && card.fileName) {
+        if (card.imageUrl && card.fileName && card.tags && card.desc) {
             uploadImage(card)
         } else {
-            alert("Error: Upload failed.");
+            alert("Error: Please fill in all the information.");
             return;
         }
     }
 });
 
-document.getElementById("test").addEventListener("click", () => {
-    // for (let card of UploadCardList) {
+let testBtn = document.getElementById("test");
+if (testBtn) {
+    document.getElementById("test").addEventListener("click", () => {
+        // for (let card of UploadCardList) {
 
-    // }
-    console.log(UploadCardList.length);
-});
-
-
-
-/*
-let progress = card.querySelector(".card_progress_bar");
-        let progressText = card.querySelector(".card_progress_text");
-        let progressValue = 0;
-        let progressInterval = setInterval(() => {
-            if (progressValue >= 100) {
-                clearInterval(progressInterval);
-                return;
-            }
-            progressValue += 1;
-            progress.style.width = progressValue + "%";
-            progressText.innerText = progressValue + "%";
-        }, 50);
-
-
-*/
+        // }
+        console.log(UploadCardList[0].tags);
+        console.log(UploadCardList[0].desc);
+    });
+}

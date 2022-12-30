@@ -87,6 +87,8 @@
     justify-content: space-between;
 }
 
+
+
 #cancel-btn,
 #upload-btn {
     width: 45%;
@@ -98,6 +100,7 @@
     font-size: 16px;
     margin-bottom: 10px;
     color: black;
+    cursor: pointer;
 }
 
 #upload-btn {
@@ -131,7 +134,7 @@
     margin-left: 10px;
     border-radius: 5px;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
-    cursor: pointer;
+    user-select: none;
 }
 
 .card-right {
@@ -187,4 +190,30 @@
     font-size: 21px;
     margin-left: 10px;
     cursor: pointer;
+}
+
+.card-right-middle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card_icons {
+    width: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 10px;
+    color: #ff6b6b;
+}
+
+.card_icon_active {
+    color: #38d9a9 !important;
+}
+
+.fa-hashtag,
+.fa-file-lines {
+    cursor: pointer;
+    margin: 0 10px;
 }

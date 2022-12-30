@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 import { getStorage, ref, uploadBytes, uploadBytesResumable, getDownloadURL } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-storage.js";
-
+import { writeToDB } from "./FB_DB.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAfr-AXKIqrQovmlEvH31V1LeOuT4c7QNc",
@@ -40,29 +40,30 @@ export function uploadImage(card) {
                     break;
             }
         },
-        // (error) => {
-        //     // A full list of error codes is available at
-        //     // https://firebase.google.com/docs/storage/web/handle-errors
-        //     switch (error.code) {
-        //         case 'storage/unauthorized':
-        //             // User doesn't have permission to access the object
-        //             break;
-        //         case 'storage/canceled':
-        //             // User canceled the upload
-        //             break;
+        (error) => {
+            // A full list of error codes is available at
+            // https://firebase.google.com/docs/storage/web/handle-errors
+            switch (error.code) {
+                case 'storage/unauthorized':
+                    // User doesn't have permission to access the object
+                    break;
+                case 'storage/canceled':
+                    // User canceled the upload
+                    break;
 
-        //         // ...
+                // ...
 
-        //         case 'storage/unknown':
-        //             // Unknown error occurred, inspect error.serverResponse
-        //             break;
-        //     }
-        // },
+                case 'storage/unknown':
+                    // Unknown error occurred, inspect error.serverResponse
+                    break;
+            }
+        },
 
         () => {
             // Upload completed successfully, now we can get the download URL
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
                 console.log('File available at', downloadURL);
+                writeToDB(card, downloadURL);
             });
         }
     );
