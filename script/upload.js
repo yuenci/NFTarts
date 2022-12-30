@@ -1,4 +1,4 @@
-// import { uploadImage } from "./storage.js";
+import { uploadImage } from "./storage.js";
 
 
 let uploadArea = document.getElementById("upload-area");
