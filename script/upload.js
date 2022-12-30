@@ -2,6 +2,7 @@ import { uploadImage } from "./storage.js";
 
 
 let uploadArea = document.getElementById("upload-area");
+let UploadCardList = [];
 
 // set file selector to accept only images
 let fileInput = document.getElementById("fileInput");
@@ -14,8 +15,9 @@ fileInput.addEventListener("change", () => {
     // console.log(imageUrl);
     // console.log(name);
 
-    let card = new UploadCard(imageUrl, name, size);
+    let card = new UploadCard(file, imageUrl, name, size);
     UploadCardList.push(card);
+    console.log(UploadCardList.length);
 });
 
 
@@ -57,17 +59,19 @@ tagsInputContainer.addEventListener("click", () => {
     }
 });
 
-let UploadCardList = [];
+
 
 // upload card
 class UploadCard {
-    constructor(imageUrl, fileName, size) {
+    constructor(file, imageUrl, fileName, size) {
+        this.file = file;
         this.imageUrl = imageUrl;
         this.fileName = fileName;
         this.size = size + "MB";
         this.name = fileName.split(".")[0];
         this.type = fileName.split(".")[1];
         this.tags = [];
+        this.cardDom = null;
         this.createCard();
     }
 
@@ -86,27 +90,32 @@ class UploadCard {
                 
                 <div class="card_size">${this.size}</div>
                 <div class="card_progress">
-                    <div class="card_progress_bar"></div>
+                    <div class="card_progress_bar">
+                        <div class="progress"></div>
+                    </div>
                     <div class="card_progress_text">0%</div>
                 </div>
             </div>
         `;
 
+        this.cardDom = card;
+
         // set file name editable
-        this.addFileNameEvent(card);
+        this.addFileNameEvent();
 
         // delete card
-        this.addDeleteEvent(card);
+        this.addDeleteEvent();
 
         // add tags
-        this.addTagsEvent(card);
+        this.addTagsEvent();
 
         // add card to upload area
         document.getElementById("upload-list").appendChild(card);
     }
 
 
-    addFileNameEvent(card) {
+    addFileNameEvent() {
+        const card = this.cardDom;
         let fileName = card.querySelector(".card-file-name");
         fileName.addEventListener("click", () => {
             // set as contenteditable
@@ -126,14 +135,20 @@ class UploadCard {
         });
     }
 
-    addDeleteEvent(card) {
+    addDeleteEvent() {
+        const card = this.cardDom;
         let deleteIcon = card.querySelector(".delete-icon");
         deleteIcon.addEventListener("click", () => {
             card.remove();
+            // remove card from UploadCardList
+            let index = UploadCardList.indexOf(this);
+            UploadCardList.splice(index, 1);
         });
+
     }
 
-    addTagsEvent(card) {
+    addTagsEvent() {
+        const card = this.cardDom;
         let cardImage = card.querySelector(".card_image");
 
         cardImage.addEventListener("click", () => {
@@ -143,6 +158,30 @@ class UploadCard {
             // set placeholder
             tagsInput.setAttribute("placeholder", "Type the tags and press Enter to confirm.");
         });
+
+
+    }
+
+    simulateProgress() {
+        const card = this.cardDom;
+        // 获得进度条的值
+        const card_progress_text = card.querySelector(".card_progress_text");
+        const progress = card.querySelector(".progress");
+
+
+        let currentValue = 0;
+        const interval = setInterval(() => {
+            // 增加当前值
+            currentValue += 10;
+            // 更新进度条的当前值
+            card_progress_text.innerHTML = currentValue + "%";
+            // 更新进度元素的宽度
+            progress.style.width = `${currentValue}%`;
+            // 如果已经完成进度，清除 interval
+            if (currentValue >= 100) {
+                clearInterval(interval);
+            }
+        }, 100);
     }
 }
 
@@ -152,13 +191,21 @@ let uploadBtn = document.getElementById("upload-btn");
 uploadBtn.addEventListener("click", () => {
     for (let card of UploadCardList) {
         if (card.imageUrl && card.fileName) {
-            uploadImage(card.fileName, card.imageUrl)
+            uploadImage(card)
         } else {
             alert("Error: Upload failed.");
             return;
         }
     }
 });
+
+document.getElementById("test").addEventListener("click", () => {
+    // for (let card of UploadCardList) {
+
+    // }
+    console.log(UploadCardList.length);
+});
+
 
 
 /*

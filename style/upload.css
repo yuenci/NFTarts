@@ -158,6 +158,14 @@
     margin-right: 10px;
 }
 
+.progress {
+    width: 0%;
+    height: 100%;
+    background-color: #121927;
+    transition: width 0.5s;
+    border-radius: 4px;
+}
+
 .card-file-name {
     display: inline-block;
     width: 90% !important;
