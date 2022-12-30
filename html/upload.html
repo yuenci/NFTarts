@@ -5,19 +5,40 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="images/logo.svg?">
     <title>Upload Images</title>
     <link rel="stylesheet" href="../style/template.css">
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="../style/iconfont.css">
     <link rel="stylesheet" href="../style/frame.css">
+    <link rel="stylesheet" href="../style/upload.css">
 </head>
 
 <body>
     <nav id="nav"></nav>
     <div id="container">
-
+        <div id="upload-title">Uplaod Images files</div>
+        <div id="upload-area">
+            <img src="../images/uploadIcon.png" alt="upload icon" id="upload-icon">
+            <div>
+                <span id="click-upload">Click to upload</span>
+                <span>or drag and drop</span>
+            </div>
+            <div id="max-upload">Maximun file size 10 MB</div>
+        </div>
+        <div id="tags-input-container">
+            <input type="text" id="tags-input">
+        </div>
+        <div id="upload-list"></div>
+        <div id="upload-btns">
+            <button id="cancel-btn">Cancel</button>
+            <button id="upload-btn">Upload</button>
+        </div>
+        <input type="file" id="fileInput" accept="image/*">
     </div>
+
     <script src="../script/template.js"></script>
+    <script src="../script/upload.js"></script>
 </body>
 
 </html>

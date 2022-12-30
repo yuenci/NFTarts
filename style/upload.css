@@ -1,0 +1,182 @@
+#container {
+    width: 550px;
+    height: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-sizing: border-box;
+    padding: 20px;
+    border: 5px solid #f0f4f6;
+    border-radius: 4px;
+}
+
+#upload-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+    margin-bottom: 20px;
+}
+
+#upload-area {
+    width: 100%;
+    height: 30%;
+    border: 2px dashed #121927;
+    border-radius: 4px;
+    box-sizing: border-box;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+#upload-icon {
+    height: 60px;
+    margin-bottom: 10px;
+}
+
+#click-upload {
+    /* add underline */
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#max-upload {
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+#tags-input {
+    width: 100%;
+    height: 30px;
+    border: 1px solid #121927;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+#upload-list {
+    width: 100%;
+    height: 45%;
+    /* background-color: aqua; */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* set y scroll bar style */
+#upload-list::-webkit-scrollbar {
+    width: 4px;
+    /* 设置滑动条的宽度 */
+    background-color: #e3e5e6;
+    /* 设置滑动条的背景颜色 */
+}
+
+#upload-list::-webkit-scrollbar-thumb {
+    background-color: #121927;
+    /* 设置滑块的背景颜色 */
+    border-radius: 10px;
+    /* 设置滑块的圆角 */
+}
+
+#upload-btns {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#cancel-btn,
+#upload-btn {
+    width: 45%;
+    height: 35px;
+    border: 1px solid #e3e5e6;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: black;
+}
+
+#upload-btn {
+    background-color: #121927;
+    color: white;
+}
+
+#fileInput {
+    display: none;
+}
+
+.upload_card {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 70px;
+    font-size: 14px;
+    border: 1px solid #121927;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    padding-right: 5px;
+}
+
+.card_image {
+    height: 60px;
+    width: 60px;
+    object-fit: cover;
+    margin-right: 10px;
+    margin-left: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+}
+
+.card-right {
+    width: calc(100% - 60px);
+}
+
+.card_progress {
+    width: 100%;
+    height: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.card_progress_bar {
+    width: 90%;
+    height: 5px;
+    /* background-color: #121927; */
+    background-color: #f5f4f7;
+    border-radius: 4px;
+    margin-top: 10px;
+    position: relative;
+    bottom: 3px;
+    margin-right: 10px;
+}
+
+.card-file-name {
+    display: inline-block;
+    width: 90% !important;
+    /* 设置 div 元素的宽度 */
+    overflow: hidden;
+    /* 隐藏超出 div 元素的内容 */
+    white-space: nowrap;
+    /* 不换行 */
+    text-overflow: ellipsis;
+    /* 文本超出宽度后截断并使用省略号显示 */
+    border: 1px solid #f5f4f7;
+
+    cursor: text;
+}
+
+.delete-icon {
+    width: 20px;
+    height: 20px;
+    font-size: 21px;
+    margin-left: 10px;
+    cursor: pointer;
+}
