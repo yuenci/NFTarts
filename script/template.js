@@ -379,13 +379,14 @@ function init_serch_page() {
                 localStorage.setItem("articleIDList", "");
                 localStorage.setItem("articleKeyWord", "");
             }
-            let scriptTags = document.getElementsByTagName("script")
-            let fileUrl = scriptTags[0].baseURI;
-            let args = fileUrl.split("/")
-            let url = "news.html";
-            if (args[args.length - 2] == "news") {
-                url = "../" + url;
-            }
+            // let scriptTags = document.getElementsByTagName("script")
+            // let fileUrl = scriptTags[0].baseURI;
+            // let args = fileUrl.split("/")
+            // let url = "news.html";
+            // if (args[args.length - 2] == "news") {
+            //     url = "../" + url;
+            // }
+            let url = "html/news.html";
             window.location.href = url;
         });
 }
