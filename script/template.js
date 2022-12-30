@@ -38,19 +38,26 @@ function ifIndex() {
 }
 
 
-
+let jsonDataInsertSrc = "";
 if (ifIndex()) {
-    jsonDataInsert.src = "script/index.json?callback=getJson"
+    jsonDataInsertSrc = "script/index.json"
 } else {
-    jsonDataInsert.src = "../script/index.json?callback=getJson"
+    jsonDataInsertSrc = "../script/index.json"
 }
-jsonDataInsert.type = "text/javascript";
+jsonDataInsert.src = jsonDataInsertSrc;
+jsonDataInsert.type = "application/json";
 document.body.appendChild(jsonDataInsert);
 
-function getJson(data) {
-    //console.log(data);
-    localStorage.setItem("indexJson", JSON.stringify(data));
-}
+// function getJson(data) {
+//     //console.log(data);
+//     localStorage.setItem("indexJson", JSON.stringify(data));
+// }
+
+fetch(jsonDataInsertSrc)
+    .then(response => response.json())
+    .then(data => {
+        localStorage.setItem("indexJson", JSON.stringify(data));
+    });
 
 
 
