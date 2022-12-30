@@ -79,20 +79,25 @@ window.onbeforeunload = function () {
 
 
 var images;
-let ImageJsonDataInsert = document.createElement("script")
+let ImageJsonDataInsert = ""
 if (ifInNewFile()) {
-    ImageJsonDataInsert.src = "../script/images.json?callback=getJson"
+    ImageJsonDataInsert = "../script/images.json"
 } else {
-    ImageJsonDataInsert.src = "../script/images.json?callback=getJson"
+    ImageJsonDataInsert = "../script/images.json"
 }
-ImageJsonDataInsert.type = "text/javascript";
-document.body.appendChild(ImageJsonDataInsert);
+// ImageJsonDataInsert.type = "text/javascript";
+// document.body.appendChild(ImageJsonDataInsert);
 
 
-function getJson(data) {
-    images = data;
-}
+// function getJson(data) {
+//     images = data;
+// }
 
+fetch(ImageJsonDataInsert)
+    .then(response => response.json())
+    .then(data => {
+        images = data
+    });
 
 
 function inputEvent(obj) {
@@ -378,15 +383,27 @@ function getCommentsNum(picID) {
     })
 }
 
+function removeImageSuffix(imageName) {
+    // remove .jpg .png .gif use regex
+    let imageData = imageName.replace(".jpg", "")
+    imageData = imageName.replace(".gif", "")
+    imageData = imageData.replace(".png", "")
+    imageData = imageData.replace(/\.\S*$/, "");
+    return imageData
+}
+
+
 function getImageData(num) {
     let description = images[num]["description"];
     let imageUrl = images[num]["imageUrl"];
     let tags = images[num]["tags"];
+    //console.log(imageUrl);
 
+    imageData = removeImageSuffix(imageUrl)
+    imageData = imageData.split("-")
 
-    let imageData = imageUrl.replace(".jpg", "")
-    imageData = imageUrl.replace(".gif", "")
-    imageData = imageData.replace(".png", "").split("-")
+    //console.log(imageData);
+
     let posterName = imageData[1].toUpperCase();
     let postTime = imageData[2].toUpperCase();
     let postAvatarUrl = ""
