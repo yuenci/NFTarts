@@ -22,8 +22,9 @@ function signup() {
     }
     const fbAuth = new FBAuth();
     fbAuth.register(email, password).then((user) => {
-        alert("User created");
-        console.log("user created", user);
+        // alert("User created");
+        window.location.href = "profile.html";
+        //console.log("user created", user);
     }).catch((error) => {
         alert(error.message);
         console.log(error);

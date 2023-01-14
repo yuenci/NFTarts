@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebas
 import {
     getAuth, sendSignInLinkToEmail, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword,
     sendPasswordResetEmail, updateProfile, updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider,
-    GoogleAuthProvider, signInWithPopup, getRedirectResult
+    GoogleAuthProvider, signInWithPopup, onAuthStateChanged
 }
     from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 import firebaseConfig from "./config.js";
@@ -211,11 +211,39 @@ export class FBAuth {
         })
     }
 
-    ifCurrentUserLoggedIn(reject, prompt) {
-        if (this.auth.currentUser === null) {
-            if (this.debug) console.log(prompt);
-            reject(prompt);
-        }
+    // ifCurrentUserLoggedIn(reject, prompt) {
+    //     if (this.auth.currentUser === null) {
+    //         if (this.debug) console.log(prompt);
+    //         reject(prompt);
+    //     }
+    // }
+
+    ifCurrentUserLoggedIn() {
+        return new Promise((resolve, reject) => {
+            onAuthStateChanged(this.auth, (user) => {
+                if (user) {
+                    if (this.debug) console.log("user logged in");
+                    resolve(true);
+                } else {
+                    if (this.debug) console.log("user not logged in");
+                    reject(false);
+                }
+            });
+        });
+    }
+
+    getCurrentUser() {
+        return new Promise((resolve, reject) => {
+            onAuthStateChanged(this.auth, (user) => {
+                if (user) {
+                    if (this.debug) console.log("user logged in");
+                    resolve(user);
+                } else {
+                    if (this.debug) console.log("user not logged in");
+                    reject(null);
+                }
+            });
+        });
     }
 }
 
