@@ -890,13 +890,15 @@ body {
     cursor: pointer;
 }
 
-#login-btn:hover {
+#login-btn:hover,
+#signup-btn:hover {
     cursor: pointer;
     background-color: #262c30;
     color: white;
 }
 
-#login-btn {
+#login-btn,
+#signup-btn {
     font-family: "Inter";
     font-size: 20px;
     margin: 30px 0px 30px 0px;
@@ -909,7 +911,8 @@ body {
     font-family: AbhayaLibre;
 }
 
-#login-page {
+#login-page,
+#signup-page {
     height: 95vh;
     display: flex;
     flex-direction: row;
@@ -918,7 +921,8 @@ body {
     font-family: AbhayaLibre;
 }
 
-#login-page-container {
+#login-page-container,
+#signup-page-container {
     width: 50%;
     margin: auto auto auto auto;
     border: 5px solid #f0f4f6;
@@ -928,12 +932,14 @@ body {
     align-items: center;
 }
 
-#login-title {
+#login-title,
+#signup-title {
     font-size: 50px;
     margin: 30px 0px 30px 30px;
 }
 
-#login-input-container {
+#login-input-container,
+#signup-input-container {
     width: 100%;
 }
 
@@ -945,27 +951,32 @@ input {
     width: 80%;
 }
 
-#login-input-container {
+#login-input-container,
+#signup-input-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-#login-text {
+#login-text,
+#signup-text {
     text-decoration: underline;
     font-size: 20px;
     margin-bottom: 20px;
 }
 
-#login-text:hover {
+#login-text:hover,
+#signup-text:hover {
     cursor: pointer;
 }
 
-#login-btn {
+#login-btn,
+#signup-btn {
     margin: 10px auto;
 }
 
-#login-text {
+#login-text,
+#signup-text {
     margin: 20px auto;
 }
 

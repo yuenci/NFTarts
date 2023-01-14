@@ -96,6 +96,13 @@ if (get_account) {
     })
 }
 
+let signUp_text = document.getElementById("signup-text");
+if (signUp_text) {
+    signUp_text.addEventListener("click", function () {
+        window.location.href = "login.html";
+    })
+}
+
 
 
 //about us
