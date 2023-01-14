@@ -1,6 +1,7 @@
 import { uploadImage } from "./FB_storage.js";
 
 
+
 let uploadArea = document.getElementById("upload-area");
 let UploadCardList = [];
 

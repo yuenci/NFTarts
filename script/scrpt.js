@@ -92,7 +92,7 @@ function verify(name, password) {
 let get_account = document.getElementById("login-text");
 if (get_account) {
     get_account.addEventListener("click", function () {
-        window.location.href = "contactUs.html";
+        window.location.href = "signUp.html";
     })
 }
 
