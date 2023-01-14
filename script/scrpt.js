@@ -8,10 +8,10 @@ if (error_page_back_btn) {
 
 //login
 
-let login_btn = document.getElementById("login-btn");
-if (login_btn) {
-    login_btn.addEventListener("click", loginToACC)
-}
+// let login_btn = document.getElementById("login-btn");
+// if (login_btn) {
+//     login_btn.addEventListener("click", loginToACC)
+// }
 
 
 function loginToACC() {

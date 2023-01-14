@@ -27,6 +27,10 @@
         <div id="login-page-container">
             <div id="login-title">Login To New World</div>
             <div id="login-input-container">
+                <div id="login-google">
+                    <img src="../images/google.svg" alt="google icon" id="google-icon">
+                    <div id="login-google-text">Continue with Google</div>
+                </div>
                 <input id="login-username" type="text" placeholder="Enter your email" onclick="this.value=''">
                 <input id="login-password" type="text" placeholder="Enter your password"
                     onclick="this.value='';this.type='password'" onfocus="this.value='';this.type='password'">
@@ -39,6 +43,7 @@
     <script src="../script/template.js"></script>
     <script src="../script/idb-keyval-min.js"></script>
     <script src="../script/scrpt.js"></script>
+    <script src="../script/login.js" type="module"></script>
 </body>
 
 </html>

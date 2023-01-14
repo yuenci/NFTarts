@@ -980,6 +980,32 @@ input {
     margin: 20px auto;
 }
 
+#login-google {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    height: 55px;
+    font-size: 30px;
+    margin: 30px 0px 30px 0px;
+    padding: 1px 2px;
+    font-family: AbhayaLibre;
+    width: 80%;
+    border: 1px solid rgb(118, 118, 118);
+    border-radius: 2px;
+    color: #757575;
+}
+
+#login-google:hover {
+    background-color: #f0f4f6;
+    cursor: pointer;
+    color: black;
+}
+
+#google-icon {
+    margin: 0px 10px 0px 0px;
+}
+
 /* index page media query */
 @media screen and (max-width:375px) {
     /* index page */

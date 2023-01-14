@@ -1,7 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
 import {
     getAuth, sendSignInLinkToEmail, createUserWithEmailAndPassword, sendEmailVerification, signInWithEmailAndPassword,
-    sendPasswordResetEmail, updateProfile, updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider
+    sendPasswordResetEmail, updateProfile, updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider,
+    GoogleAuthProvider, signInWithPopup, getRedirectResult
 }
     from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js";
 import firebaseConfig from "./config.js";
@@ -47,6 +48,23 @@ export class FBAuth {
                 reject(error);
             });
         })
+    }
+
+    googleLogin() {
+        return new Promise((resolve, reject) => {
+            const provider = new GoogleAuthProvider(this.app);
+
+            signInWithPopup(this.auth, provider)
+                .then((result) => {
+                    const user = result.user;
+                    if (this.debug) console.log("Sign in with user: ", user);
+                    resolve(user);
+                }).catch((error) => {
+                    if (this.debug) console.log(error.code, error.message);
+                    reject(error);
+                });
+        })
+
     }
 
 
