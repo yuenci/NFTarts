@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="images/logo.svg?">
+
     <title>Profile</title>
     <link rel="stylesheet" href="../style/template.css">
     <link rel="stylesheet" href="../style/style.css">
@@ -48,16 +49,18 @@
                 </div>
             </div>
             <div id="profile-body-posts" class="">
-                <div id="profile-post-add" class="post-cards">
+                <div id="profile-post-add" class="post-cards hidden">
                     <img src="../images/add.png" alt="add icon">
                 </div>
             </div>
-            <div id="profile-body-likes" class="hidden">likes</div>
+            <div id="profile-body-likes" class="hidden"></div>
         </div>
     </div>
+    <div id="modal" class="hidden"></div>
+    <input type="file" name="" id="file-update" accept="image/*">
     <script src="../script/template.js"></script>
-    <script src="../script/idb-keyval-min.js"></script>
     <script src="../script/scrpt.js"></script>
+    <script src="../script/anime.min.js"></script>
     <script src="../script/profile.js" type="module"></script>
 </body>
 

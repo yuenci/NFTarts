@@ -1120,6 +1120,7 @@ input {
 #profile-tab-likes {
     cursor: pointer;
     border-top: 1px solid transparent;
+
 }
 
 .post-btn-active,
@@ -1131,6 +1132,218 @@ input {
 
 .hidden {
     display: none !important;
+}
+
+.post-cards {
+    width: 250px;
+    height: 250px;
+    /* background-color: #0095f6; */
+}
+
+#profile-body-posts {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#profile-post-add {
+    box-sizing: border-box;
+    border: 2px solid #efefef;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.post-cards {
+    margin: 10px 10px 0 0;
+}
+
+.post-cards-img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+}
+
+#modal {
+    position: absolute;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+#upload-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 700px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+#upload-modal-body {
+    height: 650px;
+    /* padding: 20px; */
+    display: flex;
+}
+
+.upload-modal-body-column {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.upload-modal-body-row {
+    flex-direction: row;
+}
+
+#upload-modal-body-right {
+    width: 100%;
+    position: relative;
+}
+
+#upload-modal-header {
+    position: relative;
+    height: 30px;
+    padding: 10px 20px;
+    border-bottom: 1px solid #dbdbdb;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#upload-modal-title {
+    display: inline-block;
+    margin: 0 auto;
+}
+
+#upload-modal-title {
+    font-size: 20px;
+    line-height: 30px;
+    /* font-weight: bold; */
+}
+
+#upload-modal-close {
+    float: right;
+    cursor: pointer;
+    font-size: 30px !important;
+}
+
+#upload-modal-img {
+    user-select: none;
+}
+
+#upload-modal-btn {
+    width: 122px;
+    height: 32px;
+    background-color: #0095f6;
+    color: white;
+    font-weight: bold;
+    border: none;
+    margin: 20px;
+    border-radius: 4px;
+    padding: 7px 16px;
+    cursor: pointer;
+    user-select: none;
+}
+
+#file-update {
+    display: none;
+}
+
+#upload-modal-picture {
+    width: 600px;
+    height: 650px;
+    object-fit: cover;
+}
+
+#upload-modal-left {
+    font-weight: bold;
+    font-size: 24px !important;
+    cursor: pointer;
+    transform: rotateY(180deg);
+}
+
+#upload-modal-upload-textarea {
+    box-sizing: border-box;
+    width: 100%;
+    height: 30%;
+    border: none;
+    resize: none;
+    font-size: 16px;
+    outline: none;
+    padding: 15px;
+    border-bottom: 1px solid #f0f4f6;
+    ;
+}
+
+#upload-modal-body-right-top {
+    box-sizing: border-box;
+    padding: 10px 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#upload-modal-body-right-top-avatar {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    border-radius: 100%;
+}
+
+#upload-modal-upload-btn {
+    width: 120px;
+    height: 30px;
+    background-color: #0095f6;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    padding: 7px 16px;
+    cursor: pointer;
+    user-select: none;
+    position: absolute;
+    /* margin: 0 auto; */
+    right: 90px;
+    bottom: 20px;
+}
+
+#upload-modal-upload-tools {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    font-size: 14px !important;
+    padding: 5px 10px;
+    border-bottom: 1px solid #f0f4f6;
+    height: 40px;
+}
+
+#upload-modal-upload-tools-emoji {
+    font-size: 22px !important;
+}
+
+#upload-modal-upload-tags {
+    margin: 0;
+    box-sizing: border-box;
+    border: none;
+    height: 40px;
+    padding: 0px 10px;
+    width: 100%;
+    outline: none;
+    font-size: 16px;
+    border-bottom: 1px solid #f0f4f6;
 }
 
 /* index page media query */
