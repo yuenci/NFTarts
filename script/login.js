@@ -22,6 +22,7 @@ function login() {
     const fbAuth = new FBAuth();
     fbAuth.login(email, password).then((user) => {
         window.location.href = "profile.html";
+        localStorage.setItem("uid", user.uid);
         //alert("User logged in");
         //console.log("user logged in", user);
     }).catch((error) => {
@@ -44,6 +45,7 @@ function loginGoogle() {
     fbAuth.googleLogin().then((user) => {
         //alert("User logged in");
         window.location.href = "profile.html";
+        localStorage.setItem("uid", user.uid);
         //console.log("user logged in", user);
     }).catch((error) => {
         alert(error.message);
