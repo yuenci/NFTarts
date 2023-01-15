@@ -42,6 +42,7 @@ export class FBAuth {
             signInWithEmailAndPassword(this.auth, email, password).then((userCredential) => {
                 const user = userCredential.user;
                 if (this.debug) console.log("Sign in with user: ", userCredential.user);
+                localStorage.setItem("loginStatus", "true");
                 resolve(user);
             }).catch((error) => {
                 if (this.debug) console.log(error.code, error.message);
@@ -58,6 +59,7 @@ export class FBAuth {
                 .then((result) => {
                     const user = result.user;
                     if (this.debug) console.log("Sign in with user: ", user);
+                    localStorage.setItem("loginStatus", "true");
                     resolve(user);
                 }).catch((error) => {
                     if (this.debug) console.log(error.code, error.message);
@@ -120,11 +122,13 @@ export class FBAuth {
             const user = this.auth.currentUser;
             this.auth.signOut().then(() => {
                 if (this.debug) console.log(`User ${user.email} sign out`);
+                localStorage.setItem("loginStatus", "false");
                 resolve(true);
             }).catch((error) => {
                 if (this.debug) console.log(error.code, error.message);
                 reject(error);
             });
+
         })
     }
 

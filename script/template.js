@@ -219,16 +219,24 @@ function click_redirection(eleObj, url) {
         return;
     }
 
-    let scriptTags = document.getElementsByTagName("script")
-    let fileUrl = scriptTags[0].baseURI;
-    let args = fileUrl.split("/")
-    if (args[args.length - 2] == "news") {
+    // let scriptTags = document.getElementsByTagName("script")
+    // let fileUrl = scriptTags[0].baseURI;
+    // let args = fileUrl.split("/")
+    // if (args[args.length - 2] == "news") {
+    //     url = "../" + url;
+    // }
+
+    // if (args[args.length - 2] == "html") {
+    //     url = "html/" + url;
+    // }
+
+    if (url === "index.html") {
         url = "../" + url;
+    } else {
+        url = "html/" + url;
     }
 
-    if (args[args.length - 2] == "html") {
-        url = "../" + url;
-    }
+
 
     if (eleObj != null) {
         eleObj.addEventListener("click", function () {
@@ -404,6 +412,16 @@ function menu() {
     let ht = document.documentElement.clientHeight;
     shadow.id = "shadow";
     shadow.style.background = "#262c30";
+
+    let account = localStorage.getItem("loginStatus");
+    console.log("account", account);
+    if (account === null) {
+        account = `<div id="menu-login" class="menu-main-text">LOG IN</div>`
+    } else {
+        account = `<div id="menu-profile" class="menu-main-text">Profile</div>`
+    }
+
+
     shadow.innerHTML = `
         <div id="nav-container">
             <div class="nav-ele" id="logo" style="color:white;">NFTarts</div>
@@ -423,7 +441,7 @@ function menu() {
             <div id="menu-gallery" class="menu-main-text">Gallery</div>
             <div id="menu-contact" class="menu-main-text">CONTACT US</div>
             <div id="menu-join" class="menu-main-text">JOIN</div>
-            <div id="menu-login" class="menu-main-text">LOG IN</div>
+            ${account}
             <div id="menu-line2" class="menu-line"></div>
             <div id="menu-footer">
                 <div id="menu-faq" class="menu-footer-items">FAQ</div>
@@ -507,6 +525,9 @@ function init_menu_page() {
 
     let login_btn = document.getElementById("menu-login");
     click_redirection(login_btn, "login.html")
+
+    let profile_btn = document.getElementById("menu-profile");
+    click_redirection(profile_btn, "profile.html")
 
     let menu_itemNames = ["menu-news", "menu-gallery", "menu-contact", "menu-join",
         "menu-login", "menu-faq", "menu-about"]

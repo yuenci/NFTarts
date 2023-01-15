@@ -1006,6 +1006,133 @@ input {
     margin: 0px 10px 0px 0px;
 }
 
+/* profile page */
+#profile-page {
+    height: 100vh;
+    max-width: 800px;
+    width: 60%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+#profile-img-con {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 100%;
+}
+
+#profile-info-line1,
+#profile-info-line2,
+#profile-info-line3,
+#profile-header,
+#profile-tabs {
+    display: flex;
+    flex-direction: row;
+}
+
+#profile-header {
+    width: 100%;
+    justify-content: space-between;
+    /* height: 200px; */
+}
+
+#profile-info {
+    margin-left: 100px;
+    width: 100%;
+}
+
+#profile-info-line1 {
+    align-items: center;
+    height: 33px;
+}
+
+#profile-info-line2 div {
+    /* justify-content: space-between; */
+    margin-right: 30px;
+}
+
+#profile-name {
+    width: 100px;
+}
+
+#profile-info-line2 {
+    margin: 15px 0;
+}
+
+#profile-bio {
+    font-size: 14px;
+}
+
+#profile-tabs {
+    margin: 20px 0;
+    border-top: 1px solid #f0f4f6;
+    justify-content: space-around;
+}
+
+.icon-24gl-grid,
+.icon-shoucang {
+    font-weight: bold;
+}
+
+#profile-btns button {
+    height: 32px !important;
+    border: none;
+    background-color: #efefef;
+    padding: 7px 16px;
+    border-radius: 5px;
+    margin: 0 5px;
+    font-weight: bold;
+}
+
+#profile-btns button:hover {
+    cursor: pointer;
+    background-color: #dbdbdb;
+}
+
+#ellipsis {
+    font-weight: bold;
+    background-color: #ffffff !important;
+}
+
+#ellipsis:hover {
+    background-color: #ffffff !important;
+    color: black !important;
+}
+
+.icon-shenglveha:hover {
+    color: black !important;
+}
+
+#follow {
+    background-color: #0095f6 !important;
+    color: white !important;
+    font-weight: bold;
+}
+
+#profile-tab-posts,
+#profile-tab-likes {
+    cursor: pointer;
+    border-top: 1px solid transparent;
+}
+
+.post-btn-active,
+.like-btn-active {
+    cursor: pointer !important;
+    border-top: 1px solid #262626 !important;
+}
+
+
+.hidden {
+    display: none !important;
+}
+
 /* index page media query */
 @media screen and (max-width:375px) {
     /* index page */
@@ -1368,12 +1495,11 @@ input {
         font-size: 30px !important;
     }
 
-    #login-username,
+    /* #login-username,
     #login-password {
         /* width: 600px;
         font-size: 20px;
         margin: 30px auto 30px auto; */
-    }
 
     .aboutUS-members-card {
         flex-direction: column-reverse;
@@ -1389,6 +1515,8 @@ input {
         width: 80%;
     }
 }
+
+
 
 @media screen and (min-width:821px) and (max-width:1280px) {
 
