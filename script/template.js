@@ -11,6 +11,7 @@ window.onload = function () {
     let scriptTags = document.getElementsByTagName("script")
     let fileUrl = scriptTags[0].baseURI;
     let args = fileUrl.split("/")
+
     if (ifIndex()) {
         typerStart();
     }
@@ -30,7 +31,8 @@ function ifIndex() {
     let fileUrl = scriptTags[0].baseURI;
     let args = fileUrl.split("/");
 
-    if (args[args.length - 2].toLowerCase() == "nftarts" || args[args.length - 2] == "index.html") {
+
+    if (args[args.length - 2].toLowerCase() == "nftarts" || args[args.length - 2] == "index.html" || args[args.length - 1] == "index.html") {
         return true;
     }
 
