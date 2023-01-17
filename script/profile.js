@@ -74,6 +74,8 @@ class User {
             userName.innerHTML = this.name;
         }
 
+        document.querySelector("title").innerHTML = this.name + " · Gallery";
+
         this.initBtns();
     };
 
@@ -163,7 +165,7 @@ class User {
         if (ellipsisBtn) {
             ellipsisBtn.addEventListener("click", () => {
                 //eidtProfileBtnEvent();
-                let modal = new Modal("menu");
+                let modal = new MenuModal("menu");
                 modal.showModal();
             })
         }
@@ -270,7 +272,6 @@ class UploadModal extends Modal {
                 </div>
             </div>
     `;
-        console.log();
         this.modal.innerHTML = content;
         let uploadModalClose = document.getElementById("upload-modal-close");
         uploadModalClose.addEventListener("click", () => {
@@ -424,6 +425,45 @@ class UploadModal extends Modal {
         return regex.test(tag);
     }
 
+}
+
+class MenuModal extends Modal {
+    constructor() {
+        super();
+        this.menuModalContent();
+    }
+
+    menuModalContent() {
+        let content = `
+        <div id="menu-modal-content">
+            <div id="menu-modal-content-password" class="menu-modal-content-item">Change Password</div>
+            <div id="menu-modal-content-nameTag" class="menu-modal-content-item">Nametag</div>
+            <div id="menu-modal-content-notifications" class="menu-modal-content-item">Notifications</div>
+            <div id="menu-modal-content-problem" class="menu-modal-content-item">Report a Problem</div>
+            <div id="menu-modal-content-logout" class="menu-modal-content-item">Log out</div>
+        </div>
+        `;
+        this.modal.innerHTML = content;
+        this.showModal();
+        this.addEvent();
+    };
+
+    addEvent() {
+        const passwordBtn = document.getElementById("menu-modal-content-password");
+        const nameTagBtn = document.getElementById("menu-modal-content-nameTag");
+        const notificationsBtn = document.getElementById("menu-modal-content-notifications");
+        const problemBtn = document.getElementById("menu-modal-content-problem");
+        const logoutBtn = document.getElementById("menu-modal-content-logout");
+
+
+
+        logoutBtn.addEventListener("click", () => {
+            // confirm logout
+            if (confirm("Are you sure to log out?")) {
+                fbAuth.logout();
+            }
+        });
+    }
 }
 
 class PostsArea {

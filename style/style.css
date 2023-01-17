@@ -1051,6 +1051,7 @@ input {
 #profile-info-line1 {
     align-items: center;
     height: 33px;
+    flex-wrap: wrap;
 }
 
 #profile-info-line2 div {
@@ -1858,6 +1859,29 @@ input {
     .aboutUS-members-card-left {
         width: 80%;
     }
+}
+
+#menu-modal-content {
+    /*screen center */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 400px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.menu-modal-content-item {
+    box-sizing: border-box;
+    padding: 14px;
+    border-bottom: 1px solid #e6e6e6;
+    cursor: pointer;
+}
+
+#menu-modal-content-logout {
+    border-bottom: none;
 }
 
 

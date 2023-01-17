@@ -409,7 +409,7 @@ function menu() {
 
     let account = localStorage.getItem("loginStatus");
     console.log("account", account);
-    if (account === null) {
+    if (account === null || account === "false") {
         account = `<div id="menu-login" class="menu-main-text">LOG IN</div>`
     } else {
         account = `<div id="menu-profile" class="menu-main-text">Profile</div>`
