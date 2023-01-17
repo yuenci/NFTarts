@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import { getFirestore, doc, setDoc, collection, addDoc, updateDoc, serverTimestamp, deleteDoc, getDoc, getDocs, where, query, orderBy }
+import { getFirestore, doc, setDoc, collection, addDoc, updateDoc, serverTimestamp, deleteDoc, getDoc, getDocs, where, query, orderBy, arrayUnion, arrayRemove }
     from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js";
 import firebaseConfig from "./config.js";
 
@@ -158,6 +158,50 @@ export class FBStore {
 
         return new Promise((resolve, reject) => {
             updateDoc(docRef, { ...document }).then(() => {
+                if (this.debug) console.log(`Document successfully ${documentID} updated!`);
+                resolve(true);
+            }).catch((error) => {
+                console.error(`Error updating document: ${documentID}`, error);
+                reject(false);
+            });
+        });
+    }
+
+    addArrayElement(collectionName, documentID, fieldName, element) {
+        if (arguments.length !== 4) throw new Error("Invalid number of arguments, expected 4, got " + arguments.length);
+        if (this.validate(collectionName) !== "string") throw new Error("Invalid collection name, expected string, got " + typeof collection);
+        if (this.validate(documentID) !== "string") throw new Error("Invalid documentID, expected string, got " + typeof documentID);
+        if (this.validate(fieldName) !== "string") throw new Error("Invalid fieldName, expected string, got " + typeof fieldName);
+
+        console.log(collectionName, documentID, fieldName, element);
+
+        const docRef = doc(this.db, collectionName, documentID);
+
+        return new Promise((resolve, reject) => {
+            updateDoc(docRef, {
+                [fieldName]: arrayUnion(element)
+            }).then(() => {
+                if (this.debug) console.log(`Document successfully ${documentID} updated!`);
+                resolve(true);
+            }).catch((error) => {
+                console.error(`Error updating document: ${documentID}`, error);
+                reject(false);
+            });
+        });
+    }
+
+    removeArrayElement(collectionName, documentID, fieldName, element) {
+        if (arguments.length !== 4) throw new Error("Invalid number of arguments, expected 4, got " + arguments.length);
+        if (this.validate(collectionName) !== "string") throw new Error("Invalid collection name, expected string, got " + typeof collection);
+        if (this.validate(documentID) !== "string") throw new Error("Invalid documentID, expected string, got " + typeof documentID);
+        if (this.validate(fieldName) !== "string") throw new Error("Invalid fieldName, expected string, got " + typeof fieldName);
+
+        const docRef = doc(this.db, collectionName, documentID);
+
+        return new Promise((resolve, reject) => {
+            updateDoc(docRef, {
+                [fieldName]: arrayRemove(element)
+            }).then(() => {
                 if (this.debug) console.log(`Document successfully ${documentID} updated!`);
                 resolve(true);
             }).catch((error) => {

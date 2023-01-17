@@ -1,5 +1,8 @@
 import { FBAuth } from "./firebase/authHandler.js";
+import { FBStore } from "./firebase/storeHandler.js";
 
+const fbAuth = new FBAuth();
+const fbStore = new FBStore();
 
 const loginBtn = document.getElementById("login-btn");
 if (loginBtn) loginBtn.addEventListener("click", login);
@@ -19,7 +22,7 @@ function login() {
 
     console.log(email, password);
 
-    const fbAuth = new FBAuth();
+
     fbAuth.login(email, password).then((user) => {
         window.location.href = "profile.html";
         localStorage.setItem("uid", user.uid);
@@ -37,19 +40,42 @@ function login() {
 const googleBtn = document.getElementById("login-google");
 if (googleBtn) googleBtn.addEventListener("click", loginGoogle);
 
-function loginGoogle() {
-    const fbAuth = new FBAuth();
-    //fbAuth.logout();
+async function loginGoogle() {
+    let user = await fbAuth.googleLogin();
+    if (user) {
 
-
-    fbAuth.googleLogin().then((user) => {
-        //alert("User logged in");
-        window.location.href = "profile.html";
         localStorage.setItem("uid", user.uid);
-        //console.log("user logged in", user);
-    }).catch((error) => {
-        alert(error.message);
-        console.log(error);
     }
-    );
+
+    // if user exists in users collection
+    fbStore.readDocument("users", user.uid).then((doc) => {
+        window.location.href = "profile.html";
+    }).catch((error) => {
+        addDataTofirebase(user.displayName, user.email, user.uid)
+    });
+}
+
+
+
+
+function addDataTofirebase(usename, email, uid) {
+    let userData = {
+        bio: "",
+        birth: "",
+        email: email,
+        gender: 2,
+        phone: "",
+        uid: uid,
+        username: usename,
+        website: "",
+        likes: [],
+    };
+    fbStore.write("users", userData, uid).then(() => {
+        console.log("Document successfully written!");
+        window.location.href = "profile.html";
+
+    }).catch((error) => {
+        console.error("Error writing document: ", error);
+    });
+
 }

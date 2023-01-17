@@ -31,16 +31,33 @@ async function signup() {
 
     const fbAuth = new FBAuth();
     try {
+        // register user
         let user = await fbAuth.register(email, password)
+
+        //save user data to local storage
         let uid = user.uid;
         localStorage.setItem("uid", uid);
 
-
-
+        // update user name and photo
         let useNameData = {
             displayName: usename,
+            photoURL: "https://api.multiavatar.com/" + usename + ".svg"
         };
         let res = await fbAuth.updateUserInfo(useNameData);
+
+        // update user data in firestore
+        let userData = {
+            bio: "",
+            birth: "",
+            email: email,
+            gender: 2,
+            phone: "",
+            uid: uid,
+            username: usename,
+            website: "",
+            likes: [],
+        };
+
         if (res) {
             // return;
             window.location.href = "profile.html";
