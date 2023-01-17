@@ -158,7 +158,7 @@ class User {
 
         if (eidtProfileBtn) {
             eidtProfileBtn.addEventListener("click", () => {
-                console.log("eidt-profile");
+                window.open("profile_edit.html", "_blank");
             })
         }
 

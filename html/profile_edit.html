@@ -14,32 +14,99 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/x-icon" href="images/logo.svg?">
-    <title>ProFile</title>
+    <title>Edit Profile</title>
     <link rel="stylesheet" href="../style/template.css">
     <link rel="stylesheet" href="../style/style.css">
     <link rel="stylesheet" href="../style/iconfont.css">
     <link rel="stylesheet" href="../style/frame.css">
+    <link rel="stylesheet" href="../style/profile_edit.css">
 </head>
 
 <body>
     <nav id="nav"></nav>
-    <div id="signup-page">
-        <div id="signup-page-container">
-            <div id="signup-title">Sign Up To New World</div>
-            <div id="signup-input-container">
-                <input id="signup-username" type="text" placeholder="Enter your username">
-                <input id="signup-email" type="text" placeholder="Enter your email">
-                <input id="signup-password" type="password" placeholder="Enter your password">
+    <div id="profile-edit-page">
+        <div id="profile-edit-container">
+            <div id="profile__edit__avatar__con" class="profile__edit__con">
+                <img src="" alt="avatar" id="profile__edit__avata__img">
+                <div>
+                    <div id="profile__edit__avatar__name"></div>
+                    <div id="profile__edit__avatar__change">Change Avatar</div>
+                </div>
             </div>
-            <button id="signup-btn">Sign Up</button>
-            <div id="signup-text">Already have account ? Login here!</div>
+            <div id="profile__edit__username__con" class="profile__edit__con">
+                <div>Username</div>
+                <div>
+                    <input type="text" name="" id="profile-edit-username" value="">
+                </div>
+            </div>
+            <div id="profile__edit__website__con" class="profile__edit__con">
+                <div>Website</div>
+                <div>
+                    <input type="text" id="profile-edit-website" value="">
+                </div>
+            </div>
+            <div id="profile__edit__bio__con" class="profile__edit__con">
+                <div>Bio</div>
+                <div>
+                    <textarea name="" id="profile__edit__bio__textarea" cols="30" rows="5"></textarea>
+                    <div id="profile__edit__bio__count">0 / 150</div>
+                </div>
+            </div>
+            <div id="profile__edit__email__con" class="profile__edit__con">
+                <div>Email</div>
+                <div>
+                    <input type="text" name="" id="profile-edit-email" disabled>
+                </div>
+            </div>
+            <div id="profile__edit__phone__con" class="profile__edit__con">
+                <div>Phone</div>
+                <div>
+                    <input type="text" name="" id="profile-edit-phone" value="">
+                </div>
+            </div>
+            <div id="profile__edit__gender__con" class="profile__edit__con">
+                <div>Gender</div>
+                <div>
+                    <select name="gender" id="profile__edit__gender__select">
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="none">Prefer not to say</option>
+                    </select>
+                </div>
+            </div>
+            <div id="profile__edit__birth__con" class="profile__edit__con">
+                <div>Birth</div>
+                <div>
+                    <input type="date" name="" id="profile__edit__birth__input" value="">
+                </div>
+            </div>
+            <div id="profile__edit__password__con" class="profile__edit__con">
+                <div>Change Password</div>
+                <div>
+                    <div>
+                        <div>Current Password</div>
+                        <input type="password" name="" id="profile-edit-password" value="">
+                    </div>
+                    <div>
+                        <div>New Password</div>
+                        <input type="password" name="" id="profile-edit-new-password" value="">
+                    </div>
+                    <div>
+                        <div>Confirm New Password</div>
+                        <input type="password" name="" id="profile-edit-confirm-password" value="">
+                    </div>
+                </div>
+            </div>
+            <div id="profile__edit__btns__con">
+                <button id="profile__edit__btns__submit">Submit</button>
+                <div id="profile__edit__btns__delete">Delete my account</div>
+            </div>
         </div>
-    </div>
-    <footer id="footer"></footer>
-    <script src="../script/template.js"></script>
-    <script src="../script/idb-keyval-min.js"></script>
-    <script src="../script/scrpt.js"></script>
-    <script src="../script/signup.js" type="module"></script>
+        <input type="file" id="avatar-update" accept="image/*" style="display: none;">
+        <script src="../script/template.js"></script>
+        <script src="../script/idb-keyval-min.js"></script>
+        <script src="../script/scrpt.js"></script>
+        <script src="../script/edit_profile.js" type="module"></script>
 </body>
 
 </html>

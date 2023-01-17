@@ -1,0 +1,120 @@
+#profile-edit-container {
+    width: 550px;
+    margin: 20px auto;
+}
+
+.profile__edit__con {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.profile__edit__con div input {
+    height: 32px;
+    margin: 0;
+    font-size: 16px;
+    width: 380px;
+    outline: none;
+}
+
+.profile__edit__con div {
+    font-size: 17px;
+    font-weight: 600;
+}
+
+#profile__edit__password__con {
+    display: none;
+}
+
+#profile__edit__password__con div div {
+    font-size: 18px;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+#profile__edit__avatar__con {
+    justify-content: flex-start;
+}
+
+
+#profile__edit__bio__textarea {
+    font-size: 16px;
+    width: 380px;
+    outline: none;
+    resize: none;
+}
+
+#profile__edit__avatar__con {
+    display: flex;
+    flex-direction: row;
+}
+
+#profile__edit__avata__img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 120px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+#profile__edit__avatar__change {
+    font-size: 14px;
+    color: #0095f6;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#profile__edit__gender__select {
+    width: 387px;
+    height: 37px;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+#profile__edit__birth__input {
+    width: 385px;
+    height: 37px;
+    padding: 0;
+    margin: 0;
+    outline: none;
+}
+
+#profile__edit__btns__con {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    position: relative;
+}
+
+#profile__edit__btns__submit {
+    width: 100px;
+    height: 32px;
+    background-color: #4db5f9;
+    color: white;
+    font-weight: 600;
+    border: none;
+    border-radius: 10px;
+    position: absolute;
+    right: calc(387px - 100px);
+    cursor: pointer;
+}
+
+#profile__edit__btns__delete {
+    height: 32px;
+    line-height: 32px;
+    color: #ed4956;
+    cursor: pointer;
+}
+
+#profile__edit__bio__count {
+    font-size: 12px;
+    color: #8e8e8e;
+    margin-top: 5px;
+    font-weight: normal;
+}
+
+.invalid {
+    border-color: #ed4956;
+}
