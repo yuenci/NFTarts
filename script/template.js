@@ -221,24 +221,16 @@ function click_redirection(eleObj, url) {
         return;
     }
 
-    // let scriptTags = document.getElementsByTagName("script")
-    // let fileUrl = scriptTags[0].baseURI;
-    // let args = fileUrl.split("/")
-    // if (args[args.length - 2] == "news") {
-    //     url = "../" + url;
-    // }
-
-    // if (args[args.length - 2] == "html") {
-    //     url = "html/" + url;
-    // }
-
-    if (url === "index.html") {
+    let scriptTags = document.getElementsByTagName("script")
+    let fileUrl = scriptTags[0].baseURI;
+    let args = fileUrl.split("/")
+    if (args[args.length - 2] == "news") {
         url = "../" + url;
-    } else {
-        url = "html/" + url;
     }
 
-
+    if (args[args.length - 2] == "html") {
+        url = "../" + url;
+    }
 
     if (eleObj != null) {
         eleObj.addEventListener("click", function () {
@@ -526,10 +518,10 @@ function init_menu_page() {
     }
 
     let login_btn = document.getElementById("menu-login");
-    click_redirection(login_btn, "login.html")
+    click_redirection(login_btn, "html/login.html")
 
     let profile_btn = document.getElementById("menu-profile");
-    click_redirection(profile_btn, "profile.html")
+    click_redirection(profile_btn, "html/profile.html")
 
     let menu_itemNames = ["menu-news", "menu-gallery", "menu-contact", "menu-join",
         "menu-login", "menu-faq", "menu-about"]

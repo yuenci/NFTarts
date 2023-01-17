@@ -2,6 +2,7 @@ import { FBAuth } from "./firebase/authHandler.js";
 import { FBStorage } from "./firebase/storageHandler.js";
 import { FBStore } from "./firebase/storeHandler.js";
 
+
 let user = null;
 const fbAuth = new FBAuth();
 const fbStorage = new FBStorage();
@@ -10,7 +11,11 @@ const fbStore = new FBStore();
 window.onload = async function () {
     user = new User();
     let res = await user.init();
-    if (res) user.initAvatarAndName();
+    if (res) {
+        user.initAvatarAndName()
+    } else {
+        window.location.href = "login.html";
+    }
 
     let posts = new PostsArea("");
 
@@ -376,7 +381,8 @@ class UploadModal extends Modal {
                 tags: tags,
                 uid: localStorage.getItem("uid"),
                 likes: [],
-                comments: {}
+                comments: {},
+                timestamp: new Date()
             }
             fbStore.write("images", data).then(() => {
                 loader.classList.add('active');
