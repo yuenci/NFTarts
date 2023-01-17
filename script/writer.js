@@ -1,4 +1,5 @@
 window.onload = function () {
+    /* base on local file system, need use permission
     // access default DB, loop for the permission
     idbKeyval.entries().then(function (entries) {
         if (entries.length > 0) {
@@ -10,6 +11,7 @@ window.onload = function () {
         }
     })
     checkAllPermission();
+    * */
 
 }
 
