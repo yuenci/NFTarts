@@ -23,6 +23,8 @@ window.onload = async function () {
 
 class Status {
     static carsList = [];
+    static shareTools = {};
+    static emojyTools = {};
 }
 
 class Card {
@@ -81,12 +83,24 @@ class Card {
         // share button event listener
         const shareBtn = card.querySelector(".icon-sendfasong");
         shareBtn.addEventListener("click", () => this.shareBtnEvent());
+
+        // emoji button event listener
+        const emojiBtn = card.querySelector(".icon-weixiao");
+        emojiBtn.addEventListener("click", () => this.emojiBtnEvent());
+
+        // comment input event listener
+        const commentInput = card.querySelector(".waterfall-comment-input");
+        commentInput.addEventListener("input", () => this.commentInputEvent());
     };
 
     shareBtnEvent() {
-        //const shareBtn = this.card.querySelector(".icon-sendfasong");
         const cardFooter = this.card.querySelector(".waterfall-card-footer");
         new ShareTool(this.id, cardFooter);
+    }
+
+    emojiBtnEvent() {
+        const writer = this.card.querySelector(".waterfall-card-comment-writer");
+        new EmojyTool(this.id, writer);
     }
 
     getStucture() {
@@ -142,11 +156,20 @@ class Card {
         return template;
     }
 
+    commentInputEvent() {
+        let commentInput = this.card.querySelector(".waterfall-comment-input");
+        let commentPost = this.card.querySelector(".waterfall-comment-post");
+        console.log(commentInput.value.length);
+        if (commentInput.value.length > 0) {
+            commentPost.style.color = "#007bff ";
+        } else {
+            commentPost.style.color = "rgb(179, 223, 252)";
+        }
+        commentInput.focus();
+    }
+
 }
 
-class ShareTools {
-    static container = {};
-}
 
 class ShareTool {
     constructor(id, dom) {
@@ -159,15 +182,15 @@ class ShareTool {
         // if the share tool is already created
         // 1. if the share tool created by current card, remove it
         // 2. if the share tool created by other card, remove it and create a new one
-        let ids = Object.keys(ShareTools.container);
+        let ids = Object.keys(Status.shareTools);
         if (ids.length > 0) {
             if (ids.includes(this.id)) {
-                ShareTools.container[this.id].remove();
-                delete ShareTools.container[this.id];
+                Status.shareTools[this.id].remove();
+                delete Status.shareTools[this.id];
                 return
             } else {
-                ShareTools.container[ids[0]].remove();
-                delete ShareTools.container[ids[0]];
+                Status.shareTools[ids[0]].remove();
+                delete Status.shareTools[ids[0]];
             }
         }
 
@@ -188,7 +211,7 @@ class ShareTool {
         shareContainer.style.top = `${x}px`;
         shareContainer.style.left = `${y}px`;
         this.dom.appendChild(shareContainer)
-        ShareTools.container[this.id] = shareContainer;
+        Status.shareTools[this.id] = shareContainer;
 
         shareContainer.querySelector(".icon-whatsapp").addEventListener("click", () => {
             window.open("https://web.whatsapp.com/", "_blank")
@@ -208,12 +231,83 @@ class ShareTool {
         document.addEventListener("click", (e) => {
             if (e.target.className !== "iconfont icon-sendfasong") {
                 shareContainer.remove();
-                delete ShareTools.container[this.id];
+                delete Status.shareTools[this.id];
             }
         })
     }
 }
 
+class EmojyTool {
+    constructor(id, dom) {
+        this.dom = dom;
+        this.id = id;
+        this.init();
+    }
+
+    init() {
+        // if the share tool is already created
+        // 1. if the share tool created by current card, remove it
+        // 2. if the share tool created by other card, remove it and create a new one
+        let ids = Object.keys(Status.emojyTools);
+        if (ids.length > 0) {
+            if (ids.includes(this.id)) {
+                Status.emojyTools[this.id].remove();
+                delete Status.emojyTools[this.id];
+                return
+            } else {
+                Status.emojyTools[ids[0]].remove();
+                delete Status.emojyTools[ids[0]];
+            }
+        }
+        let x = -45
+        let y = -82
+
+        let emojyContainer = document.createElement("div");
+        emojyContainer.id = "emojyContainer";
+        emojyContainer.innerHTML =
+            `
+            <span class="emojy-icon">👍</span>
+            <span class="emojy-icon">❤️</span>
+            <span class="emojy-icon">😁</span>
+            <span class="emojy-icon">😲</span>
+            <span class="emojy-icon">🙏</span>
+        `
+        emojyContainer.style.position = "absolute"
+        emojyContainer.style.top = `${x}px`;
+        emojyContainer.style.left = `${y}px`;
+        this.dom.appendChild(emojyContainer)
+        Status.emojyTools[this.id] = emojyContainer;
+
+        // click other place, remove the share tool
+        document.addEventListener("click", (e) => {
+            if (e.target.className !== "iconfont icon-weixiao") {
+                emojyContainer.remove();
+                delete Status.emojyTools[this.id];
+            }
+        });
+
+        let emojiBtns = emojyContainer.querySelectorAll(".emojy-icon");
+        emojiBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                let commentInput = this.dom.querySelector(".waterfall-comment-input");
+                commentInput.value += btn.innerText;
+                this.inputStatusDetect();
+            })
+        })
+    }
+
+    inputStatusDetect() {
+        let commentInput = this.dom.querySelector(".waterfall-comment-input");
+        let commentPost = this.dom.querySelector(".waterfall-comment-post");
+        console.log(commentInput.value.length);
+        if (commentInput.value.length > 0) {
+            commentPost.style.color = "#007bff ";
+        } else {
+            commentPost.style.color = "rgb(179, 223, 252)";
+        }
+        commentInput.focus();
+    }
+}
 
 
 
