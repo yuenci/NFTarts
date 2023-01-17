@@ -1,3 +1,5 @@
+import { FBStore } from "./firebase/storeHandler.js";
+
 let articleObj = {
     1: {
         "Type": "On-campus Activity",
@@ -139,6 +141,9 @@ function loadNewsCards() {
         // get article from DB
         loadNewsFromDB();
 
+        // get article from Firebase
+        loadNewsFromFirebase();
+
     } else {
         // get article from localStorage
         let articleIDs = articleIDList.split(",");
@@ -177,9 +182,78 @@ function loadNewsFromDB() {
     );
 }
 
+function loadNewsFromFirebase() {
+    const fbStore = new FBStore();
+    fbStore.readCollection("articles").then(
+        function (data) {
+            let keys = Object.keys(data);
+            for (let index = 0; index < keys.length; index++) {
+                let DataObj = data[keys[index]];
+                let cardData = {
+                    "Type": DataObj["type"],
+                    "Poster": DataObj["poster"],
+                    "Date": timestampToDatetime(DataObj["timestamp"]["seconds"]),
+                    "Title": DataObj["title"],
+                    "Address": "html/article.html"
+                }
+                creatNewsCard(cardData, keys[index]);
+            }
+        }
+    )
+}
+
+function timestampToDatetime(timestamp) {
+    let date = new Date(timestamp * 1000);
+    let year = date.getFullYear();
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    // let month as text not number
+    switch (month) {
+        case 1:
+            month = "January";
+            break;
+        case 2:
+            month = "February";
+            break;
+        case 3:
+            month = "March";
+            break;
+        case 4:
+            month = "April";
+            break;
+        case 5:
+            month = "May";
+            break;
+        case 6:
+            month = "June";
+            break;
+        case 7:
+            month = "July";
+            break;
+        case 8:
+            month = "August";
+            break;
+        case 9:
+            month = "September";
+            break;
+        case 10:
+            month = "October";
+            break;
+        case 11:
+            month = "November";
+            break;
+        case 12:
+            month = "December";
+            break;
+    }
 
 
-function creatNewsCard(DataObj) {
+    return day + " " + month + " " + year
+}
+
+
+
+function creatNewsCard(DataObj, articleKey) {
     let news_card = document.createElement("div");
     news_card.className = "news-card-container";
     news_card.innerHTML = `
@@ -189,19 +263,14 @@ function creatNewsCard(DataObj) {
         <div class="news-datetime">${DataObj["Date"]}</div>
     `
     insertAfter(news_card, anchor);
-    click_redirection1(news_card, DataObj["Address"])
+    if (arguments.length == 1) {
+        click_redirection1(news_card, DataObj["Address"])
+    } else {
+        click_redirection1(news_card, DataObj["Address"], articleKey)
+    }
+
 }
-function creat_news_card(type, poster, date, title) {
-    let result = `
-    <div class="news-card-container">
-        <span class="news-type">${type}</span>
-        <span class="news-publisher">${poster}</span>
-        <div class="news-title">${title}</div>
-        <div class="news-datetime">${date}</div>
-    </div>
-    `
-    return result
-}
+
 
 function insertAfter(newElement, targetElement) {
     var parent = targetElement.parentNode;
@@ -212,15 +281,18 @@ function insertAfter(newElement, targetElement) {
     }
 }
 
-function click_redirection1(eleObj, url) {
-    let scriptTags = document.getElementsByTagName("script")
-    let fileUrl = scriptTags[0].baseURI;
-    let args = fileUrl.split("/")
-    if (args[args.length - 2] == "news") {
-        url = "../" + url;
-    }
-    if (eleObj != null) {
+function click_redirection1(eleObj, url, articleKey) {
+    url = "../" + url;
+
+    if (eleObj == null) return;
+
+    if (arguments.length == 1) {
         eleObj.addEventListener("click", function () {
+            window.open(url, '_blank');
+        })
+    } else {
+        eleObj.addEventListener("click", function () {
+            localStorage.setItem("articleKey", articleKey);
             window.open(url, '_blank');
         })
     }

@@ -34,7 +34,7 @@ class User {
         this.uid = user.uid;
         this.name = user.displayName;
         this.photoURL = user.photoURL;
-        //localStorage.setItem("uidView", this.uid);
+        localStorage.setItem("uidView", this.uid);
 
         const userData = await fbStore.query("users", ["uid", "==", this.uid]);
         if (userData.length > 0) {
@@ -97,6 +97,7 @@ class User {
         } else if (status === "self") {
             btns = `
                     <button id="eidt-profile">Edit Profile</button>
+                    <button id="eidt-writer">Writer</button>
                     <button id="ellipsis"><span class="iconfont icon-shenglvehao"></span></button>
         `;
         } else (
@@ -156,6 +157,13 @@ class User {
                 //eidtProfileBtnEvent();
                 let modal = new Modal("menu");
                 modal.showModal();
+            })
+        }
+
+        let writer = document.getElementById("eidt-writer");
+        if (writer) {
+            writer.addEventListener("click", () => {
+                window.open("writer.html", "_blank");
             })
         }
     }
