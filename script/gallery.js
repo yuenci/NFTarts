@@ -5,7 +5,11 @@ const fbAuth = new FBAuth();
 
 
 var galleryData = "";
+var userData = {};
 window.onload = async function () {
+    let uid = localStorage.getItem("uid");
+    userData = await fbStore.readDocument("users", uid);
+
     let allImagesData = await fbStore.readCollection("images");
     //console.log(allImagesData);
 
@@ -32,6 +36,7 @@ class Card {
         this.timestamp = data.timestamp.seconds;
         this.posterAvatar = data.posterAvatar;
         this.posterName = data.posterName;
+        this.card = {};
     }
 
     insertCard() {
@@ -40,18 +45,52 @@ class Card {
         card.innerHTML = this.getStucture();
         document.querySelector("body").appendChild(card);
 
+        this.card = card;
         Status.carsList.push(card);
 
-        const likebtn = card.querySelector(".love-icons");
-        likebtn.addEventListener("click", () => {
-            likebtn.classList.toggle("icon-love");
-            firebaseHandler.addLikeDataToImage(this.id, localStorage.getItem("uid"));
-            firebaseHandler.addLikeDataToUser(this.id, localStorage.getItem("uid"));
+        // Like button event listener
+        const likeBtn = card.querySelector(".love-icons");
+        const likeNum = card.querySelector("#waterfall-card-footer-likes-num");
+
+        likeBtn.addEventListener("click", () => {
+            let currentUid = localStorage.getItem("uid");
+
+            if (likeBtn.getAttribute("class").includes("icon-xihuan")) {
+                console.log("liked");
+                likeBtn.classList.replace("icon-xihuan", "icon-love");
+
+
+                firebaseHandler.addLikeDataToImage(this.id, currentUid);
+                firebaseHandler.addLikeDataToUser(this.id, currentUid);
+                likeNum.innerHTML = parseInt(likeNum.innerHTML) + 1;
+            } else {
+                console.log("unliked");
+                likeBtn.classList.replace("icon-love", "icon-xihuan");
+
+
+                firebaseHandler.removeLikeDataFromImage(this.id, currentUid);
+                firebaseHandler.removeLikeDataFromUser(this.id, currentUid);
+                likeNum.innerHTML = parseInt(likeNum.innerHTML) - 1;
+            }
         });
+
+        // Comment button event listener
+
+
+
+        // share button event listener
+        const shareBtn = card.querySelector(".icon-sendfasong");
+        shareBtn.addEventListener("click", () => this.shareBtnEvent());
     };
 
+    shareBtnEvent() {
+        //const shareBtn = this.card.querySelector(".icon-sendfasong");
+        const cardFooter = this.card.querySelector(".waterfall-card-footer");
+        new ShareTool(this.id, cardFooter);
+    }
+
     getStucture() {
-        let num = Math.floor(Math.random() * 1000);
+        let num = this.id;
         let tags = "";
         for (let i = 0; i < this.tags.length; i++) {
             tags += this.tags[i] + " ";
@@ -60,6 +99,11 @@ class Card {
         let commentsNum = Object.keys(this.comments).length;
         let likesNum = this.likes.length;
         let dateTime = new Date(this.timestamp * 1000).toLocaleString();
+
+        let likeIcons = "icon-xihuan";
+        if (userData.likes.includes(this.id)) {
+            likeIcons = "icon-love";
+        }
 
         let template = `
         <div class="waterfall-card-title">
@@ -77,11 +121,11 @@ class Card {
         </div>
         <div class="waterfall-card-footer">
             <div class="waterfall-card-footer-icons">
-                <span class="iconfont icon-xihuan love-icons" cardID="${num}"></span>
+                <span class="iconfont ${likeIcons} love-icons" cardID="${num}"></span>
                 <span class="iconfont icon-pinglun" cardID="${num}"></span>
                 <span class="iconfont icon-sendfasong"></span>
             </div>
-            <div class="waterfall-card-footer-likes">${likesNum} likes</div>
+            <div class="waterfall-card-footer-likes"><span id="waterfall-card-footer-likes-num">${likesNum}</span> likes</div>
             <div class="waterfall-card-footer-description">${this.caption}</div>
             <span class="waterfall-card-footer-comments" cardID="${num}">View all ${commentsNum} comments</span>
         </div>
@@ -98,6 +142,76 @@ class Card {
         return template;
     }
 
+}
+
+class ShareTools {
+    static container = {};
+}
+
+class ShareTool {
+    constructor(id, dom) {
+        this.dom = dom;
+        this.id = id;
+        this.init();
+    }
+
+    init() {
+        // if the share tool is already created
+        // 1. if the share tool created by current card, remove it
+        // 2. if the share tool created by other card, remove it and create a new one
+        let ids = Object.keys(ShareTools.container);
+        if (ids.length > 0) {
+            if (ids.includes(this.id)) {
+                ShareTools.container[this.id].remove();
+                delete ShareTools.container[this.id];
+                return
+            } else {
+                ShareTools.container[ids[0]].remove();
+                delete ShareTools.container[ids[0]];
+            }
+        }
+
+
+        let shareContainer = document.createElement("div");
+        shareContainer.id = "shareContainer";
+        let x = -60
+        let y = 28
+
+        shareContainer.innerHTML =
+            `
+            <span class="share-icon"><span class="iconfont icon-whatsapp"></span></span>
+            <span class="share-icon"><span class="iconfont icon-linkedin-fill"></span></span>
+            <span class="share-icon"><span class="iconfont icon-twitter"></span></span>
+            <span class="share-icon"><span class="iconfont icon-facebook-fill"></span></span>
+        `
+        shareContainer.style.position = "absolute"
+        shareContainer.style.top = `${x}px`;
+        shareContainer.style.left = `${y}px`;
+        this.dom.appendChild(shareContainer)
+        ShareTools.container[this.id] = shareContainer;
+
+        shareContainer.querySelector(".icon-whatsapp").addEventListener("click", () => {
+            window.open("https://web.whatsapp.com/", "_blank")
+        })
+        shareContainer.querySelector(".icon-linkedin-fill").addEventListener("click", () => {
+            window.open("https://www.linkedin.com/", "_blank")
+        })
+
+        shareContainer.querySelector(".icon-twitter").addEventListener("click", () => {
+            window.open("https://twitter.com/", "_blank")
+        })
+        shareContainer.querySelector(".icon-facebook-fill").addEventListener("click", () => {
+            window.open("https://www.facebook.com/", "_blank")
+        })
+
+        // click other place, remove the share tool
+        document.addEventListener("click", (e) => {
+            if (e.target.className !== "iconfont icon-sendfasong") {
+                shareContainer.remove();
+                delete ShareTools.container[this.id];
+            }
+        })
+    }
 }
 
 

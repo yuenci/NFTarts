@@ -173,7 +173,7 @@ export class FBStore {
         if (this.validate(documentID) !== "string") throw new Error("Invalid documentID, expected string, got " + typeof documentID);
         if (this.validate(fieldName) !== "string") throw new Error("Invalid fieldName, expected string, got " + typeof fieldName);
 
-        console.log(collectionName, documentID, fieldName, element);
+        //console.log(collectionName, documentID, fieldName, element);
 
         const docRef = doc(this.db, collectionName, documentID);
 

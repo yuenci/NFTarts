@@ -1,4 +1,7 @@
 import { FBAuth } from "./firebase/authHandler.js";
+import { FBStore } from "./firebase/storeHandler.js";
+
+
 
 
 const signupBtn = document.getElementById("signup-btn");
@@ -57,6 +60,7 @@ async function signup() {
             website: "",
             likes: [],
         };
+        res = await new FBStore().write("users", userData, uid)
 
         if (res) {
             // return;
