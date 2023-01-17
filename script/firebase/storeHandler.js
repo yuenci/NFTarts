@@ -151,6 +151,7 @@ export class FBStore {
     }
 
     update(collectionName, document, documentID) {
+
         if (documentID === undefined) documentID = ""; else documentID = documentID.toString();
         this.validateThreeParams(collectionName, document, documentID);
 

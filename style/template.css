@@ -504,11 +504,13 @@ main {
     justify-content: center;
     align-items: center;
     height: 100%;
+    width: 100%;
 }
 
 #backLayer-main-image {
     height: 95%;
-
+    width: 60%;
+    object-fit: cover;
 }
 
 #backLayer-left-container {
@@ -565,7 +567,6 @@ main {
 
 .backLayer-comments-container {
     width: 100%;
-
 }
 
 .backLayer-comment-avatar {

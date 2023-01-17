@@ -227,7 +227,7 @@ class Scroll {
 }
 
 
-class Modal {
+export class Modal {
     constructor() {
         this.modal = document.getElementById("modal");
         this.modalContent = "";
@@ -247,6 +247,7 @@ class Modal {
 
     hideModal() {
         this.modal.classList.add("hidden");
+        this.modal.innerHTML = "";
         Scroll.enableScroll();
     }
 }
