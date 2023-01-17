@@ -1,19 +1,135 @@
-window.onload = function () {
-    /* base on local file system, need use permission
-    // access default DB, loop for the permission
-    idbKeyval.entries().then(function (entries) {
-        if (entries.length > 0) {
-            for (let index = 0; index < entries.length; index += 2) {
-                let title = entries[index][0]
-                let time = entries[index + 1][1]
-                creat_card(title, time)
-            }
-        }
-    })
-    checkAllPermission();
-    * */
+import { FBStore } from "./firebase/storeHandler.js";
+import { timestampToDatetime } from "./article.js"
 
+const fbStore = new FBStore();
+
+window.onload = async function () {
+    /* base on faierbase, no need use permission* */
+    let data = await fbStore.readCollection("articles");
+    console.log(data);
+
+    let keys = Object.keys(data);
+    for (let index = 0; index < keys.length; index++) {
+        let key = keys[index];
+        let artData = data[key];
+        artData.key = key;
+        creat_card1(artData);
+    }
+
+    // get table-container first child
+    let table_container = document.getElementById("table-container");
+    let first_child = table_container.children[0];
+    first_child.click();
 }
+
+function creat_card1(data, time = new Date().toLocaleString(), bgc = "white") {
+
+    let title = data.title;
+    time = timestampToDatetime(data.timestamp.seconds);
+
+    let key = data.key;
+
+    let table_container = document.getElementById("table-container");
+    let new_card = document.createElement("div")
+    new_card.className = "writer-table-cards";
+    new_card.style.background = bgc;
+    new_card.innerHTML = `
+    <div class="writer-table-cards-title-icon">
+        <div class="writer-table-cards-title">${title}</div>
+        <div><span class="iconfont icon-lajitong"></span></div>
+    </div>
+    <div class="writer-table-cards-time">${time}</div>
+    `
+    new_card.addEventListener("click", function () {
+        document.querySelector("#title-text-input").value = title;
+        document.querySelector("#title-text-type").value = data.type;
+        document.querySelector("#title-text-publisher").value = data.poster;
+        document.querySelector("#write-area-textarea").value = formatContentInTextArea(data.content);
+    })
+    if (table_container.children.length == 0) {
+        table_container.appendChild(new_card)
+    }
+    else {
+        let target = table_container.children[0]
+        table_container.insertBefore(new_card, target)
+    }
+
+    //register delect event
+    table_container.children[0].children[0].children[1].addEventListener("click", function (event) {
+        //let key = this.parentNode.children[0].innerHTML;
+        console.log(key);
+        if (confirm("Are you sure you want to delete this file?")) {
+            table_container.children[0].remove();
+            fbStore.delete("articles", key);
+        }
+        event.stopPropagation();
+    }, false)
+}
+
+
+function formatContentInTextArea(data) {
+    let newData = "";
+
+    for (let sentence of data) {
+        newData += sentence + "\n\n";
+    }
+    return newData;
+}
+
+let post_btn = document.getElementById("writer-post-btn");
+post_btn.addEventListener('click', function () {
+    let title = document.querySelector("#title-text-input").value;
+    let type = document.querySelector("#title-text-type").value;
+    let poster = document.querySelector("#title-text-publisher").value;
+    let content = document.querySelector("#write-area-textarea").value;
+
+    if (title == "" || type == "" || poster == "" || content == "") {
+        alert("Please fill in all the content!");
+        return;
+    }
+
+    let contentArray = content.split("\n\n");
+    let data = {
+        title: title,
+        type: type,
+        poster: poster,
+        content: contentArray,
+        timestamp: new Date()
+    }
+
+    fbStore.write("articles", data);
+    data.timestamp["seconds"] = Math.round(data.timestamp.getTime() / 1000);
+    creat_card1(data);
+});
+
+
+
+
+
+
+
+
+
+
+
+/*
+* old version base on local file system
+*/
+
+// window.onload = function () {
+//     /* base on local file system, need use permission* */
+//     // access default DB, loop for the permission
+//     idbKeyval.entries().then(function (entries) {
+//         if (entries.length > 0) {
+//             for (let index = 0; index < entries.length; index += 2) {
+//                 let title = entries[index][0]
+//                 let time = entries[index + 1][1]
+//                 creat_card(title, time)
+//             }
+//         }
+//     })
+//     checkAllPermission();
+// }
 
 function checkAllPermission() {
     idbKeyval.keys().then(function (keys) {
@@ -138,6 +254,7 @@ function ifEmpty() {
 
 
 // post btn click event
+/*
 let post_btn = document.getElementById("writer-post-btn");
 post_btn.addEventListener('click', () => storeDBTODB());
 post_btn.addEventListener('click', async function getNewFileHandle() {
@@ -172,6 +289,7 @@ post_btn.addEventListener('click', async function getNewFileHandle() {
 
 
 });
+*/
 
 function storeDBTODB() {
     if (ifEmpty()) {
@@ -386,11 +504,11 @@ async function verifyPermission(fileHandle, readWrite) {
 
 let new_btn = document.getElementById("writer-new-btn");
 new_btn.addEventListener("click", function () {
-    // title_input.value = "Title";
-    // title_type.value = "Type";
-    // title_publisher.value = "Publisher";
-    // area_input.value = "Start to write something...";
-    location.reload()
+    title_input.value = "";
+    title_type.value = "";
+    title_publisher.value = "";
+    area_input.value = "";
+    //location.reload()
 })
 
 function storeArtle(title, type, publisher, mainsStr) {

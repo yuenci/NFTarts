@@ -44,10 +44,13 @@ function addImage() {
 
 }
 
-        // {
-        //     imageUrl: ""
-        //     caption: ""
-        //     tags: []
-        //     "likes": [],
-        //         "comments": { },
-        // }
+// {
+//     imageUrl: ""
+//     caption: ""
+//     tags: []
+//     "likes": [],
+//         "comments": { },
+// }
+
+
+console.log(Math.round(new Date().getTime() / 1000));

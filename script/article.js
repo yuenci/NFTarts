@@ -25,7 +25,7 @@ window.onload = async function () {
 }
 
 
-function timestampToDatetime(timestamp) {
+export function timestampToDatetime(timestamp) {
     let date = new Date(timestamp * 1000);
     let year = date.getFullYear();
     let day = date.getDate();
