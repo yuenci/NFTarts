@@ -525,7 +525,7 @@ function init_menu_page() {
 
     let menu_itemNames = ["menu-news", "menu-gallery", "menu-contact", "menu-join",
         "menu-login", "menu-faq", "menu-about"]
-    let menu_item_url = ["html/news.html", "html/gallery.html", "html/contactUs.html", "html/joinUs.html",
+    let menu_item_url = ["html/news.html", "html/waterfall.html", "html/contactUs.html", "html/joinUs.html",
         "html/login.html", "html/FAQ.html", "html/aboutUs.html"]
     for (let index = 0; index < menu_itemNames.length; index++) {
         const element = menu_itemNames[index];
@@ -708,7 +708,7 @@ let apu_logo_btn = document.getElementById("apu-logo");
 click_redirection(apu_logo_btn, "https://www.apu.edu.my/")
 
 let webItems_btns = document.getElementsByClassName("webItem");
-let webItems_urls = ["html/news.html", "html/gallery.html", "html/aboutUs.html", "html/contactUs.html"]
+let webItems_urls = ["html/news.html", "html/waterfall.html", "html/aboutUs.html", "html/contactUs.html"]
 for (let index = 0; index < webItems_btns.length; index++) {
     let element = webItems_btns[index];
     let url = webItems_urls[index];

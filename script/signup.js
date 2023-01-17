@@ -9,8 +9,15 @@ function emailValidation(email) {
     return re.test(email);
 }
 
-function signup() {
-    const email = document.getElementById("signup-username").value;
+async function signup() {
+    const usename = document.getElementById("signup-username").value;
+    if (usename.length < 3) {
+        alert("Username must be at least 3 characters");
+        return;
+    }
+
+
+    const email = document.getElementById("signup-email").value;
     if (!emailValidation(email)) {
         alert("Invalid email");
         return;
@@ -20,14 +27,27 @@ function signup() {
         alert("Password must be at least 6 characters");
         return;
     }
+
+
     const fbAuth = new FBAuth();
-    fbAuth.register(email, password).then((user) => {
-        // alert("User created");
-        window.location.href = "profile.html";
-        //console.log("user created", user);
-    }).catch((error) => {
+    try {
+        let user = await fbAuth.register(email, password)
+        let uid = user.uid;
+        localStorage.setItem("uid", uid);
+
+
+
+        let useNameData = {
+            displayName: usename,
+        };
+        let res = await fbAuth.updateUserInfo(useNameData);
+        if (res) {
+            // return;
+            window.location.href = "profile.html";
+        }
+    }
+    catch (error) {
         alert(error.message);
         console.log(error);
     }
-    );
 }

@@ -41,7 +41,7 @@ function getAllDataJson(data) {
 
 let imagesData = idbKeyval.createStore("imagesData-store", "imagesData")
 function setTestData() {
-    let imagesData = idbKeyval.createStore("imagesData-store", "imagesData")
+    imagesData = idbKeyval.createStore("imagesData-store", "imagesData")
     value_value = {
         "likes": ["innisv", "yannisv", "pheyminv", "javk", "lalsadas"],
         "comments": {

@@ -34,6 +34,14 @@ class User {
         this.uid = user.uid;
         this.name = user.displayName;
         this.photoURL = user.photoURL;
+        console.log("1", this.photoURL);
+        if (this.photoURL === null) {
+            let usename = user.displayName.replace(" ", '%20');
+            this.photoURL = `https://api.multiavatar.com/${usename}.svg`
+        }
+
+
+
         localStorage.setItem("uidView", this.uid);
 
         const userData = await fbStore.query("users", ["uid", "==", this.uid]);
@@ -76,7 +84,7 @@ class User {
         }
         // else if () {
         //     // check if following
-        // } 
+        // }
         this.userFollowStatus(status);
     };
 

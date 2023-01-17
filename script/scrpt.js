@@ -27,7 +27,7 @@ function loginToACC() {
                     window.location.href = "writer.html";
                 } else {
                     localStorage.setItem("userName", username_value.toLowerCase())
-                    window.location.href = "gallery.html";
+                    window.location.href = "waterfall.html";
                 }
             } else {
                 let r = confirm("Need help? Contact us!")
