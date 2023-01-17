@@ -379,9 +379,7 @@ class UploadModal extends Modal {
             loader = document.querySelector('.upload-loader'),
             check = document.querySelector('.upload-check');
 
-        document.querySelector(".upload-modal-upload-btn").addEventListener("click", () => {
-
-
+        document.querySelector(".upload-modal-upload-btn").addEventListener("click", async () => {
 
             let caption = document.getElementById("upload-modal-upload-textarea").value;
             let tags = document.getElementById("upload-modal-upload-tags").value.split(" ");
@@ -392,6 +390,7 @@ class UploadModal extends Modal {
                 }
             }
 
+            let currentUserData = await fbAuth.getCurrentUser();
             let data = {
                 imageUrl: this.imageUrl,
                 caption: caption,
@@ -399,8 +398,12 @@ class UploadModal extends Modal {
                 uid: localStorage.getItem("uid"),
                 likes: [],
                 comments: {},
-                timestamp: new Date()
+                timestamp: new Date(),
+                posterName: currentUserData.displayName,
+                posterAvatar: currentUserData.photoURL
             }
+
+
             fbStore.write("images", data).then(() => {
                 loader.classList.add('active');
 
@@ -461,6 +464,10 @@ class MenuModal extends Modal {
             // confirm logout
             if (confirm("Are you sure to log out?")) {
                 fbAuth.logout();
+                setTimeout(() => {
+                    window.location.href = "../index.html";
+                }, 1000);
+
             }
         });
     }
