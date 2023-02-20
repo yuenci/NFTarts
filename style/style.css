@@ -1141,6 +1141,10 @@ input {
     /* background-color: #0095f6; */
 }
 
+.post-cards:hover {
+    cursor: pointer;
+}
+
 #profile-body-posts {
     width: 100%;
     display: flex;

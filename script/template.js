@@ -525,7 +525,7 @@ function init_menu_page() {
 
     let menu_itemNames = ["menu-news", "menu-gallery", "menu-contact", "menu-join",
         "menu-login", "menu-faq", "menu-about"]
-    let menu_item_url = ["html/news.html", "html/waterfall.html", "html/contactUs.html", "html/joinUs.html",
+    let menu_item_url = ["html/news.html", "html/gallery.html", "html/contactUs.html", "html/joinUs.html",
         "html/login.html", "html/FAQ.html", "html/aboutUs.html"]
     for (let index = 0; index < menu_itemNames.length; index++) {
         const element = menu_itemNames[index];

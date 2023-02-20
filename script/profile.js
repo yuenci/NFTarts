@@ -570,11 +570,18 @@ class PostImageCard {
         const postCardsCon = document.getElementById("profile-body-posts");
 
         let postCard = document.createElement("div");
+        this.addEvent(postCard);
         postCard.classList.add("post-cards");
         postCard.innerHTML = `
             <img src="${this.imageUrl}" alt="" class="post-cards-img">
         `;
         postCardsCon.appendChild(postCard);
+    }
+
+    addEvent(dom) {
+        dom.addEventListener("click", () => {
+            console.log("click");
+        });
     }
 }
 
