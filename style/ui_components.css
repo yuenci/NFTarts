@@ -7,14 +7,73 @@
 }
 
 .toast {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: #262c30;
     color: #fff;
-    border-radius: 5px;
-    padding: 10px 20px;
+    /* border-radius: 5px; */
+    padding: 10px 10px;
     margin-bottom: 10px;
-    max-width: 80%;
+    /* max-width: 80%; */
+    max-width: 400px;
+    max-height: 50px;
     text-align: center;
-    white-space: nowrap;
+    /* white-space: nowrap; */
     overflow: hidden;
     text-overflow: ellipsis;
+    font-family: "Inter";
+}
+
+.confirm-box {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #fff;
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); */
+    border: 5px solid #f0f4f6;
+    padding: 20px;
+    width: 400px;
+}
+
+.confirm-text {
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.confirm-buttons {
+    text-align: center;
+}
+
+.confirm-button {
+    background: #eee;
+    border: none;
+    padding: 10px 20px;
+    margin: 0px 10px;
+    cursor: pointer;
+}
+
+.confirm-button:hover {
+    background: #ddd;
+    transition: 0.2s;
+}
+
+.confirm-yes {
+    background: #f0f4f6;
+    color: black;
+}
+
+.confirm-no {
+    /* background: #d9534f; */
+    background: #f0f4f6;
+    /* color: #fff; */
+    color: black;
+}
+
+.confirm-yes:hover {
+    background: #d3d6d8;
+}
+
+.confirm-no:hover {
+    /* background: #c9302c; */
+    background: #d3d6d8;
 }
