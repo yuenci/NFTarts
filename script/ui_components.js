@@ -1,52 +1,4 @@
-function confirmBox(message, successCallback, errorCallback) {
-    var confirmBox = document.createElement('div');
-    confirmBox.className = 'confirm-box';
-
-    var confirmText = document.createElement('div');
-    confirmText.className = 'confirm-text';
-    confirmText.innerHTML = message;
-
-    var confirmButtons = document.createElement('div');
-    confirmButtons.className = 'confirm-buttons';
-
-    var confirmButtonYes = document.createElement('button');
-    confirmButtonYes.className = 'confirm-button confirm-yes';
-    confirmButtonYes.innerHTML = 'Yes';
-    confirmButtonYes.onclick = function () {
-        successCallback();
-        document.body.removeChild(confirmBox);
-    };
-
-    var confirmButtonNo = document.createElement('button');
-    confirmButtonNo.className = 'confirm-button confirm-no';
-    confirmButtonNo.innerHTML = 'No';
-    confirmButtonNo.onclick = function () {
-        errorCallback();
-        document.body.removeChild(confirmBox);
-    };
-
-    confirmBox.appendChild(confirmText);
-    confirmBox.appendChild(confirmButtons);
-    confirmButtons.appendChild(confirmButtonYes);
-    confirmButtons.appendChild(confirmButtonNo);
-
-    document.body.appendChild(confirmBox);
-}
-
-
-btn1.addEventListener('click', () => {
-    console.log('You clicked the button!');
-    confirmBox('Are you sure?', function () {
-        console.log('You clicked Yes!');
-    }, function () {
-        console.log('You clicked No!');
-    })
-});
-
-// 
-
-
-
+//  toast
 class Toast {
     constructor() {
         this.container = document.createElement('div');
@@ -78,8 +30,6 @@ class Toast {
     }
 }
 
-
-
 const toast = new Toast();
 
 btn2.addEventListener('click', () => {
@@ -89,3 +39,66 @@ btn2.addEventListener('click', () => {
     //toast.show('Hello, World!', 10000, 'error'); // 显示 "Hello, World!" 并在 10 秒后消失
     toast.show('Hello, World!', 3000, 'success');
 });
+
+
+// confirmBox
+
+function confirmBox(message, successCallback, errorCallback) {
+    var confirmBox = document.createElement('div');
+    confirmBox.className = 'confirm-box';
+
+    var confirmText = document.createElement('div');
+    confirmText.className = 'confirm-text';
+    confirmText.innerHTML = message;
+
+    var confirmButtons = document.createElement('div');
+    confirmButtons.className = 'confirm-buttons';
+
+    var confirmButtonYes = document.createElement('button');
+    confirmButtonYes.className = 'confirm-button confirm-yes';
+    confirmButtonYes.innerHTML = 'Yes';
+    confirmButtonYes.onclick = function () {
+        successCallback();
+        document.body.removeChild(confirmBox);
+        document.body.removeChild(confirmOverlay);
+    };
+
+    var confirmButtonNo = document.createElement('button');
+    confirmButtonNo.className = 'confirm-button confirm-no';
+    confirmButtonNo.innerHTML = 'No';
+    confirmButtonNo.onclick = function () {
+        errorCallback();
+        document.body.removeChild(confirmBox);
+        document.body.removeChild(confirmOverlay);
+    };
+
+    var confirmOverlay = document.createElement('div');
+    confirmOverlay.className = 'confirm-overlay';
+    confirmOverlay.onclick = function () {
+        document.body.removeChild(confirmBox);
+        document.body.removeChild(confirmOverlay);
+    };
+
+    confirmBox.appendChild(confirmText);
+    confirmBox.appendChild(confirmButtons);
+    confirmButtons.appendChild(confirmButtonYes);
+    confirmButtons.appendChild(confirmButtonNo);
+
+    document.body.appendChild(confirmOverlay);
+    document.body.appendChild(confirmBox);
+}
+
+
+
+
+btn1.addEventListener('click', () => {
+    console.log('You clicked the button!');
+    confirmBox('Are you sure?', function () {
+        console.log('You clicked Yes!');
+    }, function () {
+        console.log('You clicked No!');
+    })
+});
+
+// 
+

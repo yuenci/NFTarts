@@ -1453,6 +1453,11 @@ input {
     transform: translate(-50%, -50%);
 }
 
+
+.waterfall-card-image-container {
+    cursor: pointer;
+}
+
 @-webkit-keyframes loading {
     30% {
         opacity: 1;

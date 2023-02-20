@@ -1,6 +1,6 @@
 import { FBStore } from "./firebase/storeHandler.js";
 import { FBAuth } from "./firebase/authHandler.js";
-import { Modal } from "./profile.js";
+import { Modal } from "./modal.js";
 const fbStore = new FBStore();
 const fbAuth = new FBAuth();
 
@@ -105,6 +105,8 @@ class Card {
         const commentDetail = card.querySelector(".waterfall-card-footer-comments");
         commentDetailBtn.addEventListener("click", () => this.commentDetailEvent());
         commentDetail.addEventListener("click", () => this.commentDetailEvent());
+
+        this.imageClickEvent();
     };
     getStucture() {
         let num = this.id;
@@ -240,6 +242,13 @@ class Card {
 
     commentDetailEvent() {
         new ImageCard(this.data).showModal();
+    }
+
+    imageClickEvent() {
+        const image = this.card.querySelector(".waterfall-card-image-container");
+        image.addEventListener("click", () => {
+            new ImageCard(this.data).showModal();
+        })
     }
 }
 
@@ -407,7 +416,7 @@ class ImageCard extends Modal {
     }
 
     init(data) {
-        console.log(data);
+        //console.log(data);
         document.querySelector("#modal").appendChild(this.getStucture(data));
         this.addComment(data.comments);
     }
@@ -574,7 +583,7 @@ class CommentCard {
     constructor(data) {
         this.data = data;
         this.init()
-        console.log("comment card", data);
+        // console.log("comment card", data);
     }
 
     init() {
@@ -604,3 +613,6 @@ class CommentCard {
         ///document.querySelector("#backLayer-comments-container").appendChild(new_comment);
     }
 }
+
+
+export { ImageCard };
