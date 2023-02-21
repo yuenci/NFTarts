@@ -214,6 +214,8 @@ if (document.getElementById("footer") != null) {
 function click_redirection(eleObj, url) {
     if (eleObj === null) return;
 
+    if (url === "html/profile.html") goToProfile(eleObj);
+
     if (url.substring(0, 8) == "https://" || url.substring(0, 7) == "http://") {
         eleObj.addEventListener("click", function () {
             window.location.href = url;
@@ -240,6 +242,13 @@ function click_redirection(eleObj, url) {
     }
 }
 
+function goToProfile(dom) {
+    dom.onclick = function () {
+        let uid = localStorage.getItem("uid");
+        localStorage.setItem("uidView", uid);
+        window.location.href = "html/profile.html";
+    }
+}
 
 
 let logoObj = document.getElementById("logo")

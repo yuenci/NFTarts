@@ -12,6 +12,8 @@ const fbStore = new FBStore();
 window.onload = async function () {
     user = new User();
     let res;
+
+    // if user init successfully, then init avatar and name
     try {
         res = await user.init();
     } catch (error) {
@@ -21,7 +23,8 @@ window.onload = async function () {
     if (res) {
         user.initAvatarAndName()
     } else {
-        window.location.href = "login.html";
+        console.log(res);
+        //window.location.href = "login.html";
     }
 
     let posts = new PostsArea("");
@@ -36,16 +39,20 @@ window.onload = async function () {
 
 class User {
     constructor() {
-        this.uid = "";
-        this.name = "";
-        this.photoURL = "";
+        this.currentUser = {};
+        this.viewUser = {};
     }
 
     async init() {
-        const user = await fbAuth.getCurrentUser()
-        this.uid = user.uid;
-        this.name = user.displayName;
-        this.photoURL = user.photoURL;
+        this.currentUser = await await fbStore.readDocument("users", localStorage.getItem("uid"));
+        //console.log(this.currentUser);
+
+        this.viewUser = await fbStore.readDocument("users", localStorage.getItem("uidView"));
+        //console.log(this.viewUser);
+
+        this.uid = this.viewUser.uid;
+        this.name = this.viewUser.username;
+        this.photoURL = this.viewUser.photoURL;
         if (this.photoURL === null) {
             let usename = user.displayName.replace(" ", '%20');
             this.photoURL = `https://api.multiavatar.com/${usename}.svg`
@@ -53,19 +60,26 @@ class User {
 
 
 
-        localStorage.setItem("uidView", this.uid);
+        //localStorage.setItem("uidView", this.uid);
 
         const userData = await fbStore.query("users", ["uid", "==", this.uid]);
-        //console.log(userData);
+
         if (userData.length > 0) {
-            document.getElementById("profile-posts").innerHTML = `<span class="profile-num">${userData[0].posts}</span> Posts`;
-            document.getElementById("profile-followers").innerHTML = `<span class="profile-num">${userData[0].followers}</span> Followers`;
-            document.getElementById("profile-following").innerHTML = `<span class="profile-num">${userData[0].following}</span> Following`;
+            let followerNum = userData[0].followers.length;
+            let followingNum = userData[0].following.length;
+            document.getElementById("profile-posts").innerHTML = `<span class="profile-num">${0}</span> Posts`;
+            document.getElementById("profile-followers").innerHTML = `<span class="profile-num">${followerNum == 1 ? "1 Follower" : followerNum + " Followers"}</span> `;
+            document.getElementById("profile-following").innerHTML = `<span class="profile-num">${followingNum}</span> Following`;
             document.getElementById("profile-bio").innerHTML = userData[0].bio;
+
+            let images = await fbStore.query("images", ["uid", "==", this.uid])
+            let posts = images.length == 1 ? "1 Post" : images.length + " Posts";
+            posts == 1 ? "1 Post" : posts + " Posts";
+            document.getElementById("profile-posts").innerHTML = `<span class="profile-num">${posts}</span>`;
         }
 
         return new Promise((resolve, reject) => {
-            if (user) {
+            if (this.currentUser) {
                 resolve(true);
             }
             else {
@@ -93,18 +107,22 @@ class User {
 
     initBtns() {
         let status = "unfollow";
-        if (this.uid === localStorage.getItem("uidView")) {
+        if (this.currentUser.uid === localStorage.getItem("uidView")) {
             status = "self";
         }
-        // else if () {
-        //     // check if following
-        // }
+        else if (this.isFollowing()) {
+            status = "following";
+        }
+        else {
+            status = "unfollow";
+        }
         this.userFollowStatus(status);
     };
 
     userFollowStatus(status) {
         let btns = ""
         let profileBtns = document.getElementById("profile-btns");
+        profileBtns.innerHTML = "";
         if (status === "following") {
             btns = `
                     <button id="following">Following</button>
@@ -152,6 +170,7 @@ class User {
         if (followingBtn) {
             followingBtn.addEventListener("click", () => {
                 console.log("following");
+                this.unfollow();
             })
         }
 
@@ -165,6 +184,7 @@ class User {
         if (followBtn) {
             followBtn.addEventListener("click", () => {
                 console.log("follow");
+                this.follow();
             })
         }
 
@@ -189,6 +209,44 @@ class User {
             })
         }
     }
+
+    async follow() {
+        const following = fbStore.addArrayElement("users", this.currentUser.uid, "following", this.viewUser.uid);
+        const followers = fbStore.addArrayElement("users", this.viewUser.uid, "followers", this.currentUser.uid);
+
+        const [p1, p2] = await Promise.all([following, followers])
+
+        if (p1 && p2) {
+            this.userFollowStatus("following");
+        } else {
+            alert("error");
+        }
+    }
+
+    async unfollow() {
+        const following = fbStore.removeArrayElement("users", this.currentUser.uid, "following", this.viewUser.uid);
+        const followers = fbStore.removeArrayElement("users", this.viewUser.uid, "followers", this.currentUser.uid);
+
+        const [p1, p2] = await Promise.all([following, followers])
+
+        if (p1 && p2) {
+            this.userFollowStatus("unfollow");
+        } else {
+            alert("error");
+        }
+    }
+
+    isFollowing() {
+        console.log(this.currentUser);
+        let following = this.currentUser.following;
+        if (following.includes(this.viewUser.uid)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
 }
 
 import { Modal } from "./modal.js";
@@ -483,7 +541,7 @@ class PostsArea {
     async displayCards(mode) {
         if (this.postInitState && this.likeInitState) return;
         let images = await fbStore.query("images", ["uid", "==", this.userUid]);
-        //console.log(images);
+        console.log(images);
 
         if (mode === "post") {
             for (let image of images) {
@@ -493,7 +551,7 @@ class PostsArea {
             }
             this.postInitState = true;
         } else if (mode === "like") {
-            console.log(this.userData.likes);
+            //console.log(this.userData.likes);
             let images = await this.getLikesImagesData(this.userData.likes)
             console.log(images);
             for (let image of images) {
@@ -525,6 +583,7 @@ class PostsArea {
         let imagesData = [];
         for (let image of images) {
             let imageDoc = await fbStore.readDocument("images", image);
+            //console.log(imageDoc);
             imagesData.push(imageDoc);
         }
         return imagesData;
@@ -568,6 +627,7 @@ class PostImageCard {
     addEvent(dom) {
         dom.addEventListener("click", () => {
             // console.log("click");
+            //console.log(this.data);
             new ImageCard(this.data).showModal();
         });
     }

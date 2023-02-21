@@ -681,9 +681,6 @@ body {
     overflow-y: auto !important;
 }
 
-#backLayer-comments-container::-webkit-scrollbar {
-    /* width: 0 !important */
-}
 
 #aboutUS-container {
     margin-left: 15%;

@@ -83,7 +83,9 @@ export class FBStore {
             getDoc(docRef).then((docSnap) => {
                 if (docSnap.exists()) {
                     if (this.debug) console.log(`Document ${documentID} data:`, docSnap.data());
-                    resolve(docSnap.data());
+                    let res = docSnap.data();
+                    res.id = docSnap.id;
+                    resolve(res);
                 } else {
                     if (this.debug) console.log(`No such document ${documentID}!`);
                     reject(`No such document ${documentID}!`);

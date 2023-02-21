@@ -24,10 +24,10 @@ function login() {
 
 
     fbAuth.login(email, password).then((user) => {
-        window.location.href = "profile.html";
         localStorage.setItem("uid", user.uid);
-        //alert("User logged in");
-        //console.log("user logged in", user);
+        localStorage.setItem("loginStatus", "true");
+        localStorage.setItem("uidView", user.uid);
+        window.location.href = "profile.html";
     }).catch((error) => {
         alert(error.message);
         console.log(error);
@@ -43,39 +43,74 @@ if (googleBtn) googleBtn.addEventListener("click", loginGoogle);
 async function loginGoogle() {
     let user = await fbAuth.googleLogin();
     if (user) {
-
         localStorage.setItem("uid", user.uid);
+        localStorage.setItem("loginStatus", "true");
+        localStorage.setItem("uidView", user.uid);
     }
+
+    // addDataTofirebase(user).then((res) => {
+    //     if (res) {
+    //         window.location.href = "profile.html";
+    //     } else {
+    //         alert("Error when login with google");
+    //     }
+    // });
 
     // if user exists in users collection
     fbStore.readDocument("users", user.uid).then((doc) => {
         window.location.href = "profile.html";
     }).catch((error) => {
-        addDataTofirebase(user.displayName, user.email, user.uid)
+        // if user does not exist in users collection
+        addDataTofirebase(user).then((res) => {
+            if (res) {
+                window.location.href = "profile.html";
+            } else {
+                alert("Error when login with google");
+            }
+        });
     });
 }
 
 
 
 
-function addDataTofirebase(usename, email, uid) {
+function addDataTofirebase(user) {
+    console.log(user);
     let userData = {
         bio: "",
         birth: "",
-        email: email,
+        email: user.email,
         gender: 2,
-        phone: "",
-        uid: uid,
-        username: usename,
+        phone: user.phoneNumber,
+        uid: user.uid,
+        username: user.displayName,
         website: "",
         likes: [],
+        photoURL: user.photoURL,
+        following: [],
+        followers: [],
     };
-    fbStore.write("users", userData, uid).then(() => {
-        console.log("Document successfully written!");
-        window.location.href = "profile.html";
-
-    }).catch((error) => {
-        console.error("Error writing document: ", error);
+    return new Promise((resolve, reject) => {
+        fbStore.write("users", userData, user.uid).then(() => {
+            console.log("Document successfully written!");
+            resolve(true);
+        }).catch((error) => {
+            console.error("Error writing document: ", error);
+            reject(false);
+        });
     });
+}
 
+
+export function logout() {
+    if (confirm("Are you sure to log out?")) {
+        fbAuth.logout();
+        localStorage.setItem("loginStatus", "false");
+        localStorage.setItem("uid", "");
+        localStorage.setItem("uidView", "");
+        setTimeout(() => {
+            window.location.href = "../index.html";
+        }, 1000);
+
+    }
 }

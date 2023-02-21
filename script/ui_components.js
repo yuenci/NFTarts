@@ -43,9 +43,16 @@ btn2.addEventListener('click', () => {
 
 // confirmBox
 
-function confirmBox(message, successCallback, errorCallback) {
+function confirmBox(message, successCallback, errorCallback, title = "") {
     var confirmBox = document.createElement('div');
     confirmBox.className = 'confirm-box';
+
+    if (title !== "") {
+        var confirmTitle = document.createElement('div');
+        confirmTitle.className = 'confirm-title';
+        confirmTitle.innerHTML = title;
+        confirmBox.appendChild(confirmTitle);
+    }
 
     var confirmText = document.createElement('div');
     confirmText.className = 'confirm-text';
