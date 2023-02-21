@@ -1,5 +1,5 @@
 //  toast
-class Toast {
+export class Toast {
     constructor() {
         this.container = document.createElement('div');
         this.container.classList.add('toast-container');
@@ -7,11 +7,11 @@ class Toast {
         this.toasts = [];
     }
 
-    show(message, duration = 3000, type = "success") {
+    show(message, duration = 30000, type = "success") {
         let colorMap = {
             "success": "#94d82d",
             "error": "#eb0028",
-            "warning": "#ff9900",
+            "warning": "#ffd43b",
             "info": "#adb5bd"
         };
 
@@ -30,7 +30,7 @@ class Toast {
     }
 }
 
-const toast = new Toast();
+export const toast = new Toast();
 
 // btn2.addEventListener('click', () => {
 
@@ -43,7 +43,7 @@ const toast = new Toast();
 
 // confirmBox
 
-function confirmBox(message, successCallback, errorCallback, title = "") {
+export function confirmBox(message, successCallback, errorCallback, title = "") {
     var confirmBox = document.createElement('div');
     confirmBox.className = 'confirm-box';
 

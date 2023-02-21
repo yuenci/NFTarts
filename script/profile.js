@@ -2,6 +2,7 @@ import { FBAuth } from "./firebase/authHandler.js";
 import { FBStorage } from "./firebase/storageHandler.js";
 import { FBStore } from "./firebase/storeHandler.js";
 import { logout } from "./login.js";
+import { toast } from "./ui_components.js";
 
 
 let user = null;
@@ -229,7 +230,9 @@ class User {
         if (p1 && p2) {
             this.userFollowStatus("following");
         } else {
-            alert("error");
+            //alert("error");
+            let message = "follow user unsuccess";
+            toast.show(message, 3000, 'error');
         }
     }
 
@@ -242,7 +245,9 @@ class User {
         if (p1 && p2) {
             this.userFollowStatus("unfollow");
         } else {
-            alert("error");
+            //alert("error");
+            let message = "unfollow user unsuccess";
+            toast.show(message, 3000, 'error');
         }
     }
 
@@ -395,7 +400,9 @@ class UploadModal extends Modal {
             let tags = document.getElementById("upload-modal-upload-tags").value.split(" ");
             for (let i = 0; i < tags.length; i++) {
                 if (!this.tagValid(tags[i])) {
-                    alert("Invalid tag: " + tags[i]);
+                    //alert("Invalid tag: " + tags[i]);
+                    let message = "Invalid tag: " + tags[i];
+                    toast.show(message, 3000, 'warning');
                     return;
                 }
             }

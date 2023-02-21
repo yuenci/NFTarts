@@ -1,5 +1,6 @@
 import { FBAuth } from "./firebase/authHandler.js";
 import { FBStore } from "./firebase/storeHandler.js";
+import { toast } from "./ui_components.js";
 
 const fbAuth = new FBAuth();
 const fbStore = new FBStore();
@@ -15,7 +16,8 @@ function emailValidation(email) {
 function login() {
     const email = document.getElementById("login-username").value;
     if (!emailValidation(email)) {
-        alert("Invalid email");
+        //alert("Invalid email");
+        toast.show('Invalid email', 3000, 'warning');
         return;
     }
     const password = document.getElementById("login-password").value;
@@ -29,7 +31,8 @@ function login() {
         localStorage.setItem("uidView", user.uid);
         window.location.href = "profile.html";
     }).catch((error) => {
-        alert(error.message);
+        //alert(error.message);
+        toast.show(error.message, 3000, 'error');
         console.log(error);
     }
     );
@@ -65,7 +68,8 @@ async function loginGoogle() {
             if (res) {
                 window.location.href = "profile.html";
             } else {
-                alert("Error when login with google");
+                //alert("Error when login with google");
+                toast.show('Error when login with google', 3000, 'error');
             }
         });
     });

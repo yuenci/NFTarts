@@ -1,5 +1,6 @@
 import { FBAuth } from "./firebase/authHandler.js";
 import { FBStore } from "./firebase/storeHandler.js";
+import { toast } from "./ui_components.js";
 
 
 
@@ -15,19 +16,22 @@ function emailValidation(email) {
 async function signup() {
     const usename = document.getElementById("signup-username").value;
     if (usename.length < 3) {
-        alert("Username must be at least 3 characters");
+        //alert("Username must be at least 3 characters");
+        toast.show('Username must be at least 3 characters', 3000, 'warning');
         return;
     }
 
 
     const email = document.getElementById("signup-email").value;
     if (!emailValidation(email)) {
-        alert("Invalid email");
+        //alert("Invalid email");
+        toast.show('Invalid email', 3000, 'warning');
         return;
     }
     const password = document.getElementById("signup-password").value;
     if (password.length < 6) {
-        alert("Password must be at least 6 characters");
+        //alert("Password must be at least 6 characters");
+        toast.show('Password must be at least 6 characters', 3000, 'warning');
         return;
     }
 
@@ -68,7 +72,8 @@ async function signup() {
         }
     }
     catch (error) {
-        alert(error.message);
+        // alert(error.message);
+        toast.show(error.message, 3000, 'warning');
         console.log(error);
     }
 }

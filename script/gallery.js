@@ -258,7 +258,8 @@ class Card {
 
         let commentInput = this.card.querySelector(".waterfall-comment-input");
         if (commentInput.value.length === 0) {
-            alert("Please enter your comment");
+            //alert("Please enter your comment");
+            toast.show('Please enter your comment', 3000, 'warning');
             return;
         }
         let currentUser = await fbAuth.getCurrentUser();
@@ -656,7 +657,8 @@ class ImageCard extends Modal {
 
             let commentInput = backLayer.querySelector(".waterfall-comment-input");
             if (commentInput.value.length === 0) {
-                alert("Please enter your comment");
+                //alert("Please enter your comment");
+                toast.show('Please enter your comment', 3000, 'warning');
                 return;
             }
             let currentUser = await fbAuth.getCurrentUser();
