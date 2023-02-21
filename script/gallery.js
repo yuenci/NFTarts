@@ -48,11 +48,17 @@ function throttle(fn, delay) {
 
 const throttledScroll = throttle(function () {
     if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
-        console.log("bottom");
+        //console.log("bottom");
 
-        // if (currentIndex ===2){
-
-        // }
+        if (currentIndex === 2 && !localStorage.getItem("uid")) {
+            let message = "To see more artworks, please log in. With an account, you can explore our entire collection of NFT art"
+            confirmBox(message, function () {
+                window.location.href = "./login.html";
+            }, function () {
+                console.log('You clicked No!');
+            })
+            return;
+        }
 
         loadImages(currentIndex + 1, 3, allImagesData);
     }

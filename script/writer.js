@@ -4,6 +4,12 @@ import { timestampToDatetime } from "./article.js"
 const fbStore = new FBStore();
 
 window.onload = async function () {
+    let uid = localStorage.getItem("uid");
+    if (!adminList.includes(uid)) {
+        window.location.href = "./login.html";
+    };
+
+
     /* base on faierbase, no need use permission* */
     let data = await fbStore.readCollection("articles");
     console.log(data);
