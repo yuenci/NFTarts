@@ -619,3 +619,98 @@ main {
 #backlayer-footer {
     height: 185px;
 }
+
+
+#qr__container {
+    height: calc(100vh - 50px);
+    background-color: #929292;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: "Inter";
+    color: white;
+}
+
+#qr__box {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+#qr__box__left {
+    width: 235px;
+    height: 270px;
+    background-color: wheat;
+    margin-right: 90px;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#qrcode {
+    width: 180px;
+    height: 180px;
+    margin: 25px 0;
+}
+
+#qr__box__right {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#bgc__swicher {
+    margin: 10px 0;
+}
+
+.bgc__swicher__btn {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: 1px solid white;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.bgc__swicher__btn:first-child {
+    margin-left: 0px;
+}
+
+.qr__container-orange {
+    background-image: linear-gradient(to right top, rgb(253, 141, 50), rgb(163, 7, 186));
+}
+
+.qr__container-purple {
+    background-image: linear-gradient(to right top, rgb(39, 196, 245), rgb(163, 7, 186));
+}
+
+.qr__container-blue {
+    background-image: linear-gradient(to right top, rgb(84, 215, 255), rgb(19, 114, 204));
+}
+
+.qr__container-green {
+    background-image: linear-gradient(to right top, rgb(112, 192, 80), rgb(39, 196, 245));
+}
+
+.qr__container-gray {
+    background-image: linear-gradient(to right top, rgb(115, 115, 115), rgb(38, 38, 38));
+}
+
+#download-btn {
+    width: 150px;
+    height: 30px;
+    border-radius: 25px;
+    background-color: white;
+    color: #929292;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
+
+#user-name {
+    color: #262c30;
+    font-size: 20px;
+}

@@ -483,6 +483,27 @@ class MenuModal extends Modal {
             // confirm logout
             logout()
         });
+
+        problemBtn.onclick = () => {
+            window.open("https://github.com/yuenci/NFTarts/issues", "_blank");
+        };
+
+        notificationsBtn.onclick = () => {
+            Notification.requestPermission().then((result) => {
+                if (result === "granted") {
+                    let message = "Notification permission granted";
+                    toast.show(message, 3000, 'success');
+                } else {
+                    let message = "Notification permission denied";
+                    toast.show(message, 3000, 'warning');
+                }
+            });
+        };
+
+        nameTagBtn.onclick = () => {
+            localStorage.setItem("userName", document.getElementById("profile-name").innerHTML);
+            window.open("qr.html", "_blank");
+        };
     }
 }
 

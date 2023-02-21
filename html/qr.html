@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/x-icon" href="images/logo.svg?">
+    <title>QR Code</title>
+    <link rel="stylesheet" href="../style/template.css">
+    <link rel="stylesheet" href="../style/style.css">
+    <link rel="stylesheet" href="../style/iconfont.css">
+    <link rel="stylesheet" href="../style/frame.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.0/FileSaver.min.js" async></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js" async></script>
+</head>
+
+<body>
+    <nav id="nav"></nav>
+    <div id="qr__container" class="qr__container-orange">
+        <div id="qr__box">
+
+            <div id="qr__box__left">
+                <div id="qrcode"></div>
+                <div id="user-name"></div>
+            </div>
+
+            <div id="qr__box__right">
+                <h2>Scan to explore our NFT Art Collection</h2>
+                <div>To enter, simply scan the QR code with your mobile device's camera. You will be taken directly to
+                    our website, where you
+                    can browse our collection of unique and beautiful NFT artworks. We can't wait to share our art with
+                    you!</div>
+                <div id="bgc__swicher"></div>
+                <button id="download-btn">Download QR</button>
+            </div>
+        </div>
+    </div>
+    <script src="../script/template.js"></script>
+    <script src="../script/scrpt.js"></script>
+    <script src="../script/qr.js"></script>
+</body>
+
+</html>
