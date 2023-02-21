@@ -1,6 +1,6 @@
 import { FBAuth } from "./firebase/authHandler.js";
 import { FBStore } from "./firebase/storeHandler.js";
-import { toast } from "./ui_components.js";
+// import { toast } from "./ui_components.js";
 
 const fbAuth = new FBAuth();
 const fbStore = new FBStore();
