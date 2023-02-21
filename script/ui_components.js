@@ -1,5 +1,5 @@
 //  toast
-export class Toast {
+class Toast {
     constructor() {
         this.container = document.createElement('div');
         this.container.classList.add('toast-container');
@@ -30,7 +30,7 @@ export class Toast {
     }
 }
 
-export const toast = new Toast();
+const toast = new Toast();
 
 // btn2.addEventListener('click', () => {
 
@@ -43,7 +43,7 @@ export const toast = new Toast();
 
 // confirmBox
 
-export function confirmBox(message, successCallback, errorCallback, title = "") {
+function confirmBox(message, successCallback, errorCallback, title = "") {
     var confirmBox = document.createElement('div');
     confirmBox.className = 'confirm-box';
 
