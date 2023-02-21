@@ -44,6 +44,7 @@ const toast = new Toast();
 // confirmBox
 
 function confirmBox(message, successCallback, errorCallback, title = "") {
+    if (document.getElementsByClassName('confirm-box').length > 0) return;
     var confirmBox = document.createElement('div');
     confirmBox.className = 'confirm-box';
 

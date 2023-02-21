@@ -1,8 +1,5 @@
 import { FBAuth } from "./firebase/authHandler.js";
 import { FBStore } from "./firebase/storeHandler.js";
-import { toast } from "./ui_components.js";
-
-
 
 
 const signupBtn = document.getElementById("signup-btn");
@@ -20,7 +17,6 @@ async function signup() {
         toast.show('Username must be at least 3 characters', 3000, 'warning');
         return;
     }
-
 
     const email = document.getElementById("signup-email").value;
     if (!emailValidation(email)) {
