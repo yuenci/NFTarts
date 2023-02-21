@@ -4,24 +4,59 @@ import { Modal } from "./modal.js";
 const fbStore = new FBStore();
 const fbAuth = new FBAuth();
 
+let currentIndex = 0;
+let allImagesData = {};
 
-// var galleryData = "";
-// var userData = {};
 window.onload = async function () {
-    // let uid = localStorage.getItem("uid");
-    // userData = await fbStore.readDocument("users", uid);
+    let uid = localStorage.getItem("uid");
 
-    let allImagesData = await fbStore.readCollection("images");
-    //console.log(allImagesData);
+    allImagesData = await fbStore.readCollection("images");
     allImagesData = sortImages(allImagesData);
 
+    // how many images to load for unlogged user
+    let n = 3;
 
-    allImagesData.forEach(picData => {
-        let pic = new Card(picData);
-        //console.log(picData.id);
-        pic.insertCard();
-    });
+    loadImages(0, n, allImagesData);
+
+    document.addEventListener("wheel", throttledScroll);
 };
+
+function loadImages(start, n, data) {
+    let length = data.length;
+    if (start + n > length) {
+        n = length - start;
+    }
+    for (let i = start; i < start + n; i++) {
+        let picData = data[i];
+        let pic = new Card(picData);
+        pic.insertCard();
+    }
+    currentIndex = start + n - 1;
+}
+
+function throttle(fn, delay) {
+    let lastCall = 0;
+    return function () {
+        const now = new Date().getTime();
+        if (now - lastCall < delay) {
+            return;
+        }
+        lastCall = now;
+        fn.apply(this, arguments);
+    }
+}
+
+const throttledScroll = throttle(function () {
+    if (window.innerHeight + window.pageYOffset >= document.body.offsetHeight) {
+        console.log("bottom");
+
+        // if (currentIndex ===2){
+
+        // }
+
+        loadImages(currentIndex + 1, 3, allImagesData);
+    }
+}, 200);
 
 function sortImages(data) {
     // data is an dictionary of objects
