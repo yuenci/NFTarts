@@ -184,78 +184,6 @@ class User {
     }
 }
 
-// class Scroll {
-//     static keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
-//     static supportsPassive = false;
-//     static wheelEvent = "onwheel" in document.createElement("div") ? "wheel" : "mousewheel";
-//     static wheelOpt = { passive: false };
-
-//     static preventDefault(e) {
-//         e.preventDefault();
-//     }
-
-//     static preventDefaultForScrollKeys(e) {
-
-//         if (Scroll.keys[e.keyCode]) {
-//             Scroll.preventDefault(e);
-//             return false;
-//         }
-//     }
-
-//     constructor() {
-//         try {
-//             window.addEventListener("test", null, Object.defineProperty({}, "passive", {
-//                 get: () => {
-//                     Scroll.supportsPassive = true;
-//                 },
-//             }));
-//         } catch (e) { }
-
-//         Scroll.wheelOpt = Scroll.supportsPassive ? { passive: false } : false;
-//     }
-
-//     // call this to Disable
-//     static disableScroll() {
-//         window.addEventListener("DOMMouseScroll", Scroll.preventDefault, { passive: false }); // older FF
-//         window.addEventListener(Scroll.wheelEvent, Scroll.preventDefault, Scroll.wheelOpt); // modern desktop
-//         window.addEventListener("touchmove", Scroll.preventDefault, Scroll.wheelOpt); // mobile
-//         window.addEventListener("keydown", Scroll.preventDefaultForScrollKeys, { passive: false });
-//     }
-
-//     // call this to Enable
-//     static enableScroll() {
-//         window.removeEventListener("DOMMouseScroll", Scroll.preventDefault, false);
-//         window.removeEventListener(Scroll.wheelEvent, Scroll.preventDefault, Scroll.wheelOpt);
-//         window.removeEventListener("touchmove", Scroll.preventDefault, Scroll.wheelOpt);
-//         window.removeEventListener("keydown", Scroll.preventDefaultForScrollKeys, false);
-//     }
-// }
-
-
-// export class Modal {
-//     constructor() {
-//         this.modal = document.getElementById("modal");
-//         this.modalContent = "";
-//     }
-
-//     showModal() {
-//         this.modal.classList.remove("hidden");
-//         let scrollTop = document.documentElement.scrollTop;
-//         this.modal.style.top = scrollTop + "px";
-//         Scroll.disableScroll();
-//         this.modal.addEventListener("click", (e) => {
-//             if (e.target.id === "modal") {
-//                 this.hideModal();
-//             }
-//         });
-//     }
-
-//     hideModal() {
-//         this.modal.classList.add("hidden");
-//         this.modal.innerHTML = "";
-//         Scroll.enableScroll();
-//     }
-// }
 import { Modal } from "./modal.js";
 
 class UploadModal extends Modal {
@@ -483,17 +411,25 @@ class MenuModal extends Modal {
 class PostsArea {
     constructor(data) {
         this.data = data;
-        this.init();
         this.userUid = "";
+        this.userData = {};
+        this.init();
+        this.postInitState = false;
+        this.likeInitState = false;
     }
 
     init() {
-        this.initTabEvent();
+        this.userUid = localStorage.getItem("uid");
 
+        this.initTabEvent();
         // show post cards
         this.showAddCard();
-        // display post cards
-        this.displayCards("post");
+
+        fbStore.readDocument("users", this.userUid).then((data) => {
+            this.userData = data;
+            // display post cards
+            this.displayCards("post");
+        });
     }
 
     initTabEvent() {
@@ -507,6 +443,7 @@ class PostsArea {
 
         likeBtn.addEventListener("click", () => {
             this.showCards("like");
+            this.displayCards("like");
         });
     }
 
@@ -541,18 +478,27 @@ class PostsArea {
     }
 
     async displayCards(mode) {
-        this.userUid = localStorage.getItem("uid");
-
+        if (this.postInitState && this.likeInitState) return;
         let images = await fbStore.query("images", ["uid", "==", this.userUid]);
         //console.log(images);
 
         if (mode === "post") {
             for (let image of images) {
-                let card = new PostImageCard(image);
+                image.userData = this.userData;
+                let card = new PostImageCard(image, "post");
                 card.display();
             }
+            this.postInitState = true;
         } else if (mode === "like") {
-            console.log();
+            console.log(this.userData.likes);
+            let images = await this.getLikesImagesData(this.userData.likes)
+            console.log(images);
+            for (let image of images) {
+                image.userData = this.userData;
+                let card = new PostImageCard(image, "like");
+                card.display();
+            }
+            this.likeInitState = true;
         }
 
     }
@@ -571,12 +517,22 @@ class PostsArea {
             card.display();
         }
     };
+
+    async getLikesImagesData(images) {
+        let imagesData = [];
+        for (let image of images) {
+            let imageDoc = await fbStore.readDocument("images", image);
+            imagesData.push(imageDoc);
+        }
+        return imagesData;
+    }
 }
 
 import { ImageCard } from "./gallery.js";
 
 class PostImageCard {
-    constructor(data) {
+    constructor(data, mode) {
+        this.mode = mode;
         this.caption = data.caption;
         this.comments = data.comments;
         this.imageUrl = data.imageUrl;
@@ -590,6 +546,7 @@ class PostImageCard {
 
     display() {
         const postCardsCon = document.getElementById("profile-body-posts");
+        const likeCardsCon = document.getElementById("profile-body-likes");
 
         let postCard = document.createElement("div");
         this.addEvent(postCard);
@@ -598,7 +555,11 @@ class PostImageCard {
         postCard.innerHTML = `
             <img src="${this.imageUrl}" alt="" class="post-cards-img">
         `;
-        postCardsCon.appendChild(postCard);
+        if (this.mode === "post") {
+            postCardsCon.appendChild(postCard);
+        } else if (this.mode === "like") {
+            likeCardsCon.appendChild(postCard);
+        }
     }
 
     addEvent(dom) {
@@ -609,8 +570,7 @@ class PostImageCard {
     }
 
     async initData() {
-        let uid = localStorage.getItem("uid");
-        let userData = await fbStore.readDocument("users", uid);
+        let userData = this.data.userData;
 
         let tags = "";
         for (let i = 0; i < this.tags.length; i++) {

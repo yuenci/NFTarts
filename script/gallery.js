@@ -414,7 +414,7 @@ class ImageCard extends Modal {
     constructor(data) {
         super();
         this.init(data);
-        console.log(data);
+        //console.log(data);
     }
 
     init(data) {

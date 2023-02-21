@@ -1145,7 +1145,8 @@ input {
     cursor: pointer;
 }
 
-#profile-body-posts {
+#profile-body-posts,
+#profile-body-likes {
     width: 100%;
     display: flex;
     flex-direction: row;
