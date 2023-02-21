@@ -12,7 +12,7 @@ window.onload = async function () {
     userData = await fbStore.readDocument("users", uid);
 
     let allImagesData = await fbStore.readCollection("images");
-    //console.log(allImagesData);
+    // console.log(allImagesData);
 
     for (let key in allImagesData) {
         let picData = allImagesData[key];
@@ -68,15 +68,16 @@ class Card {
 
                 firebaseHandler.addLikeDataToImage(this.id, currentUid);
                 firebaseHandler.addLikeDataToUser(this.id, currentUid);
-                likeNum.innerHTML = parseInt(likeNum.innerHTML) + 1;
+                let newlikeNum = parseInt(likeNum.innerHTML) + 1;
+                likeNum.innerHTML = newlikeNum == 1 ? "1 like" : newlikeNum + " likes";
             } else {
                 console.log("unliked");
                 likeBtn.classList.replace("icon-love", "icon-xihuan");
 
-
                 firebaseHandler.removeLikeDataFromImage(this.id, currentUid);
                 firebaseHandler.removeLikeDataFromUser(this.id, currentUid);
-                likeNum.innerHTML = parseInt(likeNum.innerHTML) - 1;
+                let newlikeNum = parseInt(likeNum.innerHTML) - 1;
+                likeNum.innerHTML = newlikeNum == 1 ? "1 like" : newlikeNum + " likes";
             }
         });
 
@@ -126,7 +127,7 @@ class Card {
         }
 
         this.data.tags = tags;
-        this.data.likesNum = likesNum;
+        this.data.likesNum = likesNum
         this.data.dateTime = dateTime;
         this.data.likeIcons = likeIcons;
 
@@ -151,7 +152,7 @@ class Card {
                 <span class="iconfont icon-pinglun" cardID="${num}"></span>
                 <span class="iconfont icon-sendfasong"></span>
             </div>
-            <div class="waterfall-card-footer-likes"><span id="waterfall-card-footer-likes-num">${likesNum}</span> likes</div>
+            <div class="waterfall-card-footer-likes"><span id="waterfall-card-footer-likes-num">${likesNum == 1 ? "1 like" : likesNum + " likes"}</span></div>
             <div class="waterfall-card-footer-description">${this.caption}</div>
             <span class="waterfall-card-footer-comments" cardID="${num}">View all 
                 <span id="waterfall-card-comments-num">${commentsNum}</span> comments</span>
@@ -413,6 +414,7 @@ class ImageCard extends Modal {
     constructor(data) {
         super();
         this.init(data);
+        console.log(data);
     }
 
     init(data) {
@@ -448,7 +450,7 @@ class ImageCard extends Modal {
                         <span class="iconfont icon-pinglun" type="backLayer" cardID="${num}"></span>
                         <span class="iconfont icon-sendfasong" type="backLayer"></span>
                     </div>
-                    <div class="waterfall-card-footer-likes">${data.likesNum} likes</div>
+                    <div class="waterfall-card-footer-likes">${data.likesNum == 1 ? data.likesNum + " like" : data.likesNum + " likes"}</div>
                     <div id="backlayer-poster-time">${data.dateTime}</div>
                 </div>
 
@@ -476,30 +478,55 @@ class ImageCard extends Modal {
         })
         // like button event
         backLayer.querySelector(".love-icons").addEventListener("click", () => {
-            const likeBtn = data.card.querySelector(".love-icons");
-            const likeNum = data.card.querySelector("#waterfall-card-footer-likes-num");
+            let likeBtn, likeNum;
+            if (data.card) {
+                likeBtn = data.card.querySelector(".love-icons");
+                likeNum = data.card.querySelector("#waterfall-card-footer-likes-num");
+            }
 
             let currentUid = localStorage.getItem("uid");
 
-            if (likeBtn.getAttribute("class").includes("icon-xihuan")) {
-                console.log("liked");
-                likeBtn.classList.replace("icon-xihuan", "icon-love");
+            if (likeBtn) {
+                if (likeBtn.getAttribute("class").includes("icon-xihuan")) {
+                    console.log("liked");
+                    likeBtn.classList.replace("icon-xihuan", "icon-love");
 
 
-                firebaseHandler.addLikeDataToImage(data.id, currentUid);
-                firebaseHandler.addLikeDataToUser(data.id, currentUid);
-                likeNum.innerHTML = parseInt(likeNum.innerHTML) + 1;
+                    firebaseHandler.addLikeDataToImage(data.id, currentUid);
+                    firebaseHandler.addLikeDataToUser(data.id, currentUid);
+                    likeNum.innerHTML = parseInt(likeNum.innerHTML) + 1;
+                } else {
+                    console.log("unliked");
+                    likeBtn.classList.replace("icon-love", "icon-xihuan");
+                    firebaseHandler.removeLikeDataFromImage(data.id, currentUid);
+                    firebaseHandler.removeLikeDataFromUser(data.id, currentUid);
+                    likeNum.innerHTML = parseInt(likeNum.innerHTML) - 1;
+                }
+
+                backLayer.querySelector(".waterfall-card-footer-likes").innerHTML = data.card.querySelector(".waterfall-card-footer-likes").innerHTML;
+                let classList = data.card.querySelector(".love-icons").getAttribute("class");
+                backLayer.querySelector(".love-icons").setAttribute("class", classList);
             } else {
-                console.log("unliked");
-                likeBtn.classList.replace("icon-love", "icon-xihuan");
-                firebaseHandler.removeLikeDataFromImage(data.id, currentUid);
-                firebaseHandler.removeLikeDataFromUser(data.id, currentUid);
-                likeNum.innerHTML = parseInt(likeNum.innerHTML) - 1;
+                likeBtn = backLayer.querySelector(".love-icons");
+                likeNum = backLayer.querySelector(".waterfall-card-footer-likes");
+                if (backLayer.querySelector(".love-icons").getAttribute("class").includes("icon-xihuan")) {
+                    console.log("liked");
+                    likeBtn.classList.replace("icon-xihuan", "icon-love");
+                    firebaseHandler.addLikeDataToImage(data.id, currentUid);
+                    firebaseHandler.addLikeDataToUser(data.id, currentUid);
+                    let newLikeNum = parseInt(likeNum.innerHTML) + 1;
+                    likeNum.innerHTML = newLikeNum == 1 ? newLikeNum + " like" : newLikeNum + " likes";
+                } else {
+                    console.log("unliked");
+                    likeBtn.classList.replace("icon-love", "icon-xihuan");
+                    firebaseHandler.removeLikeDataFromImage(data.id, currentUid);
+                    firebaseHandler.removeLikeDataFromUser(data.id, currentUid);
+                    let newLikeNum = parseInt(likeNum.innerHTML) - 1;
+                    likeNum.innerHTML = newLikeNum == 1 ? newLikeNum + " like" : newLikeNum + " likes";
+                }
+
             }
 
-            backLayer.querySelector(".waterfall-card-footer-likes").innerHTML = data.card.querySelector(".waterfall-card-footer-likes").innerHTML;
-            let classList = data.card.querySelector(".love-icons").getAttribute("class");
-            backLayer.querySelector(".love-icons").setAttribute("class", classList);
 
         })
 
@@ -556,8 +583,10 @@ class ImageCard extends Modal {
             let res = await fbStore.update("images", { comments: newComments }, data.id)
             if (res) {
                 let commentsNum = Object.keys(newComments).length;
-                let commentsNumDom = data.card.querySelector("#waterfall-card-comments-num");
-                commentsNumDom.innerText = commentsNum;
+                if (data.card) {
+                    let commentsNumDom = data.card.querySelector("#waterfall-card-comments-num");
+                    commentsNumDom.innerText = commentsNum;
+                }
             }
             commentInput.value = "";
             commentInput.focus();

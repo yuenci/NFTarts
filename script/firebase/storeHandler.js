@@ -283,7 +283,9 @@ export class FBStore {
     snapshotToArray(snapshot) {
         const arr = [];
         snapshot.forEach(doc => {
-            arr.push(doc.data());
+            let data = doc.data();
+            data.id = doc.id;
+            arr.push(data);
         });
         return arr;
     }

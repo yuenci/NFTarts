@@ -547,6 +547,11 @@ function init_menu_page() {
 }
 
 window.onresize = function () {
+    let url_array = window.location.href.split("/");
+    let ignorelist = ["profile.html", "gallery.html"]
+    if (ignorelist.indexOf(url_array[url_array.length - 1]) != -1) return;
+
+
     let wh = document.documentElement.scrollWidth
     let shadow = document.getElementById("shadow");
     if (shadow != null) {
@@ -562,6 +567,8 @@ window.onresize = function () {
             add_social_icons();
         }
     }
+
+
 }
 
 

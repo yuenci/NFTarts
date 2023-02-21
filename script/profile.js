@@ -20,6 +20,11 @@ window.onload = async function () {
     let posts = new PostsArea("");
 
     // initCards();
+
+    let social_sidebar = document.getElementById("social-icons-side")
+    if (social_sidebar) {
+        social_sidebar.remove();
+    }
 }
 
 class User {
@@ -34,7 +39,6 @@ class User {
         this.uid = user.uid;
         this.name = user.displayName;
         this.photoURL = user.photoURL;
-        console.log("1", this.photoURL);
         if (this.photoURL === null) {
             let usename = user.displayName.replace(" ", '%20');
             this.photoURL = `https://api.multiavatar.com/${usename}.svg`
@@ -45,7 +49,7 @@ class User {
         localStorage.setItem("uidView", this.uid);
 
         const userData = await fbStore.query("users", ["uid", "==", this.uid]);
-        console.log(userData);
+        //console.log(userData);
         if (userData.length > 0) {
             document.getElementById("profile-posts").innerHTML = `<span class="profile-num">${userData[0].posts}</span> Posts`;
             document.getElementById("profile-followers").innerHTML = `<span class="profile-num">${userData[0].followers}</span> Followers`;
@@ -484,21 +488,26 @@ class PostsArea {
     }
 
     init() {
+        this.initTabEvent();
+
+        // show post cards
+        this.showAddCard();
+        // display post cards
+        this.displayCards("post");
+    }
+
+    initTabEvent() {
         const postBtn = document.getElementById("profile-tab-posts");
         const likeBtn = document.getElementById("profile-tab-likes");
         postBtn.addEventListener("click", () => {
             this.showCards("post");
+            this.showAddCard();
+            this.displayCards("post");
         });
 
         likeBtn.addEventListener("click", () => {
             this.showCards("like");
         });
-
-        // show post cards
-        this.showAddCard();
-
-        // display post cards
-        this.displayCards();
     }
 
     showCards(mode) {
@@ -531,16 +540,21 @@ class PostsArea {
         });
     }
 
-    async displayCards() {
+    async displayCards(mode) {
         this.userUid = localStorage.getItem("uid");
 
         let images = await fbStore.query("images", ["uid", "==", this.userUid]);
         //console.log(images);
 
-        for (let image of images) {
-            let card = new PostImageCard(image);
-            card.display();
+        if (mode === "post") {
+            for (let image of images) {
+                let card = new PostImageCard(image);
+                card.display();
+            }
+        } else if (mode === "like") {
+            console.log();
         }
+
     }
 
     async updateCards() {
@@ -550,6 +564,7 @@ class PostsArea {
         postCardsCon.appendChild(uploadBtn);
 
         let images = await fbStore.query("images", ["uid", "==", this.userUid]);
+        console.log(images);
 
         for (let image of images) {
             let card = new PostImageCard(image);
@@ -568,6 +583,9 @@ class PostImageCard {
         this.likes = data.likes;
         this.tags = data.tags;
         this.uid = data.uid;
+        this.data = data;
+        this.timestamp = data.timestamp.seconds;
+        this.initData();
     }
 
     display() {
@@ -576,6 +594,7 @@ class PostImageCard {
         let postCard = document.createElement("div");
         this.addEvent(postCard);
         postCard.classList.add("post-cards");
+
         postCard.innerHTML = `
             <img src="${this.imageUrl}" alt="" class="post-cards-img">
         `;
@@ -584,8 +603,37 @@ class PostImageCard {
 
     addEvent(dom) {
         dom.addEventListener("click", () => {
-            console.log("click");
+            // console.log("click");
+            new ImageCard(this.data).showModal();
         });
+    }
+
+    async initData() {
+        let uid = localStorage.getItem("uid");
+        let userData = await fbStore.readDocument("users", uid);
+
+        let tags = "";
+        for (let i = 0; i < this.tags.length; i++) {
+            tags += this.tags[i] + " ";
+        }
+
+
+        let commentsNum = Object.keys(this.comments).length;
+        let likesNum = this.likes.length;
+        //console.log(this.timestamp);
+        let dateTime = new Date(this.timestamp * 1000).toLocaleString();
+
+        let likeIcons = "icon-xihuan";
+        if (userData.likes.includes(this.data.id)) {
+            likeIcons = "icon-love";
+        }
+
+        this.card = document.querySelector(".post-cards");
+        this.data.tags = tags;
+        this.data.likesNum = likesNum;
+        this.data.dateTime = dateTime;
+        this.data.likeIcons = likeIcons;
+        this.data.commentsNum = commentsNum;
     }
 }
 
