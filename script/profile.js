@@ -1,6 +1,7 @@
 import { FBAuth } from "./firebase/authHandler.js";
 import { FBStorage } from "./firebase/storageHandler.js";
 import { FBStore } from "./firebase/storeHandler.js";
+import { logout } from "./login.js";
 
 
 let user = null;
@@ -10,7 +11,13 @@ const fbStore = new FBStore();
 
 window.onload = async function () {
     user = new User();
-    let res = await user.init();
+    let res;
+    try {
+        res = await user.init();
+    } catch (error) {
+        console.log(error);
+    }
+
     if (res) {
         user.initAvatarAndName()
     } else {
@@ -393,17 +400,13 @@ class MenuModal extends Modal {
         const problemBtn = document.getElementById("menu-modal-content-problem");
         const logoutBtn = document.getElementById("menu-modal-content-logout");
 
-
+        passwordBtn.onclick = () => {
+            window.open("profile_edit.html", "_blank");
+        };
 
         logoutBtn.addEventListener("click", () => {
             // confirm logout
-            if (confirm("Are you sure to log out?")) {
-                fbAuth.logout();
-                setTimeout(() => {
-                    window.location.href = "../index.html";
-                }, 1000);
-
-            }
+            logout()
         });
     }
 }
@@ -419,7 +422,7 @@ class PostsArea {
     }
 
     init() {
-        this.userUid = localStorage.getItem("uid");
+        this.userUid = localStorage.getItem("uidView");
 
         this.initTabEvent();
         // show post cards
