@@ -558,40 +558,45 @@ main {
 }
 
 .backLayer-comment {
-    margin: 20px 10px 20px 10px;
+    margin: 20px 5px;
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-
+    width: 90%;
 }
 
-.backLayer-comments-container {
+#backLayer-comments-container {
     width: 100%;
 }
 
 .backLayer-comment-avatar {
-    width: 45px;
+    width: 40px;
     height: 40px;
+    /* min-width: 20px;
+    min-height: 20px;
+    max-width: 40px;
+    max-height: 40px; */
     border-radius: 20px;
     border: 1px solid #ACADB6;
     font-size: 30px;
     line-height: 40px;
     text-align: center;
     color: #929292;
+    margin-right: 10px;
 }
 
 .backLayer-comment-name-time-content {
-    width: 100%;
-    margin-left: 10px;
+    width: 80%;
+    /* margin-left: 10px; */
 }
 
 .backLayer-comment-username {
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
 }
 
 .backLayer-comment-content {
-    font-size: 18px;
+    font-size: 14px;
     margin-left: 5px;
     /* width: 100px;
     max-width: 50%; */
@@ -601,6 +606,6 @@ main {
 }
 
 .backLayer-comment-time {
-    font-size: 16px;
+    font-size: 12px;
     color: #8e8e8e;
 }
