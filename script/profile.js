@@ -135,11 +135,18 @@ class User {
                     <button id="ellipsis"><span class="iconfont icon-shenglvehao"></span></button>
         `;
         } else if (status === "self") {
-            btns = `
+            let uid = localStorage.getItem("uid");
+            if (adminList.includes(uid)) {
+                btns = `
                     <button id="eidt-profile">Edit Profile</button>
                     <button id="eidt-writer">Writer</button>
-                    <button id="ellipsis"><span class="iconfont icon-shenglvehao"></span></button>
-        `;
+                    <button id="ellipsis"><span class="iconfont icon-shenglvehao"></span></button>`
+            } else {
+                btns = `
+                <button id="eidt-profile">Edit Profile</button>
+                <button id="ellipsis"><span class="iconfont icon-shenglvehao"></span></button>`
+            }
+            ;
         } else (
             userFollowStatus("unfollow")
         )

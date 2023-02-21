@@ -26,6 +26,7 @@
 
 /* confirm  */
 .confirm-box {
+    font-family: "Inter";
     position: fixed;
     top: 50%;
     left: 50%;

@@ -32,13 +32,13 @@ class Toast {
 
 const toast = new Toast();
 
-btn2.addEventListener('click', () => {
+// btn2.addEventListener('click', () => {
 
-    //toast.show('Hello, World!Hello, World!Hello'); // 显示 "Hello, World!" 并在 3 秒后消失
-    //toast.show('Goodbye!', 5000); // 显示 "Goodbye!" 并在 5 秒后消失
-    //toast.show('Hello, World!', 10000, 'error'); // 显示 "Hello, World!" 并在 10 秒后消失
-    toast.show('Hello, World!', 3000, 'success');
-});
+//     //toast.show('Hello, World!Hello, World!Hello'); // 显示 "Hello, World!" 并在 3 秒后消失
+//     //toast.show('Goodbye!', 5000); // 显示 "Goodbye!" 并在 5 秒后消失
+//     //toast.show('Hello, World!', 10000, 'error'); // 显示 "Hello, World!" 并在 10 秒后消失
+//     toast.show('Hello, World!', 3000, 'success');
+// });
 
 
 // confirmBox
@@ -98,14 +98,14 @@ function confirmBox(message, successCallback, errorCallback, title = "") {
 
 
 
-btn1.addEventListener('click', () => {
-    console.log('You clicked the button!');
-    confirmBox('Are you sure?', function () {
-        console.log('You clicked Yes!');
-    }, function () {
-        console.log('You clicked No!');
-    })
-});
+// btn1.addEventListener('click', () => {
+//     console.log('You clicked the button!');
+//     confirmBox('Are you sure?', function () {
+//         console.log('You clicked Yes!');
+//     }, function () {
+//         console.log('You clicked No!');
+//     })
+// });
 
 // 
 

@@ -5,11 +5,11 @@ const fbStore = new FBStore();
 const fbAuth = new FBAuth();
 
 
-var galleryData = "";
-var userData = {};
+// var galleryData = "";
+// var userData = {};
 window.onload = async function () {
-    let uid = localStorage.getItem("uid");
-    userData = await fbStore.readDocument("users", uid);
+    // let uid = localStorage.getItem("uid");
+    // userData = await fbStore.readDocument("users", uid);
 
     let allImagesData = await fbStore.readCollection("images");
     //console.log(allImagesData);
@@ -435,32 +435,32 @@ class firebaseHandler {
     static removeLikeDataFromUser(imageId, userId) {
         fbStore.removeArrayElement("users", userId, "likes", imageId)
     }
-} -
+}
 
-    class ImageCard extends Modal {
-        constructor(data) {
-            super();
-            this.init(data);
-            //console.log(data);
-        }
+class ImageCard extends Modal {
+    constructor(data) {
+        super();
+        this.init(data);
+        //console.log(data);
+    }
 
-        init(data) {
+    init(data) {
 
-            document.querySelector("#modal").appendChild(this.getStucture(data));
-            this.addComment(data.comments);
-        }
+        document.querySelector("#modal").appendChild(this.getStucture(data));
+        this.addComment(data.comments);
+    }
 
-        getStucture(data) {
-            let backLayer = document.createElement("div");
-            let num = data.id;
-            if (!data.card) {
-                let currentUser = localStorage.getItem("uid");
-                if (data.likes.includes(currentUser)) {
-                    data.likeIcons = "icon-love";
-                }
+    getStucture(data) {
+        let backLayer = document.createElement("div");
+        let num = data.id;
+        if (!data.card) {
+            let currentUser = localStorage.getItem("uid");
+            if (data.likes.includes(currentUser)) {
+                data.likeIcons = "icon-love";
             }
+        }
 
-            backLayer.innerHTML = `
+        backLayer.innerHTML = `
     <div id="backLayer-container">
         <img src="${data.imageUrl}" alt="" id="backLayer-main-image">
         <div id="backLayer-left-container">
@@ -496,147 +496,147 @@ class firebaseHandler {
         </div>
     </div>
     `
-            let cliH = document.documentElement.clientHeight;
-            let cliW = document.documentElement.clientWidth;
-            backLayer.style.height = `${cliH}px`;
-            backLayer.style.width = `${cliW * 0.5}px`;
-            this.addEvent(backLayer, data)
-            return backLayer;
-        }
+        let cliH = document.documentElement.clientHeight;
+        let cliW = document.documentElement.clientWidth;
+        backLayer.style.height = `${cliH}px`;
+        backLayer.style.width = `${cliW * 0.5}px`;
+        this.addEvent(backLayer, data)
+        return backLayer;
+    }
 
-        addEvent(backLayer, data) {
-            //close button event
-            backLayer.querySelector("#backLayer-icon-guanbi").addEventListener("click", () => {
-                this.hideModal();
-            })
-            // like button event
-            backLayer.querySelector(".love-icons").addEventListener("click", () => {
-                let likeBtn, likeNum;
-                if (data.card) {
-                    likeBtn = data.card.querySelector(".love-icons");
-                    likeNum = data.card.querySelector("#waterfall-card-footer-likes-num");
-                }
-
-                let currentUid = localStorage.getItem("uid");
-
-                if (likeBtn && likeNum) {
-                    if (likeBtn.getAttribute("class").includes("icon-xihuan")) {
-                        console.log("liked");
-                        likeBtn.classList.replace("icon-xihuan", "icon-love");
-                        firebaseHandler.addLikeDataToImage(data.id, currentUid);
-                        firebaseHandler.addLikeDataToUser(data.id, currentUid);
-                        likeNum.innerHTML = parseInt(likeNum.innerHTML) + 1;
-                    } else {
-                        console.log("unliked");
-                        likeBtn.classList.replace("icon-love", "icon-xihuan");
-                        firebaseHandler.removeLikeDataFromImage(data.id, currentUid);
-                        firebaseHandler.removeLikeDataFromUser(data.id, currentUid);
-                        likeNum.innerHTML = parseInt(likeNum.innerHTML) - 1;
-                    }
-
-                    backLayer.querySelector(".waterfall-card-footer-likes").innerHTML = data.card.querySelector(".waterfall-card-footer-likes").innerHTML;
-                    let classList = data.card.querySelector(".love-icons").getAttribute("class");
-                    backLayer.querySelector(".love-icons").setAttribute("class", classList);
-                } else {
-                    likeBtn = backLayer.querySelector(".love-icons");
-                    likeNum = backLayer.querySelector(".waterfall-card-footer-likes");
-                    if (backLayer.querySelector(".love-icons").getAttribute("class").includes("icon-xihuan")) {
-                        console.log("liked");
-                        likeBtn.classList.replace("icon-xihuan", "icon-love");
-                        firebaseHandler.addLikeDataToImage(data.id, currentUid);
-                        firebaseHandler.addLikeDataToUser(data.id, currentUid);
-                        let newLikeNum = parseInt(likeNum.innerHTML) + 1;
-                        likeNum.innerHTML = newLikeNum == 1 ? newLikeNum + " like" : newLikeNum + " likes";
-                    } else {
-                        console.log("unliked");
-                        likeBtn.classList.replace("icon-love", "icon-xihuan");
-                        firebaseHandler.removeLikeDataFromImage(data.id, currentUid);
-                        firebaseHandler.removeLikeDataFromUser(data.id, currentUid);
-                        let newLikeNum = parseInt(likeNum.innerHTML) - 1;
-                        likeNum.innerHTML = newLikeNum == 1 ? newLikeNum + " like" : newLikeNum + " likes";
-                    }
-
-                }
-
-
-            })
-
-            //share button event
-            backLayer.querySelector(".icon-sendfasong").addEventListener("click", () => {
-                new ShareTool(data.id, backLayer.querySelector(".waterfall-card-footer-icons"));
-            })
-
-            //emojy button event
-            backLayer.querySelector(".icon-weixiao").addEventListener("click", () => {
-                new EmojyTool(data.id, backLayer.querySelector(".waterfall-card-comment-writer"));
-            })
-
-            // input event
-            backLayer.querySelector(".waterfall-comment-input").addEventListener("input", () => {
-                let commentInput = backLayer.querySelector(".waterfall-comment-input");
-                let commentPost = backLayer.querySelector(".waterfall-comment-post");
-
-                if (commentInput.value.length > 0) {
-                    commentPost.style.color = "#007bff ";
-                } else {
-                    commentPost.style.color = "rgb(179, 223, 252)";
-                }
-                commentInput.focus();
-            })
-
-            // post button event
-            backLayer.querySelector(".waterfall-comment-post").addEventListener("click", async () => {
-                let commentInput = backLayer.querySelector(".waterfall-comment-input");
-                if (commentInput.value.length === 0) {
-                    alert("Please enter your comment");
-                    return;
-                }
-                let currentUser = await fbAuth.getCurrentUser();
-
-                let timestamp = new Date().getTime();
-
-
-                let commentData = {
-                    userName: currentUser.displayName,
-                    userUid: currentUser.uid,
-                    comment: commentInput.value,
-                    dateTime: new Date()
-                }
-
-                // make a copy of the comments
-                let newComments = data.comments;
-
-                newComments[timestamp] = commentData;
-
-                //console.log(newComments);
-
-
-                let res = await fbStore.update("images", { comments: newComments }, data.id)
-                if (res) {
-                    let commentsNum = Object.keys(newComments).length;
-                    if (data.card) {
-                        let commentsNumDom = data.card.querySelector("#waterfall-card-comments-num");
-                        commentsNumDom.innerText = commentsNum;
-                    }
-                }
-                commentInput.value = "";
-                commentInput.focus();
-
-                new CommentCard(commentData);
-            })
-        }
-
-        addComment(data) {
-
-
-
-            let keys = Object.keys(data);
-            for (let i = 0; i < keys.length; i++) {
-                data[keys[i]].key = keys[i];
-                new CommentCard(data[keys[i]]);
+    addEvent(backLayer, data) {
+        //close button event
+        backLayer.querySelector("#backLayer-icon-guanbi").addEventListener("click", () => {
+            this.hideModal();
+        })
+        // like button event
+        backLayer.querySelector(".love-icons").addEventListener("click", () => {
+            let likeBtn, likeNum;
+            if (data.card) {
+                likeBtn = data.card.querySelector(".love-icons");
+                likeNum = data.card.querySelector("#waterfall-card-footer-likes-num");
             }
+
+            let currentUid = localStorage.getItem("uid");
+
+            if (likeBtn && likeNum) {
+                if (likeBtn.getAttribute("class").includes("icon-xihuan")) {
+                    console.log("liked");
+                    likeBtn.classList.replace("icon-xihuan", "icon-love");
+                    firebaseHandler.addLikeDataToImage(data.id, currentUid);
+                    firebaseHandler.addLikeDataToUser(data.id, currentUid);
+                    likeNum.innerHTML = parseInt(likeNum.innerHTML) + 1;
+                } else {
+                    console.log("unliked");
+                    likeBtn.classList.replace("icon-love", "icon-xihuan");
+                    firebaseHandler.removeLikeDataFromImage(data.id, currentUid);
+                    firebaseHandler.removeLikeDataFromUser(data.id, currentUid);
+                    likeNum.innerHTML = parseInt(likeNum.innerHTML) - 1;
+                }
+
+                backLayer.querySelector(".waterfall-card-footer-likes").innerHTML = data.card.querySelector(".waterfall-card-footer-likes").innerHTML;
+                let classList = data.card.querySelector(".love-icons").getAttribute("class");
+                backLayer.querySelector(".love-icons").setAttribute("class", classList);
+            } else {
+                likeBtn = backLayer.querySelector(".love-icons");
+                likeNum = backLayer.querySelector(".waterfall-card-footer-likes");
+                if (backLayer.querySelector(".love-icons").getAttribute("class").includes("icon-xihuan")) {
+                    console.log("liked");
+                    likeBtn.classList.replace("icon-xihuan", "icon-love");
+                    firebaseHandler.addLikeDataToImage(data.id, currentUid);
+                    firebaseHandler.addLikeDataToUser(data.id, currentUid);
+                    let newLikeNum = parseInt(likeNum.innerHTML) + 1;
+                    likeNum.innerHTML = newLikeNum == 1 ? newLikeNum + " like" : newLikeNum + " likes";
+                } else {
+                    console.log("unliked");
+                    likeBtn.classList.replace("icon-love", "icon-xihuan");
+                    firebaseHandler.removeLikeDataFromImage(data.id, currentUid);
+                    firebaseHandler.removeLikeDataFromUser(data.id, currentUid);
+                    let newLikeNum = parseInt(likeNum.innerHTML) - 1;
+                    likeNum.innerHTML = newLikeNum == 1 ? newLikeNum + " like" : newLikeNum + " likes";
+                }
+
+            }
+
+
+        })
+
+        //share button event
+        backLayer.querySelector(".icon-sendfasong").addEventListener("click", () => {
+            new ShareTool(data.id, backLayer.querySelector(".waterfall-card-footer-icons"));
+        })
+
+        //emojy button event
+        backLayer.querySelector(".icon-weixiao").addEventListener("click", () => {
+            new EmojyTool(data.id, backLayer.querySelector(".waterfall-card-comment-writer"));
+        })
+
+        // input event
+        backLayer.querySelector(".waterfall-comment-input").addEventListener("input", () => {
+            let commentInput = backLayer.querySelector(".waterfall-comment-input");
+            let commentPost = backLayer.querySelector(".waterfall-comment-post");
+
+            if (commentInput.value.length > 0) {
+                commentPost.style.color = "#007bff ";
+            } else {
+                commentPost.style.color = "rgb(179, 223, 252)";
+            }
+            commentInput.focus();
+        })
+
+        // post button event
+        backLayer.querySelector(".waterfall-comment-post").addEventListener("click", async () => {
+            let commentInput = backLayer.querySelector(".waterfall-comment-input");
+            if (commentInput.value.length === 0) {
+                alert("Please enter your comment");
+                return;
+            }
+            let currentUser = await fbAuth.getCurrentUser();
+
+            let timestamp = new Date().getTime();
+
+
+            let commentData = {
+                userName: currentUser.displayName,
+                userUid: currentUser.uid,
+                comment: commentInput.value,
+                dateTime: new Date()
+            }
+
+            // make a copy of the comments
+            let newComments = data.comments;
+
+            newComments[timestamp] = commentData;
+
+            //console.log(newComments);
+
+
+            let res = await fbStore.update("images", { comments: newComments }, data.id)
+            if (res) {
+                let commentsNum = Object.keys(newComments).length;
+                if (data.card) {
+                    let commentsNumDom = data.card.querySelector("#waterfall-card-comments-num");
+                    commentsNumDom.innerText = commentsNum;
+                }
+            }
+            commentInput.value = "";
+            commentInput.focus();
+
+            new CommentCard(commentData);
+        })
+    }
+
+    addComment(data) {
+
+
+
+        let keys = Object.keys(data);
+        for (let i = 0; i < keys.length; i++) {
+            data[keys[i]].key = keys[i];
+            new CommentCard(data[keys[i]]);
         }
     }
+}
 
 
 class CommentCard {

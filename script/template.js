@@ -22,6 +22,10 @@ window.onload = function () {
 
     //writeIndexToDB();
     add_social_icons();
+
+
+    // Prompt go to gallery
+    promptToGallery();
 };
 
 
@@ -869,6 +873,32 @@ let copyright = document.getElementById("copyright")
 click_redirection(copyright, "html/404.html")
 
 
+// Prompt for new function update.
+function promptToGallery() {
+    // get the current url
+    let args = window.location.href.split("/");
+    let currentFile = args[args.length - 1];
+    if (currentFile !== "index.html") {
+        return;
+    }
 
+    let isPrompted = localStorage.getItem("isPrompted");
+    if (isPrompted == "true") {
+        return;
+    }
+
+
+    console.log("Current file is " + currentFile);
+    let title = "Welcome to our NFT Art Gallery!";
+    let message = "We have just launched our NFT Art Gallery. Click the 'Yes' button below to check it out!";
+
+    confirmBox(message, function () {
+        window.location.href = "html/gallery.html";
+    }, function () {
+        // do nothing
+    }, title = title)
+
+    localStorage.setItem("isPrompted", "true");
+}
 
 
