@@ -206,6 +206,9 @@ class Card {
     }
 
     likeBtnEvent() {
+        let message = "login to like this image";
+        if (!this.checkIsLogin(message)) return;
+
         const likeBtn = this.card.querySelector(".love-icons");
         const likeNum = this.card.querySelector("#waterfall-card-footer-likes-num");
         let currentUid = localStorage.getItem("uid");
@@ -250,6 +253,9 @@ class Card {
     }
 
     async commentPostBtnEvent() {
+        let message = "login to post your comment";
+        if (!this.checkIsLogin(message)) return;
+
         let commentInput = this.card.querySelector(".waterfall-comment-input");
         if (commentInput.value.length === 0) {
             alert("Please enter your comment");
@@ -318,6 +324,19 @@ class Card {
             localStorage.setItem("uidView", uid);
             window.open("profile.html", "_blank");
         })
+    }
+
+    checkIsLogin(message) {
+        if (!localStorage.getItem("uid")) {
+
+            confirmBox(message, function () {
+                window.location.href = "./login.html";
+            }, function () {
+                return false;
+            })
+            return;
+        }
+        return true;
     }
 }
 
@@ -552,6 +571,10 @@ class ImageCard extends Modal {
         })
         // like button event
         backLayer.querySelector(".love-icons").addEventListener("click", () => {
+            let message = "login to like this image";
+            if (!this.checkIsLogin(message)) return;
+
+
             let likeBtn, likeNum;
             if (data.card) {
                 likeBtn = data.card.querySelector(".love-icons");
@@ -627,6 +650,10 @@ class ImageCard extends Modal {
 
         // post button event
         backLayer.querySelector(".waterfall-comment-post").addEventListener("click", async () => {
+            let message = "login to post your comment";
+            if (!this.checkIsLogin(message)) return;
+
+
             let commentInput = backLayer.querySelector(".waterfall-comment-input");
             if (commentInput.value.length === 0) {
                 alert("Please enter your comment");
@@ -676,6 +703,19 @@ class ImageCard extends Modal {
             data[keys[i]].key = keys[i];
             new CommentCard(data[keys[i]]);
         }
+    }
+
+    checkIsLogin(message) {
+        if (!localStorage.getItem("uid")) {
+
+            confirmBox(message, function () {
+                window.location.href = "./login.html";
+            }, function () {
+                return false;
+            })
+            return;
+        }
+        return true;
     }
 }
 

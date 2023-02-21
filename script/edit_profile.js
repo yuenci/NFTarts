@@ -130,14 +130,27 @@ deleteBtn.addEventListener("click", async function () {
     console.log("delete");
 
     // confirm delete
-    let confirm = window.confirm("Are you sure to delete your account?");
-    if (!confirm) return;
+    confirmBox('Are you sure to delete your account?', async function () {
+        let res = await fbAuth.deleteAccount();
+        let res2 = await fbStore.delete("users", user.uid);
+        if (res && res2) {
+            window.location.href = "../index.html";
+        } else {
+            console.log(res);
+        }
+    }, function () {
+        console.log('You clicked No!');
+    })
 
-    let res = await fbAuth.deleteAccount();
-    let res2 = await fbStore.delete("users", user.uid);
-    if (res && res2) {
-        window.location.href = "../index.html";
-    } else {
-        console.log(res);
-    }
+
+    // let confirm = window.confirm("Are you sure to delete your account?");
+    // if (!confirm) return;
+
+    // let res = await fbAuth.deleteAccount();
+    // let res2 = await fbStore.delete("users", user.uid);
+    // if (res && res2) {
+    //     window.location.href = "../index.html";
+    // } else {
+    //     console.log(res);
+    // }
 });

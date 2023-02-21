@@ -10,9 +10,12 @@ const fbStorage = new FBStorage();
 const fbStore = new FBStore();
 
 window.onload = async function () {
+    if (!localStorage.getItem("uid")) {
+        window.location.href = "./login.html";
+    }
+
     user = new User();
     let res;
-
     // if user init successfully, then init avatar and name
     try {
         res = await user.init();

@@ -103,14 +103,26 @@ function addDataTofirebase(user) {
 
 
 export function logout() {
-    if (confirm("Are you sure to log out?")) {
+    // if (confirm("Are you sure to log out?")) {
+    // fbAuth.logout();
+    // localStorage.setItem("loginStatus", "false");
+    // localStorage.setItem("uid", "");
+    // localStorage.setItem("uidView", "");
+    // setTimeout(() => {
+    //     window.location.href = "../index.html";
+    // }, 1000);
+    // }
+
+    let message = "Are you sure to log out?";
+    confirmBox(message, function () {
         fbAuth.logout();
         localStorage.setItem("loginStatus", "false");
         localStorage.setItem("uid", "");
         localStorage.setItem("uidView", "");
         setTimeout(() => {
             window.location.href = "../index.html";
-        }, 1000);
-
-    }
+        }, 500);
+    }, function () {
+        console.log('You clicked No!');
+    })
 }

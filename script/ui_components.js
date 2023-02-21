@@ -100,11 +100,11 @@ function confirmBox(message, successCallback, errorCallback, title = "") {
 
 // btn1.addEventListener('click', () => {
 //     console.log('You clicked the button!');
-//     confirmBox('Are you sure?', function () {
-//         console.log('You clicked Yes!');
-//     }, function () {
-//         console.log('You clicked No!');
-//     })
+    // confirmBox('Are you sure?', function () {
+    //     console.log('You clicked Yes!');
+    // }, function () {
+    //     console.log('You clicked No!');
+    // })
 // });
 
 // 
