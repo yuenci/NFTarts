@@ -41,6 +41,7 @@ In this group assignment, our group constructed a student organisation website a
 
 * [idb-keyval](https://github.com/jakearchibald/idb-keyval) - A super-simple-small promise-based keyval store implemented with IndexedDB
 * [Anime](https://animejs.com/) - A lightweight JavaScript animation library
+* [Firebase-Api-Encapsulation](https://github.com/yuenci/Firebase-Api-Encapsulation) - The encapsulated library of firebaseapi
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
