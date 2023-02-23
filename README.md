@@ -65,48 +65,48 @@ This project is written in Vanilla js, without any dependency, and can be direct
 
 ## Usage
 
-#### Sign Up
+### 1. Sign Up
 
 Currently supports two registration methods: email registration and Google account registration.
 ![](images/tutorial/sign_up.gif)
 
-#### Login
+### 2. Login
 
 ![](images/tutorial/login.gif)
 
-#### Log out
+### 3. Log out
 
 ![](images/tutorial/log_out.gif)
 
-#### View Gallery
+### 4. View Gallery
 
 ![](images/tutorial/view_gallary.gif)
 
-#### Like & Comment
+### 5. Like & Comment
 
 ![](images/tutorial/like_comment.gif)
 
-#### View Profile
+### 6. View Profile
 
 ![](images/tutorial/view_profile.gif)
 
-#### Modify Profile
+### 7. Modify Profile
 
 ![](images/tutorial/modify_profile.gif)
 
-#### View others' profile
+### 8. View others' profile
 
 ![](images/tutorial/view_other_profile.gif)
 
-#### Upload Arts
+### 9. Upload Arts
 
 ![](images/tutorial/upload_art.gif)
 
-#### Generate Nametag
+### 10. Generate Nametag
 
 ![](images/tutorial/nametag.gif)
 
-#### News writer
+### 11. News writer
 
 Administrators can publish new news through the news writer
 ![](images/tutorial/writer.gif)
