@@ -65,19 +65,30 @@ This project is written in Vanilla js, without any dependency, and can be direct
 
 ## Usage
 
-#### Sign
+#### Sign Up
 
 #### Login
 
+![](/images/tutorial/login.gif)
+
+#### Log out
+
+
 #### View Gallery
+
+#### Like & Comment
 
 #### View Profile
 
-#### Upload Arts
-
 #### Modify Profile
 
+#### View others' profile
+
+#### Upload Arts
+
 #### Generate Nametag
+
+#### News writer
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
