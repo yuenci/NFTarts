@@ -67,28 +67,48 @@ This project is written in Vanilla js, without any dependency, and can be direct
 
 #### Sign Up
 
+![](images/tutorial/sign_up.gif)
+
 #### Login
 
-![](/images/tutorial/login.gif)
+![](images/tutorial/login.gif)
 
 #### Log out
+
+![](images/tutorial/log_out.gif)
 
 
 #### View Gallery
 
+![](images/tutorial/view_gallary.gif)
+
 #### Like & Comment
+
+![](images/tutorial/like_comment.gif)
 
 #### View Profile
 
+![](images/tutorial/view_profile.gif)
+
 #### Modify Profile
+
+![](images/tutorial/modify_profile.gif)
 
 #### View others' profile
 
+![](images/tutorial/view_other_profile.gif)
+
 #### Upload Arts
+
+![](images/tutorial/upload_art.gif)
 
 #### Generate Nametag
 
+![](images/tutorial/nametag.gif)
+
 #### News writer
+
+![](images/tutorial/writer.gif)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
