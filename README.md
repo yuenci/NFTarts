@@ -1,16 +1,18 @@
 # NFTarts
-<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
-<a name="readme-top"></a>
 
+<!-- Improved compatibility of back to top link: See: https://github.com/othneildrew/Best-README-Template/pull/73 -->
+
+`<a name="readme-top"></a>`
 
 <!-- PROJECT LOGO -->
+
 <br />
 <div align="center">
   <a href="https://github.com/yuenci/NFTarts">
     <img src="https://github.com/yuenci/NFTarts/blob/master/images/nftart.png" alt="Logo" width="200">
   </a>
 
-  <p align="center">
+<p align="center">
     🖖 A great modern website that introduces the art of NFT arts 💎
     <br />
   </p>
@@ -19,9 +21,8 @@
 <br />
 <br />
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 ![Product screenshot](images/demo.png)
@@ -34,10 +35,7 @@ Furthermore, a completely working website contains various functionalities enabl
 
 In this group assignment, our group constructed a student organisation website as the official platform of Asia Pacific University (APU) based on the team model. This website presents the most up-to-date information and activities for members and non-members to guarantee that information can be discovered to the greatest extent possible.
 
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ### Built With
 
@@ -46,9 +44,8 @@ In this group assignment, our group constructed a student organisation website a
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 This project is written in Vanilla js, without any dependency, and can be directly opened locally.
@@ -60,24 +57,32 @@ This project is written in Vanilla js, without any dependency, and can be direct
    git clone https://github.com/yuenci/NFTarts
    ```
 2. Open the index.html locally.
-3. Or Open index.html with http server 
+3. Or Open index.html with http server
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+#### Sign
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+#### Login
+
+#### View Gallery
+
+#### View Profile
+
+#### Upload Arts
+
+#### Modify Profile
+
+#### Generate Nametag
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- CONTRIBUTING -->
+
 ## Contributing
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
@@ -92,6 +97,7 @@ Don't forget to give the project a star! Thanks again!
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Authors
+
 <a href="https://github.com/yuenci" target="_blank" >
   <img src="images/innis.jpg" alt="profile image" width="60px">
 </a>
@@ -103,29 +109,25 @@ Don't forget to give the project a star! Thanks again!
 </a>
 
 <!-- CONTACT -->
+
 ## Contact
 
 Innis - [@InnisYu](https://twitter.com/yuenci3) - yuenci1575270674@gmail.com
 
-Pheymin - [@p_min23](https://www.instagram.com/p_min23/)  
+Pheymin - [@p_min23](https://www.instagram.com/p_min23/)
 
-Yannis - [@lengzhiyan1015](https://www.facebook.com/lengzhiyan1015)  
-
+Yannis - [@lengzhiyan1015](https://www.facebook.com/lengzhiyan1015)
 
 <!-- LICENSE -->
+
 ## License
 
 Distributed under the GPL License. See [LICENSE](./LICENSE) for more information.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-
-
-
-
 <!-- ACKNOWLEDGMENTS -->
+
 ## Acknowledgments
 
 * [Ideo](https://ideo.com)
@@ -133,4 +135,3 @@ Distributed under the GPL License. See [LICENSE](./LICENSE) for more information
 * [Nftnow](https://nftnow.com)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-

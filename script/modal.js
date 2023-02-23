@@ -1,4 +1,3 @@
-
 export class Modal {
     constructor() {
         this.modal = document.getElementById("modal");
@@ -24,7 +23,7 @@ export class Modal {
     }
 }
 
-class Scroll {
+export class Scroll {
     static keys = { 37: 1, 38: 1, 39: 1, 40: 1 };
     static supportsPassive = false;
     static wheelEvent = "onwheel" in document.createElement("div") ? "wheel" : "mousewheel";

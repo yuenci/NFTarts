@@ -3,6 +3,7 @@ import { FBStorage } from "./firebase/storageHandler.js";
 import { FBStore } from "./firebase/storeHandler.js";
 import { logout } from "./login.js";
 // import { toast } from "./ui_components.js";
+import { Scroll, Modal } from "./modal.js";
 
 
 let user = null;
@@ -264,7 +265,7 @@ class User {
 
 }
 
-import { Modal } from "./modal.js";
+
 
 class UploadModal extends Modal {
     constructor() {
