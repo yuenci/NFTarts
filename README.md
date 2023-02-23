@@ -67,6 +67,7 @@ This project is written in Vanilla js, without any dependency, and can be direct
 
 #### Sign Up
 
+Currently supports two registration methods: email registration and Google account registration.
 ![](images/tutorial/sign_up.gif)
 
 #### Login
@@ -76,7 +77,6 @@ This project is written in Vanilla js, without any dependency, and can be direct
 #### Log out
 
 ![](images/tutorial/log_out.gif)
-
 
 #### View Gallery
 
@@ -108,6 +108,7 @@ This project is written in Vanilla js, without any dependency, and can be direct
 
 #### News writer
 
+Administrators can publish new news through the news writer
 ![](images/tutorial/writer.gif)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
