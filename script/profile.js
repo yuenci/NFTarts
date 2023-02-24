@@ -181,21 +181,21 @@ class User {
 
         if (followingBtn) {
             followingBtn.addEventListener("click", () => {
-                console.log("following");
+                //console.log("following");
                 this.unfollow();
             })
         }
 
         if (messageBtn) {
             messageBtn.addEventListener("click", () => {
-                console.log("message");
+                //console.log("message");
             })
         }
 
 
         if (followBtn) {
             followBtn.addEventListener("click", () => {
-                console.log("follow");
+                //console.log("follow");
                 this.follow();
             })
         }
@@ -253,7 +253,7 @@ class User {
     }
 
     isFollowing() {
-        console.log(this.currentUser);
+        //console.log(this.currentUser);
         let following = this.currentUser.following;
         if (following.includes(this.viewUser.uid)) {
             return true;
@@ -572,7 +572,7 @@ class PostsArea {
         uploadBtn.classList.remove("hidden");
 
         uploadBtn.addEventListener("click", () => {
-            console.log("upload");
+            //console.log("upload");
             new UploadModal();
         });
     }
@@ -580,7 +580,8 @@ class PostsArea {
     async displayCards(mode) {
         if (this.postInitState && this.likeInitState) return;
         let images = await fbStore.query("images", ["uid", "==", this.userUid]);
-        console.log(images);
+        //console.log(images);
+        images = this.sortImages(images);
 
         if (mode === "post") {
             for (let image of images) {
@@ -611,12 +612,20 @@ class PostsArea {
 
         let images = await fbStore.query("images", ["uid", "==", this.userUid]);
         console.log(images);
+        images = this.sortImages(images);
 
         for (let image of images) {
             let card = new PostImageCard(image);
             card.display();
         }
     };
+
+    sortImages(cardDataList) {
+        let sortedCardDataList = cardDataList.sort((a, b) => {
+            return b.timestamp.seconds - a.timestamp.seconds;
+        });
+        return sortedCardDataList;
+    }
 
     async getLikesImagesData(images) {
         let imagesData = [];
